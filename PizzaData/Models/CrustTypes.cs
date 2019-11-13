@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PizzaShop.Models
+namespace PizzaData.Models
 {
     public partial class CrustTypes
     {

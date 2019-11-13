@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PizzaShop;
+using PizzaData.Models;
 
 namespace PizzaShop.Migrations
 {
     [DbContext(typeof(Project2DatabaseContext))]
-    partial class Project2DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191113161321_M2MandUppercase")]
+    partial class M2MandUppercase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

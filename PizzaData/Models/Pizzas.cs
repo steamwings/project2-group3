@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PizzaShop.Models
+namespace PizzaData.Models
 {
     public partial class Pizzas
     {
@@ -20,5 +20,7 @@ namespace PizzaShop.Models
         public virtual CrustTypes CrustType { get; set; }
         public virtual SauceTypes SauceType { get; set; }
         public virtual ICollection<Recipes> Recipes { get; set; }
+
+        public virtual ICollection<OrderPizzas> OrderPizzas { get; set; }
     }
 }

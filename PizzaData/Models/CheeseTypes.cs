@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PizzaShop.Models
+namespace PizzaData.Models
 {
-    public partial class SauceTypes
+    public partial class CheeseTypes
     {
-        public SauceTypes()
+        public CheeseTypes()
         {
             Pizzas = new HashSet<Pizzas>();
         }
