@@ -7,9 +7,9 @@ namespace PizzaShop.Models
 {
     public class Pizza
     {
-        Crust crust;
-        Sauce sauce;
+        Crust Crust;
+        Sauce Sauce;
         Cheese Cheese;
-        List<Topping> toppings;
+        List<Topping> Toppings;
     }
 }

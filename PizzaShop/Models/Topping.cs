@@ -7,8 +7,8 @@ namespace PizzaShop.Models
 {
     public class Topping
     {
-        string name;
+        string Name;
         string ToppingType;
-        string description;
+        string Description;
     }
 }

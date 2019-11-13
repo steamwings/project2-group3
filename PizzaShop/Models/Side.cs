@@ -7,7 +7,7 @@ namespace PizzaShop.Models
 {
     public class Side
     {
-        string type;
-        string description;
+        string Type;
+        string Description;
     }
 }

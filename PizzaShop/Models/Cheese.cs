@@ -7,7 +7,7 @@ namespace PizzaShop.Models
 {
     public class Cheese
     {
-        string type;
-        string description;
+        string Type;
+        string Description;
     }
 }

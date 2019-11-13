@@ -7,8 +7,8 @@ namespace PizzaShop.Models
 {
     public class Order
     {
-        int customerid;
-        DateTime date;
-        List<I_Item> items;
+        int CustomerId;
+        DateTime Date;
+        List<IItem> Items;
     }
 }

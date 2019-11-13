@@ -7,7 +7,7 @@ namespace PizzaShop.Models
 {
     public class Customer
     {
-        int id;
-        string name;
+        int Id;
+        string Name;
     }
 }
