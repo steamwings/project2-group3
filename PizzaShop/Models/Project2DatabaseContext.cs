@@ -62,6 +62,36 @@ namespace PizzaShop.Models
                 entity.Property(e => e.OrderTime).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<OrderPizzas>(entity =>
+            {
+                entity.HasOne(e => e.Order)
+                    .WithMany(o => o.OrderPizzas)
+                    .HasForeignKey(e => e.OrderId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_OrderPizzas_Orders");
+
+                entity.HasOne(e => e.Pizza)
+                    .WithMany(p => p.OrderPizzas)
+                    .HasForeignKey(e => e.PizzaId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_OrderPizza_Pizzas");
+            });
+
+            modelBuilder.Entity<OrderSides>(entity =>
+            {
+                entity.HasOne(e => e.Order)
+                    .WithMany(o => o.OrderSides)
+                    .HasForeignKey(e => e.OrderId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_OrderSides_Orders");
+
+                entity.HasOne(e => e.Side)
+                    .WithMany(p => p.OrderSides)
+                    .HasForeignKey(e => e.SideId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_OrderSides_Sides");
+            });
+
             modelBuilder.Entity<Pizzas>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(50);
