@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PizzaShop.Models;
+using PizzaData.Models;
 
 namespace PizzaShop.Migrations
 {
@@ -21,7 +21,7 @@ namespace PizzaShop.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("PizzaShop.Models.CheeseTypes", b =>
+            modelBuilder.Entity("PizzaData.Models.CheeseTypes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("CheeseTypes");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.CrustTypes", b =>
+            modelBuilder.Entity("PizzaData.Models.CrustTypes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("CrustTypes");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.Customers", b =>
+            modelBuilder.Entity("PizzaData.Models.Customers", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.OrderPizzas", b =>
+            modelBuilder.Entity("PizzaData.Models.OrderPizzas", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +103,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("OrderPizzas");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.OrderSides", b =>
+            modelBuilder.Entity("PizzaData.Models.OrderSides", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,7 +125,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("OrderSides");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.Orders", b =>
+            modelBuilder.Entity("PizzaData.Models.Orders", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -140,7 +140,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.Pizzas", b =>
+            modelBuilder.Entity("PizzaData.Models.Pizzas", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,7 +171,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("Pizzas");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.Recipes", b =>
+            modelBuilder.Entity("PizzaData.Models.Recipes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,7 +193,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.SauceTypes", b =>
+            modelBuilder.Entity("PizzaData.Models.SauceTypes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -214,7 +214,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("SauceTypes");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.Sides", b =>
+            modelBuilder.Entity("PizzaData.Models.Sides", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,7 +235,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("Sides");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.Toppings", b =>
+            modelBuilder.Entity("PizzaData.Models.Toppings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -256,16 +256,16 @@ namespace PizzaShop.Migrations
                     b.ToTable("Toppings");
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.OrderPizzas", b =>
+            modelBuilder.Entity("PizzaData.Models.OrderPizzas", b =>
                 {
-                    b.HasOne("PizzaShop.Models.Orders", "Order")
+                    b.HasOne("PizzaData.Models.Orders", "Order")
                         .WithMany("OrderPizzas")
                         .HasForeignKey("OrderId")
                         .HasConstraintName("FK_OrderPizzas_Orders")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PizzaShop.Models.Pizzas", "Pizza")
+                    b.HasOne("PizzaData.Models.Pizzas", "Pizza")
                         .WithMany("OrderPizzas")
                         .HasForeignKey("PizzaId")
                         .HasConstraintName("FK_OrderPizza_Pizzas")
@@ -273,16 +273,16 @@ namespace PizzaShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.OrderSides", b =>
+            modelBuilder.Entity("PizzaData.Models.OrderSides", b =>
                 {
-                    b.HasOne("PizzaShop.Models.Orders", "Order")
+                    b.HasOne("PizzaData.Models.Orders", "Order")
                         .WithMany("OrderSides")
                         .HasForeignKey("OrderId")
                         .HasConstraintName("FK_OrderSides_Orders")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PizzaShop.Models.Sides", "Side")
+                    b.HasOne("PizzaData.Models.Sides", "Side")
                         .WithMany("OrderSides")
                         .HasForeignKey("SideId")
                         .HasConstraintName("FK_OrderSides_Sides")
@@ -290,36 +290,36 @@ namespace PizzaShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.Pizzas", b =>
+            modelBuilder.Entity("PizzaData.Models.Pizzas", b =>
                 {
-                    b.HasOne("PizzaShop.Models.CheeseTypes", "CheeseType")
+                    b.HasOne("PizzaData.Models.CheeseTypes", "CheeseType")
                         .WithMany("Pizzas")
                         .HasForeignKey("CheeseTypeId")
                         .HasConstraintName("FK_Pizzas_CheeseTypes")
                         .IsRequired();
 
-                    b.HasOne("PizzaShop.Models.CrustTypes", "CrustType")
+                    b.HasOne("PizzaData.Models.CrustTypes", "CrustType")
                         .WithMany("Pizzas")
                         .HasForeignKey("CrustTypeId")
                         .HasConstraintName("FK_Pizzas_CrustTypes")
                         .IsRequired();
 
-                    b.HasOne("PizzaShop.Models.SauceTypes", "SauceType")
+                    b.HasOne("PizzaData.Models.SauceTypes", "SauceType")
                         .WithMany("Pizzas")
                         .HasForeignKey("SauceTypeId")
                         .HasConstraintName("FK_Pizzas_SauceTypes")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PizzaShop.Models.Recipes", b =>
+            modelBuilder.Entity("PizzaData.Models.Recipes", b =>
                 {
-                    b.HasOne("PizzaShop.Models.Pizzas", "Pizza")
+                    b.HasOne("PizzaData.Models.Pizzas", "Pizza")
                         .WithMany("Recipes")
                         .HasForeignKey("PizzaId")
                         .HasConstraintName("FK_Recipes_Pizzas")
                         .IsRequired();
 
-                    b.HasOne("PizzaShop.Models.Toppings", "Topping")
+                    b.HasOne("PizzaData.Models.Toppings", "Topping")
                         .WithMany("Recipes")
                         .HasForeignKey("ToppingId")
                         .HasConstraintName("FK_Recipes_Toppings")
