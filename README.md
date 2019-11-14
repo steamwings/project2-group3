@@ -2,7 +2,8 @@
 Keep reading to get started with a pizza-ordering interface.
 
 ## API (and Business Layer)
-*will be created*
+PizzaShop.sln
+references PizzaData/PizzaData.csproj
 
 ## Angular UI
 *will be created*
