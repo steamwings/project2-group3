@@ -8,6 +8,8 @@ namespace PizzaData.Models
     {
         public int Id { get; set; }
         public DateTime OrderTime { get; set; }
+        public int CustomerId { get; set; }
+        public virtual Customers Customer { get; set; }
         public virtual ICollection<OrderPizzas> OrderPizzas { get; set; }
         public virtual ICollection<OrderSides> OrderSides { get; set; }
     }

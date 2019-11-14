@@ -50,10 +50,15 @@ namespace PizzaShop
             modelBuilder.Entity<CrustTypes>(entity =>
             {
                 entity.Property(e => e.Description).IsRequired();
-
+                
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Customers>(entity =>
+            {
+                entity.Property(c => c.Id).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<Orders>(entity =>
@@ -61,6 +66,12 @@ namespace PizzaShop
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.OrderTime).HasColumnType("datetime");
+
+                entity.HasOne(o => o.Customer)
+                    .WithMany(c => c.Orders)
+                    .HasForeignKey(o => o.CustomerId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_Orders_Customers");
             });
 
             modelBuilder.Entity<OrderPizzas>(entity =>

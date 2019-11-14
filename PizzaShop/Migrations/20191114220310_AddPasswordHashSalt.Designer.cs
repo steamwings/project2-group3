@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaShop;
 
 namespace PizzaShop.Migrations
 {
     [DbContext(typeof(Project2DatabaseContext))]
-    partial class Project2DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191114220310_AddPasswordHashSalt")]
+    partial class AddPasswordHashSalt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
