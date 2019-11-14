@@ -1,0 +1,28 @@
+#PageContainer{
+  position: relative;
+  min-height: 100vh;
+}
+
+
+#LandingContent{
+    background-color: #fffe9a;
+    position: absolute;
+    border-radius: 5px;
+    width: 100%;
+    height: 300px;
+
+}
+
+
+
+#Footer{
+
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  border-radius: 5px;
+
+  background-color: #cd4545;
+
+}

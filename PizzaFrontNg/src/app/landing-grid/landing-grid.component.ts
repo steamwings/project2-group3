@@ -16,10 +16,10 @@ export interface Tile {
 export class LandingGridComponent implements OnInit {
   constructor() { }
   tiles: Tile[] = [
-    {text: 'Log-In', cols: 3, rows: 1, color: '#f5a882'},
-    {text: 'Order', cols: 1, rows: 2, color: 'lightgreen'},
-    {text: 'Coupons', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Register Today', cols: 2, rows: 1, color: '#a6f582'},
+    {text: 'Log-In', cols: 3, rows: 1, color: '#f16821'},
+    {text: 'Order', cols: 1, rows: 2, color: '#f3a333'},
+    {text: 'Coupons', cols: 1, rows: 1, color: '#f3a333'},
+    {text: 'Register Today', cols: 2, rows: 1, color: '#cd4545'},
   ];
   ngOnInit() {
   }
