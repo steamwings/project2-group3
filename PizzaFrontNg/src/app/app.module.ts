@@ -9,21 +9,26 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LandingGridComponent } from './landing-grid/landing-grid.component';
 import { FooterComponent } from './footer/footer.component';
 import { LandingContentComponent } from './landing-content/landing-content.component';
-
+import { AppRoutingModule} from './app-routing.module';
+import { OrderListComponent } from './order-list/order-list.component';
+import { LoginComponent } from './login/login.component'
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     LandingGridComponent,
     FooterComponent,
-    LandingContentComponent
+    LandingContentComponent,
+    OrderListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatMenuModule,
     MatButtonModule,
-    MatGridListModule
+    MatGridListModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent
