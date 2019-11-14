@@ -1,0 +1,24 @@
+
+<nav>
+<button mat-button [matMenuTriggerFor]="aboveMenu">Menu</button>
+<mat-menu #aboveMenu="matMenu" yPosition="above">
+  <button mat-menu-item>Pick-Up</button>
+  <button mat-menu-item>Delivery</button>
+</mat-menu>
+
+<button mat-button >Tracker</button>
+
+
+<button mat-button [matMenuTriggerFor]="beforeMenu">Locations</button>
+<mat-menu #beforeMenu="matMenu"  yPosition="above">
+  <button mat-menu-item>Location 1</button>
+  <button mat-menu-item>Location 2</button>
+</mat-menu>
+
+
+<button mat-button [matMenuTriggerFor]="afterMenu">Shopping Cart</button>
+<mat-menu #afterMenu="matMenu"  yPosition="above">
+  <button mat-menu-item>Current Order</button>
+  <button mat-menu-item>Order History</button>
+</mat-menu>
+</nav>
