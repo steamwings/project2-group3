@@ -4,38 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PizzaData.Models;
 
 namespace PizzaMvcUI.Controllers
 {
-    public class PizzasController : Controller
+    public class OrdersController : Controller
     {
-
-        public async Task<ActionResult> SelectCrust(int id)
-        {
-            CrustTypes c = await API.GetCrust(id);
-            return View("Message", $"You selected {c.Name}");
-        }
-
-        // GET: Pizzas
+        // GET: Orders
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Pizzas/Details/5
+        // GET: Orders/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Pizzas/Create
+        // GET: Orders/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Pizzas/Create
+        // POST: Orders/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -52,13 +44,13 @@ namespace PizzaMvcUI.Controllers
             }
         }
 
-        // GET: Pizzas/Edit/5
+        // GET: Orders/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Pizzas/Edit/5
+        // POST: Orders/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -75,13 +67,13 @@ namespace PizzaMvcUI.Controllers
             }
         }
 
-        // GET: Pizzas/Delete/5
+        // GET: Orders/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Pizzas/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

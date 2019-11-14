@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PizzaData.Models.CrustTypes>
+
+@{
+    ViewData["Title"] = "_SelectCrust";
+    var crustList = new SelectList(Model);
+}
+
+<p>
+    Check out our best-in-class crusts.
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("I Want This!", "SelectCrust", new { id=item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
