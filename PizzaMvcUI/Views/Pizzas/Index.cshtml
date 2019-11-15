@@ -1,11 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Pizzas";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Build your Perfect Pizza</h1>
-</div>
-<div>
-    <h4>Select a Crust</h4>
-    @{ await Html.RenderPartialAsync("_SelectCrust", await API.GetCrusts()); }
-</div>
+    <div class="text-center">
+        <h1 class="display-4">The best pizzas you can buy.</h1>
+
+        <p>Try one of our <a asp-action="Index" asp-controller="Pizzas">masterfully-crafted recipes</a>.</p>
+        <p><a asp-action="Build" asp-controller="Pizzas">Build your own</a> masterpiece pizza.</p>
+
+        <p>
+            You selected @TempData["crust"]
+        </p>
+    </div>

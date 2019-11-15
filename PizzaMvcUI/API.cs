@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace PizzaMvcUI
 {
-    //https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/calling-a-web-api-from-a-net-client
+    /// <summary>
+    /// Helper class with C# calls to API
+    /// Reference https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/calling-a-web-api-from-a-net-client
+    /// </summary>
     public static class API
     {
         static HttpClient client = new HttpClient();
