@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -77,6 +78,7 @@ namespace PizzaShop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<CrustTypes>> PostCrustTypes(CrustTypes crustTypes)
         {
             _context.CrustTypes.Add(crustTypes);
@@ -87,6 +89,7 @@ namespace PizzaShop.Controllers
 
         // DELETE: api/CrustTypes/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<CrustTypes>> DeleteCrustTypes(int id)
         {
             var crustTypes = await _context.CrustTypes.FindAsync(id);

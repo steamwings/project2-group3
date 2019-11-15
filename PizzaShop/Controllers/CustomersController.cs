@@ -85,6 +85,22 @@ namespace PizzaShop.Controllers
             return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers);
         }
 
+
+        public async Task<ActionResult> Login(string email, string passwordHash)
+        {
+            Customers customer = await _context.Customers
+                .Where(cust => cust.Email == email && cust.PasswordHash == passwordHash)
+                .SingleOrDefaultAsync();
+            if (customer != null)
+            {
+                return Ok(customer.Id);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         // DELETE: api/Customers/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Customers>> DeleteCustomers(int id)
