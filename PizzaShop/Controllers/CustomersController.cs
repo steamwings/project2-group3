@@ -88,7 +88,7 @@ namespace PizzaShop.Controllers
             catch (DbUpdateException)
             {
                 return new StatusCodeResult(422);
-            } 
+            }
         }
 
         //POST: api/Customers/Login
