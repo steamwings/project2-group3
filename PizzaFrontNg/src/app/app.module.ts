@@ -5,11 +5,13 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { LandingGridComponent } from './landing-grid/landing-grid.component';
-import { FooterComponent } from './footer/footer.component';
-import { LandingContentComponent } from './landing-content/landing-content.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { LandingGridComponent } from './components/landing-grid/landing-grid.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { LandingContentComponent } from './components/landing-content/landing-content.component';
 import { AppRoutingModule, routingComponents} from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,8 @@ import { AppRoutingModule, routingComponents} from './app-routing.module';
     MatMenuModule,
     MatButtonModule,
     MatGridListModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent
