@@ -12,10 +12,10 @@ namespace PizzaData.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [Required]
-        [Column(TypeName = "char(32)")] // 256 bit
+        [Column(TypeName = "char(44)")] // 256 bit
         public string PasswordHash { get; set; }
         [Required]
-        [Column(TypeName = "char(16)")] // 128 bit
+        [Column(TypeName = "char(24)")] // 128 bit
         public string Salt { get; set; }
         [MinLength(2)]
         public string FirstName { get; set; }

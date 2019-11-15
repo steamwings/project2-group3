@@ -80,11 +80,11 @@ namespace PizzaShop.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("char(32)");
+                        .HasColumnType("char(44)");
 
                     b.Property<string>("Salt")
                         .IsRequired()
-                        .HasColumnType("char(16)");
+                        .HasColumnType("char(24)");
 
                     b.HasKey("Id");
 
