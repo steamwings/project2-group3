@@ -22,16 +22,16 @@ namespace PizzaShop.Controllers
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Orders>>> GetOrders()
+        public async Task<ActionResult<IEnumerable<NOrders>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.NOrders.ToListAsync();
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Orders>> GetOrders(int id)
+        public async Task<ActionResult<NOrders>> GetOrders(int id)
         {
-            var orders = await _context.Orders.FindAsync(id);
+            var orders = await _context.NOrders.FindAsync(id);
 
             if (orders == null)
             {
@@ -45,7 +45,7 @@ namespace PizzaShop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrders(int id, Orders orders)
+        public async Task<IActionResult> PutOrders(int id, NOrders orders)
         {
             if (id != orders.Id)
             {
@@ -77,27 +77,32 @@ namespace PizzaShop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Orders>> PostOrders(Orders orders)
+        public async Task<ActionResult<NOrders>> PostOrders(NOrders orders)
         {
-            _context.Orders.Add(orders);
+
+            _context.NOrders.Add(orders);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetOrders", new { id = orders.Id }, orders);
         }
 
-
+        public int GetEstimatePickupTime()
+        {
+            Random random = new Random();
+            return (int)Math.Round(random.Next(10, 75) / 5.0) * 5;
+        }
 
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Orders>> DeleteOrders(int id)
+        public async Task<ActionResult<NOrders>> DeleteOrders(int id)
         {
-            var orders = await _context.Orders.FindAsync(id);
+            var orders = await _context.NOrders.FindAsync(id);
             if (orders == null)
             {
                 return NotFound();
             }
 
-            _context.Orders.Remove(orders);
+            _context.NOrders.Remove(orders);
             await _context.SaveChangesAsync();
 
             return orders;
@@ -105,7 +110,7 @@ namespace PizzaShop.Controllers
 
         private bool OrdersExists(int id)
         {
-            return _context.Orders.Any(e => e.Id == id);
+            return _context.NOrders.Any(e => e.Id == id);
         }
     }
 }

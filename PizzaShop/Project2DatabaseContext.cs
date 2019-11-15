@@ -21,8 +21,8 @@ namespace PizzaShop
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<OrderPizzas> OrderPizzas { get; set; }
         public virtual DbSet<OrderSides> OrderSides { get; set; }
-        public virtual DbSet<Orders> Orders { get; set; }
-        public virtual DbSet<Pizzas> Pizzas { get; set; }
+        public virtual DbSet<NOrders> NOrders { get; set; }
+        public virtual DbSet<NPizzas> NPizzas { get; set; }
         public virtual DbSet<Recipes> Recipes { get; set; }
         public virtual DbSet<SauceTypes> SauceTypes { get; set; }
         public virtual DbSet<Sides> Sides { get; set; }
@@ -63,41 +63,41 @@ namespace PizzaShop
                     .HasName("AlternateKey_Email");
             });
 
-            modelBuilder.Entity<Orders>(entity =>
+            modelBuilder.Entity<NOrders>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.OrderTime).HasColumnType("datetime");
 
                 entity.HasOne(o => o.Customer)
-                    .WithMany(c => c.Orders)
+                    .WithMany(c => c.NOrders)
                     .HasForeignKey(o => o.CustomerId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_Orders_Customers");
+                    .HasConstraintName("FK_NOrders_Customers");
             });
 
             modelBuilder.Entity<OrderPizzas>(entity =>
             {
-                entity.HasOne(e => e.Order)
+                entity.HasOne(e => e.NOrder)
                     .WithMany(o => o.OrderPizzas)
-                    .HasForeignKey(e => e.OrderId)
+                    .HasForeignKey(e => e.NOrderId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_OrderPizzas_Orders");
+                    .HasConstraintName("FK_OrderPizzas_NOrders");
 
-                entity.HasOne(e => e.Pizza)
+                entity.HasOne(e => e.NPizza)
                     .WithMany(p => p.OrderPizzas)
-                    .HasForeignKey(e => e.PizzaId)
+                    .HasForeignKey(e => e.NPizzaId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_OrderPizza_Pizzas");
+                    .HasConstraintName("FK_OrderPizza_NPizzas");
             });
 
             modelBuilder.Entity<OrderSides>(entity =>
             {
-                entity.HasOne(e => e.Order)
+                entity.HasOne(e => e.NOrder)
                     .WithMany(o => o.OrderSides)
-                    .HasForeignKey(e => e.OrderId)
+                    .HasForeignKey(e => e.NOrderId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_OrderSides_Orders");
+                    .HasConstraintName("FK_OrderSides_NOrders");
 
                 entity.HasOne(e => e.Side)
                     .WithMany(p => p.OrderSides)
@@ -106,24 +106,24 @@ namespace PizzaShop
                     .HasConstraintName("FK_OrderSides_Sides");
             });
 
-            modelBuilder.Entity<Pizzas>(entity =>
+            modelBuilder.Entity<NPizzas>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(50);
 
                 entity.HasOne(d => d.CheeseType)
-                    .WithMany(p => p.Pizzas)
+                    .WithMany(p => p.NPizzas)
                     .HasForeignKey(d => d.CheeseTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Pizzas_CheeseTypes");
 
                 entity.HasOne(d => d.CrustType)
-                    .WithMany(p => p.Pizzas)
+                    .WithMany(p => p.NPizzas)
                     .HasForeignKey(d => d.CrustTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Pizzas_CrustTypes");
 
                 entity.HasOne(d => d.SauceType)
-                    .WithMany(p => p.Pizzas)
+                    .WithMany(p => p.NPizzas)
                     .HasForeignKey(d => d.SauceTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Pizzas_SauceTypes");
@@ -131,11 +131,11 @@ namespace PizzaShop
 
             modelBuilder.Entity<Recipes>(entity =>
             {
-                entity.HasOne(d => d.Pizza)
+                entity.HasOne(d => d.NPizza)
                     .WithMany(p => p.Recipes)
-                    .HasForeignKey(d => d.PizzaId)
+                    .HasForeignKey(d => d.NPizzaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Recipes_Pizzas");
+                    .HasConstraintName("FK_Recipes_NPizzas");
 
                 entity.HasOne(d => d.Topping)
                     .WithMany(p => p.Recipes)
