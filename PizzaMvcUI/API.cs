@@ -14,7 +14,7 @@ namespace PizzaMvcUI
     /// </summary>
     public static class API
     {
-        static HttpClient client = new HttpClient();
+        static readonly HttpClient client = new HttpClient();
         static API()
         {
             client.BaseAddress = new Uri("http://krazpizza.azurewebsites.net/");
