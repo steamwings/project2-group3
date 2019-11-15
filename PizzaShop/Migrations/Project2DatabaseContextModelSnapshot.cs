@@ -158,6 +158,28 @@ namespace PizzaShop.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("PizzaData.Models.PizzaToppings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PizzaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToppingId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PizzaId");
+
+                    b.HasIndex("ToppingId");
+
+                    b.ToTable("PizzaToppings");
+                });
+
             modelBuilder.Entity("PizzaData.Models.Pizzas", b =>
                 {
                     b.Property<int>("Id")
@@ -187,28 +209,6 @@ namespace PizzaShop.Migrations
                     b.HasIndex("SauceTypeId");
 
                     b.ToTable("Pizzas");
-                });
-
-            modelBuilder.Entity("PizzaData.Models.Recipes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("PizzaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToppingId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PizzaId");
-
-                    b.HasIndex("ToppingId");
-
-                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("PizzaData.Models.SauceTypes", b =>
@@ -318,6 +318,21 @@ namespace PizzaShop.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PizzaData.Models.PizzaToppings", b =>
+                {
+                    b.HasOne("PizzaData.Models.Pizzas", "Pizza")
+                        .WithMany("Recipes")
+                        .HasForeignKey("PizzaId")
+                        .HasConstraintName("FK_Recipes_Pizzas")
+                        .IsRequired();
+
+                    b.HasOne("PizzaData.Models.Toppings", "Topping")
+                        .WithMany("Recipes")
+                        .HasForeignKey("ToppingId")
+                        .HasConstraintName("FK_Recipes_Toppings")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PizzaData.Models.Pizzas", b =>
                 {
                     b.HasOne("PizzaData.Models.CheeseTypes", "CheeseType")
@@ -336,21 +351,6 @@ namespace PizzaShop.Migrations
                         .WithMany("Pizzas")
                         .HasForeignKey("SauceTypeId")
                         .HasConstraintName("FK_Pizzas_SauceTypes")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PizzaData.Models.Recipes", b =>
-                {
-                    b.HasOne("PizzaData.Models.Pizzas", "Pizza")
-                        .WithMany("Recipes")
-                        .HasForeignKey("PizzaId")
-                        .HasConstraintName("FK_Recipes_Pizzas")
-                        .IsRequired();
-
-                    b.HasOne("PizzaData.Models.Toppings", "Topping")
-                        .WithMany("Recipes")
-                        .HasForeignKey("ToppingId")
-                        .HasConstraintName("FK_Recipes_Toppings")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

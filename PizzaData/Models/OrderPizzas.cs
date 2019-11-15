@@ -10,6 +10,5 @@ namespace PizzaData.Models
         public int PizzaId { get; set; }
         public virtual Pizzas Pizza { get; set; }
         public virtual Orders Order { get; set; }
-
     }
 }
