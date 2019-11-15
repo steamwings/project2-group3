@@ -85,7 +85,9 @@ namespace PizzaShop.Controllers
             return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers);
         }
 
-
+        //POST: api/Customers/Login
+        [HttpPost]
+        [Route("api/Customers/Login")]
         public async Task<ActionResult> Login(string email, string passwordHash)
         {
             Customers customer = await _context.Customers

@@ -9,6 +9,10 @@
     <Compile Remove="Migrations\20191113182113_Test.Designer.cs" />
     <Compile Remove="Migrations\20191114220203_AddPasswordHashSalt.cs" />
     <Compile Remove="Migrations\20191114220203_AddPasswordHashSalt.Designer.cs" />
+    <Compile Remove="Migrations\20191115154014_NamingConventions.cs" />
+    <Compile Remove="Migrations\20191115154014_NamingConventions.Designer.cs" />
+    <Compile Remove="Migrations\20191115155037_NamingConventions.cs" />
+    <Compile Remove="Migrations\20191115155037_NamingConventions.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

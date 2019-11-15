@@ -22,6 +22,6 @@ namespace PizzaData.Models
         [MinLength(2)]
         public string LastName { get; set; }
 
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<NOrders> NOrders { get; set; }
     }
 }

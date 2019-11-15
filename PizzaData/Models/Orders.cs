@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace PizzaData.Models
 {
-    public partial class Orders
+    public class Order
     {
-        public int Id { get; set; }
+        public List<Pizzas> Pizzas { get; set; }
+        public List<Sides> Sides { get; set; }
         public DateTime OrderTime { get; set; }
         public int CustomerId { get; set; }
-        public virtual Customers Customer { get; set; }
-        public virtual ICollection<OrderPizzas> OrderPizzas { get; set; }
-        public virtual ICollection<OrderSides> OrderSides { get; set; }
     }
 }

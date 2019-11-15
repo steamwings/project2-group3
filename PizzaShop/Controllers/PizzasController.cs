@@ -22,16 +22,16 @@ namespace PizzaShop.Controllers
 
         // GET: api/Pizzas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pizzas>>> GetPizzas()
+        public async Task<ActionResult<IEnumerable<NPizzas>>> GetPizzas()
         {
-            return await _context.Pizzas.ToListAsync();
+            return await _context.NPizzas.ToListAsync();
         }
 
         // GET: api/Pizzas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pizzas>> GetPizzas(int id)
+        public async Task<ActionResult<NPizzas>> GetPizzas(int id)
         {
-            var pizzas = await _context.Pizzas.FindAsync(id);
+            var pizzas = await _context.NPizzas.FindAsync(id);
 
             if (pizzas == null)
             {
@@ -45,7 +45,7 @@ namespace PizzaShop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPizzas(int id, Pizzas pizzas)
+        public async Task<IActionResult> PutPizzas(int id, NPizzas pizzas)
         {
             if (id != pizzas.Id)
             {
@@ -77,9 +77,9 @@ namespace PizzaShop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Pizzas>> PostPizzas(Pizzas pizzas)
+        public async Task<ActionResult<NPizzas>> PostPizzas(NPizzas pizzas)
         {
-            _context.Pizzas.Add(pizzas);
+            _context.NPizzas.Add(pizzas);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPizzas", new { id = pizzas.Id }, pizzas);
@@ -87,15 +87,15 @@ namespace PizzaShop.Controllers
 
         // DELETE: api/Pizzas/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Pizzas>> DeletePizzas(int id)
+        public async Task<ActionResult<NPizzas>> DeletePizzas(int id)
         {
-            var pizzas = await _context.Pizzas.FindAsync(id);
+            var pizzas = await _context.NPizzas.FindAsync(id);
             if (pizzas == null)
             {
                 return NotFound();
             }
 
-            _context.Pizzas.Remove(pizzas);
+            _context.NPizzas.Remove(pizzas);
             await _context.SaveChangesAsync();
 
             return pizzas;
@@ -103,7 +103,7 @@ namespace PizzaShop.Controllers
 
         private bool PizzasExists(int id)
         {
-            return _context.Pizzas.Any(e => e.Id == id);
+            return _context.NPizzas.Any(e => e.Id == id);
         }
     }
 }
