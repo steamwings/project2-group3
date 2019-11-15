@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PizzaData.Models
 {
-    class Pizzas
+    public class Pizzas
     {
         public int CrustTypesId { get; set; }
         public int CheeseTypesId { get; set; }
