@@ -87,11 +87,11 @@ namespace PizzaShop.Controllers
 
         //POST: api/Customers/Login
         [HttpPost]
-        [Route("api/Customers/Login")]
-        public async Task<ActionResult> Login(string email, string passwordHash)
+        [Route("Login")]
+        public async Task<ActionResult> Login(LoginCredentials loginCredentials)
         {
             Customers customer = await _context.Customers
-                .Where(cust => cust.Email == email && cust.PasswordHash == passwordHash)
+                .Where(cust => cust.Email == loginCredentials.Email && cust.PasswordHash == loginCredentials.PasswordHash)
                 .SingleOrDefaultAsync();
             if (customer != null)
             {
