@@ -59,6 +59,8 @@ namespace PizzaShop
             modelBuilder.Entity<Customers>(entity =>
             {
                 entity.Property(c => c.Id).ValueGeneratedOnAdd();
+                entity.HasAlternateKey(e => e.Email)
+                    .HasName("AlternateKey_Email");
             });
 
             modelBuilder.Entity<Orders>(entity =>

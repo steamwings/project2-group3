@@ -9,6 +9,9 @@ namespace PizzaData.Models
     {
         public int Id { get; set; }
         [Required]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+        [Required]
         [Column(TypeName = "char(32)")] // 256 bit
         public string PasswordHash { get; set; }
         [Required]

@@ -68,6 +68,10 @@ namespace PizzaShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -83,6 +87,9 @@ namespace PizzaShop.Migrations
                         .HasColumnType("char(16)");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Email")
+                        .HasName("AlternateKey_Email");
 
                     b.ToTable("Customers");
                 });
