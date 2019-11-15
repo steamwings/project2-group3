@@ -11,7 +11,7 @@ namespace PizzaMvcUI
     //https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/calling-a-web-api-from-a-net-client
     public static class API
     {
-        static HttpClient client = new HttpClient();
+        static readonly HttpClient client = new HttpClient();
         static API()
         {
             client.BaseAddress = new Uri("http://krazpizza.azurewebsites.net/");
