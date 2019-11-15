@@ -6,20 +6,21 @@ $(document).ready(function () {
 
 function assignGet(uri) {
     $("#btnIWant").click(function (e) {
-        console.log("Read value is " + $("pizzaOption").val());
-//        $.ajax({
-////            contentType: 'application/json',
-//            type: "GET",
-//            url: baseUrl + uri,
-//            success: function (data, textStatus, jqXHR) {
-//                $("#headerSelect").val("Success!");
-//                console.log("GET was successful...I think.");
-//            },
-//            error: function (jqXHR, textStatus, errorThrown) {
-//                $("#headerSelect").val(jqXHR.statusText);
-//                console.log("GET failed: " + textStatus);
-//            }
-//        });
+        var id = $("input[name=pizzaOption]:checked").val();
+        console.log("Read value is " + id);
+        $.ajax({
+//            contentType: 'application/json',
+            type: "GET",
+            url: baseUrl + uri + id,
+            success: function (data, textStatus, jqXHR) {
+                $("#headerSelect").val("Success!");
+                console.log("GET was successful...I think.");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#headerSelect").val(jqXHR.statusText);
+                console.log("GET failed: " + textStatus);
+            }
+        });
     });
 }
 
@@ -29,17 +30,25 @@ function makeRadioOptions(resource, headerText) {
         type: "GET",
         url: apiUrl + resource,
 //        headers: { "Access-Control-Request-Method": "GET"},
-//        xhrFields: { withCredentials: true },
+ //       xhrFields: { withCredentials: true },
         success: function (data, textStatus, jqXHR) {
             console.log("API GET succeeded");
+            document.getElementsByName("pizzaOption").forEach(function (e) { e.remove() });
             data.forEach(function (option) {
-                document.getElementByName("pizzaOption").remove();
+                var d = document.createElement('div');
                 var o = document.createElement('input');
                 o.setAttribute('type', 'radio');
                 o.setAttribute('name', 'pizzaOption');
+                o.setAttribute('id', option.name);
                 o.setAttribute('value', option.id);
-                o.val(option.name + " - " + option.description);
-                $("#divDoStuff").appendChild(o);
+                $("#divDoStuff").append(o);
+                var l = document.createElement('label');
+                l.setAttribute('for', option.name);
+                l.setAttribute('style', 'style="display:block"');
+                l.innerText = " " + option.name + " - " + option.description;
+                $(d).append(o);
+                $(d).append(l);
+                $("#divDoStuff").prepend(d);
             });
             $("#headerSelect").val(headerText);
         },
