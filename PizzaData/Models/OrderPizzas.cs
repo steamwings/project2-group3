@@ -10,6 +10,5 @@ namespace PizzaData.Models
         public int NPizzaId { get; set; }
         public virtual NPizzas NPizza { get; set; }
         public virtual NOrders NOrder { get; set; }
-
     }
 }

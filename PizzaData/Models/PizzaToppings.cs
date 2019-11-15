@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PizzaData.Models
 {
-    public partial class Recipes
+    public partial class PizzaToppings
     {
         public int Id { get; set; }
         public int NPizzaId { get; set; }
@@ -13,3 +13,4 @@ namespace PizzaData.Models
         public virtual Toppings Topping { get; set; }
     }
 }
+

@@ -7,7 +7,7 @@ namespace PizzaData.Models
     {
         public NPizzas()
         {
-            Recipes = new HashSet<Recipes>();
+            PizzaToppings = new HashSet<PizzaToppings>();
         }
 
         public int Id { get; set; }
@@ -20,7 +20,7 @@ namespace PizzaData.Models
         public virtual CheeseTypes CheeseType { get; set; }
         public virtual CrustTypes CrustType { get; set; }
         public virtual SauceTypes SauceType { get; set; }
-        public virtual ICollection<Recipes> Recipes { get; set; }
+        public virtual ICollection<PizzaToppings> PizzaToppings { get; set; }
 
         public virtual ICollection<OrderPizzas> OrderPizzas { get; set; }
     }

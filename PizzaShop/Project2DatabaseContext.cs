@@ -23,7 +23,7 @@ namespace PizzaShop
         public virtual DbSet<OrderSides> OrderSides { get; set; }
         public virtual DbSet<NOrders> NOrders { get; set; }
         public virtual DbSet<NPizzas> NPizzas { get; set; }
-        public virtual DbSet<Recipes> Recipes { get; set; }
+        public virtual DbSet<PizzaToppings> PizzaToppings { get; set; }
         public virtual DbSet<SauceTypes> SauceTypes { get; set; }
         public virtual DbSet<Sides> Sides { get; set; }
         public virtual DbSet<Toppings> Toppings { get; set; }
@@ -129,10 +129,10 @@ namespace PizzaShop
                     .HasConstraintName("FK_Pizzas_SauceTypes");
             });
 
-            modelBuilder.Entity<Recipes>(entity =>
+            modelBuilder.Entity<PizzaToppings>(entity =>
             {
                 entity.HasOne(d => d.NPizza)
-                    .WithMany(p => p.Recipes)
+                    .WithMany(p => p.PizzaToppings)
                     .HasForeignKey(d => d.NPizzaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Recipes_NPizzas");
