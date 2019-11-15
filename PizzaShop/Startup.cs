@@ -15,6 +15,9 @@ namespace PizzaShop
 {
     public class Startup
     {
+
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -38,6 +41,21 @@ namespace PizzaShop
             services.AddDbContext<Project2DatabaseContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DataConnection")));
             services.AddControllersWithViews();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://mvcpizza.azurewebsites.net/");//,
+                        //"http://localhost:53101");
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+
+                });
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +72,8 @@ namespace PizzaShop
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
             
