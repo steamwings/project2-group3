@@ -80,9 +80,15 @@ namespace PizzaShop.Controllers
         public async Task<ActionResult<Customers>> PostCustomers(Customers customers)
         {
             _context.Customers.Add(customers);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers.Id);
+            }
+            catch (DbUpdateException)
+            {
+                return new StatusCodeResult(422);
+            } 
         }
 
         //POST: api/Customers/Login
