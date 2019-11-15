@@ -1,4 +1,5 @@
-﻿using PizzaData.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using PizzaData.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,5 +43,14 @@ namespace PizzaMvcUI
             return crust;
         }
 
+        public static async Task<int> Login(LoginCredentials credentials)
+        {
+            var response = await client.PostAsJsonAsync($"api/Customers/Login", credentials);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<int>();
+            }
+            return -1;
+        }
     }
 }

@@ -16,11 +16,17 @@ namespace PizzaMvcUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogIn([Bind("Email,Password")]LoginVM login)
+        public async Task<ActionResult> LogIn([Bind("Email,Password")]LoginVM login)
         {
             if (ModelState.IsValid)
             {
-                // generate hash & salt, pass to API
+                var credentials = new LoginCredentials()
+                {
+                    Email = login.Email,
+                    PasswordHash = login.Password
+                };
+                int Id = await API.Login(credentials);
+                TempData["User"] = Id;
                 return RedirectToAction("Index", "Home");
             }
             return View(login);
