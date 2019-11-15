@@ -7,13 +7,13 @@ namespace PizzaData.Models
     {
         public Toppings()
         {
-            Recipes = new HashSet<Recipes>();
+            Recipes = new HashSet<PizzaToppings>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<Recipes> Recipes { get; set; }
+        public virtual ICollection<PizzaToppings> Recipes { get; set; }
     }
 }
