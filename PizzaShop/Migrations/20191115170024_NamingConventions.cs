@@ -21,7 +21,7 @@ namespace PizzaShop.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Recipes_Pizzas",
-                table: "Recipes");
+                table: "PizzaToppings");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -30,8 +30,8 @@ namespace PizzaShop.Migrations
                 name: "Pizzas");
 
             migrationBuilder.DropIndex(
-                name: "IX_Recipes_PizzaId",
-                table: "Recipes");
+                name: "IX_PizzaToppings_PizzaId",
+                table: "PizzaToppings");
 
             migrationBuilder.DropIndex(
                 name: "IX_OrderSides_OrderId",
@@ -47,7 +47,7 @@ namespace PizzaShop.Migrations
 
             migrationBuilder.DropColumn(
                 name: "PizzaId",
-                table: "Recipes");
+                table: "PizzaToppings");
 
             migrationBuilder.DropColumn(
                 name: "OrderId",
@@ -61,9 +61,15 @@ namespace PizzaShop.Migrations
                 name: "PizzaId",
                 table: "OrderPizzas");
 
+            migrationBuilder.AddColumn<decimal>(
+                name: "Price",
+                table: "Sides",
+                nullable: false,
+                defaultValue: 0m);
+
             migrationBuilder.AddColumn<int>(
                 name: "NPizzaId",
-                table: "Recipes",
+                table: "PizzaToppings",
                 nullable: false,
                 defaultValue: 0);
 
@@ -141,8 +147,8 @@ namespace PizzaShop.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recipes_NPizzaId",
-                table: "Recipes",
+                name: "IX_PizzaToppings_NPizzaId",
+                table: "PizzaToppings",
                 column: "NPizzaId");
 
             migrationBuilder.CreateIndex(
@@ -206,7 +212,7 @@ namespace PizzaShop.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Recipes_NPizzas",
-                table: "Recipes",
+                table: "PizzaToppings",
                 column: "NPizzaId",
                 principalTable: "NPizzas",
                 principalColumn: "Id",
@@ -229,7 +235,7 @@ namespace PizzaShop.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Recipes_NPizzas",
-                table: "Recipes");
+                table: "PizzaToppings");
 
             migrationBuilder.DropTable(
                 name: "NOrders");
@@ -238,8 +244,8 @@ namespace PizzaShop.Migrations
                 name: "NPizzas");
 
             migrationBuilder.DropIndex(
-                name: "IX_Recipes_NPizzaId",
-                table: "Recipes");
+                name: "IX_PizzaToppings_NPizzaId",
+                table: "PizzaToppings");
 
             migrationBuilder.DropIndex(
                 name: "IX_OrderSides_NOrderId",
@@ -254,8 +260,12 @@ namespace PizzaShop.Migrations
                 table: "OrderPizzas");
 
             migrationBuilder.DropColumn(
+                name: "Price",
+                table: "Sides");
+
+            migrationBuilder.DropColumn(
                 name: "NPizzaId",
-                table: "Recipes");
+                table: "PizzaToppings");
 
             migrationBuilder.DropColumn(
                 name: "NOrderId",
@@ -271,7 +281,7 @@ namespace PizzaShop.Migrations
 
             migrationBuilder.AddColumn<int>(
                 name: "PizzaId",
-                table: "Recipes",
+                table: "PizzaToppings",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -326,8 +336,7 @@ namespace PizzaShop.Migrations
                     CheeseTypeId = table.Column<int>(type: "int", nullable: false),
                     CrustTypeId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    SauceTypeId = table.Column<int>(type: "int", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    SauceTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -353,8 +362,8 @@ namespace PizzaShop.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recipes_PizzaId",
-                table: "Recipes",
+                name: "IX_PizzaToppings_PizzaId",
+                table: "PizzaToppings",
                 column: "PizzaId");
 
             migrationBuilder.CreateIndex(
@@ -418,7 +427,7 @@ namespace PizzaShop.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Recipes_Pizzas",
-                table: "Recipes",
+                table: "PizzaToppings",
                 column: "PizzaId",
                 principalTable: "Pizzas",
                 principalColumn: "Id",

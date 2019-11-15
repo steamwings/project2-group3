@@ -192,7 +192,7 @@ namespace PizzaShop.Migrations
                     b.ToTable("OrderSides");
                 });
 
-            modelBuilder.Entity("PizzaData.Models.Recipes", b =>
+            modelBuilder.Entity("PizzaData.Models.PizzaToppings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -211,7 +211,7 @@ namespace PizzaShop.Migrations
 
                     b.HasIndex("ToppingId");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("PizzaToppings");
                 });
 
             modelBuilder.Entity("PizzaData.Models.SauceTypes", b =>
@@ -345,10 +345,10 @@ namespace PizzaShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PizzaData.Models.Recipes", b =>
+            modelBuilder.Entity("PizzaData.Models.PizzaToppings", b =>
                 {
                     b.HasOne("PizzaData.Models.NPizzas", "NPizza")
-                        .WithMany("Recipes")
+                        .WithMany("PizzaToppings")
                         .HasForeignKey("NPizzaId")
                         .HasConstraintName("FK_Recipes_NPizzas")
                         .IsRequired();
