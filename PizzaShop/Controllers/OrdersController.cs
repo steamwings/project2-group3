@@ -85,6 +85,7 @@ namespace PizzaShop.Controllers
                 OrderTime = order.OrderTime,
             };
             _context.NOrders.Add(nOrder);
+            await _context.SaveChangesAsync();
             foreach (var pizza in order.Pizzas)
             {
                 NPizzas nPizza = new NPizzas
@@ -96,18 +97,31 @@ namespace PizzaShop.Controllers
                     Name = pizza.Name
                 };
                 _context.NPizzas.Add(nPizza);
+                await _context.SaveChangesAsync();
                 _context.OrderPizzas.Add(new OrderPizzas
                 {
                     NOrderId = nOrder.Id,
                     NPizzaId = nPizza.Id
                 });
+                await _context.SaveChangesAsync();
                 foreach (var topping in pizza.ToppingsId)
                 {
                     _context.PizzaToppings.Add(new PizzaToppings { 
                          NPizzaId = nPizza.Id,
                          ToppingId = topping
                     });
+                    await _context.SaveChangesAsync();
                 }
+            }
+            foreach (var sideId in order.SidesIds)
+            {
+                OrderSides os = new OrderSides
+                {
+                    NOrderId = nOrder.Id,
+                    SideId = sideId
+                };
+                _context.OrderSides.Add(os);
+                await _context.SaveChangesAsync();
             }
             await _context.SaveChangesAsync();
 
