@@ -1,59 +1,52 @@
-<h3> Build your KraZpiZZa</h3>
+<h3 > Build your KraZpiZZa</h3>
 
         <form  [formGroup]="orderForm" (ngSubmit)="orderPizza()">
 
-            <div>
+            <div class="orderGroup">
                 <h4>Choose Your Crust</h4>
-            <label for="crust">Thin    
-                <input  type="radio" value="Thin" name="crust" formControlName="crust"></label>          
-            <label for="crust">Thick 
-                <input  type="radio" value="Thick" name="crust" formControlName="crust">
+            <label for="crust">  
+                <input  type="radio" value="Thin" name="crust" formControlName="crust">Thin  </label>          
+            <label for="crust"> 
+                <input  type="radio" value="Thick" name="crust" formControlName="crust">Thick
             </label>            
-            <label for="crust">Deep Dish    
-                <input  type="radio" value="Deep Dish" name="crust" formControlName="crust">
+            <label for="crust">    
+                <input  type="radio" value="Deep Dish" name="crust" formControlName="crust">Deep Dish
             </label>           
-            <label for="crust">Classic    
-                <input  type="radio" value="Classic" name="crust" formControlName="crust">
+            <label for="crust">    
+                <input  type="radio" value="Classic" name="crust" formControlName="crust">Classic
             </label>
             </div>
 
             <div>
                     <h4>Choose Your Sauce</h4>
-                <label for="crust">Bechamel
-                    <input type="radio" value="Bechamel" name="sauce" formControlName="sauce"></label>
-                <label for="crust">Pesto
-                    <input type="radio" value="Pesto" name="sauce" formControlName="sauce">
+                <label for="crust">
+                    <input type="radio" value="Bechamel" name="sauce" formControlName="sauce">Bechamel</label>
+                <label for="crust">
+                    <input type="radio" value="Pesto" name="sauce" formControlName="sauce">Pesto
                 </label>
-                <label for="crust">Marinara
-                    <input type="radio" value="Marinara" name="sauce" formControlName="sauce">
+                <label for="crust">
+                    <input type="radio" value="Marinara" name="sauce" formControlName="sauce">Marinara
                 </label>
-                <label for="crust">Special
-                    <input type="radio" value="Special" name="sauce" formControlName="sauce">
+                <label for="crust">
+                    <input type="radio" value="Special" name="sauce" formControlName="sauce">Special
                 </label>
             </div>
 
             <div>
                     <h4>Choose Your Cheese</h4>
-                <label for="crust">Mozzerella
-                    <input type="radio" value="Mozzerella" name="cheese" formControlName="cheese"></label>
-                <label for="crust">Cheddar
-                    <input type="radio" value="Cheddar" name="cheese" formControlName="cheese">
+                <label for="crust">
+                    <input type="radio" value="Mozzerella" name="cheese" formControlName="cheese">Mozzerella</label>
+                <label for="crust">
+                    <input type="radio" value="Cheddar" name="cheese" formControlName="cheese">Cheddar
                 </label>
-                <label for="crust">Feta
-                    <input type="radio" value="Feta" name="cheese" formControlName="cheese">
+                <label for="crust">
+                    <input type="radio" value="Feta" name="cheese" formControlName="cheese">Feta
                 </label>
-                <label for="crust">Gorganzolla
-                    <input type="radio" value="Gorganzolla" name="cheese" formControlName="cheese">
+                <label for="crust">
+                    <input type="radio" value="Gorganzolla" name="cheese" formControlName="cheese">Gorganzolla
                 </label>
             </div>
-<!-- 
-            <app-checkbox-group formControlName="toppings">
-                    <app-checkbox value="Pepperoni">Pepperoni</app-checkbox>
-                    <app-checkbox value="Mushrooms">Mushrooms</app-checkbox>
-                    <app-checkbox value="Sausage">Sausage</app-checkbox>
-                    <app-checkbox value="Olives">Olives</app-checkbox>
-            </app-checkbox-group> -->
-
+            
             <div>
                     <h4>Choose Your Toppings</h4>
                  <app-checkbox-group formControlName="toppings">
