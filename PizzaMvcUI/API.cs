@@ -46,6 +46,17 @@ namespace PizzaMvcUI
             return crust;
         }
 
+        public static async Task<Customers> GetCustomer(int id)
+        {
+            Customers customer = null;
+            HttpResponseMessage response = await client.GetAsync($"api/Customers/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                customer = await response.Content.ReadAsAsync<Customers>();
+            }
+            return customer;
+        }
+
         public static async Task<int> Login(LoginCredentials credentials)
         {
             var response = await client.PostAsJsonAsync($"api/Customers/Login", credentials);

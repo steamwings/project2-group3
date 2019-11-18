@@ -3,6 +3,15 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    @if (TempData["User"] != null)
+    {
+        var cust = await API.GetCustomer((int)TempData["User"]);
+        <h1 class="display-4">Welcome, @cust.FirstName</h1>
+        TempData.Keep();
+    }
+    else
+    {
+        <h1 class="display-4">Welcome</h1>
+    }
     <p>Start your order <a asp-action="Index" asp-controller="Orders">Here</a>.</p>
 </div>
