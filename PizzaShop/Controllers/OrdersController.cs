@@ -77,13 +77,55 @@ namespace PizzaShop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<NOrders>> PostOrders(NOrders orders)
+        public async Task<ActionResult<NOrders>> PostOrders(Orders order)
         {
-
-            _context.NOrders.Add(orders);
+            NOrders nOrder = new NOrders
+            {
+                CustomerId = order.CustomerId,
+                OrderTime = order.OrderTime,
+            };
+            _context.NOrders.Add(nOrder);
+            await _context.SaveChangesAsync();
+            foreach (var pizza in order.Pizzas)
+            {
+                NPizzas nPizza = new NPizzas
+                {
+                    CheeseTypeId = pizza.CheeseTypesId,
+                    CrustTypeId = pizza.CrustTypesId,
+                    SauceTypeId = pizza.SauceTypesId,
+                    Size = pizza.Size,
+                    Name = pizza.Name
+                };
+                _context.NPizzas.Add(nPizza);
+                await _context.SaveChangesAsync();
+                _context.OrderPizzas.Add(new OrderPizzas
+                {
+                    NOrderId = nOrder.Id,
+                    NPizzaId = nPizza.Id
+                });
+                await _context.SaveChangesAsync();
+                foreach (var topping in pizza.ToppingsId)
+                {
+                    _context.PizzaToppings.Add(new PizzaToppings { 
+                         NPizzaId = nPizza.Id,
+                         ToppingId = topping
+                    });
+                    await _context.SaveChangesAsync();
+                }
+            }
+            foreach (var sideId in order.SidesIds)
+            {
+                OrderSides os = new OrderSides
+                {
+                    NOrderId = nOrder.Id,
+                    SideId = sideId
+                };
+                _context.OrderSides.Add(os);
+                await _context.SaveChangesAsync();
+            }
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrders", new { id = orders.Id }, orders);
+            return CreatedAtAction("GetOrders", new { id = nOrder.Id }, nOrder.Id);
         }
 
         public int GetEstimatePickupTime()

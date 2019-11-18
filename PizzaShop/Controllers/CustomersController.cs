@@ -80,18 +80,24 @@ namespace PizzaShop.Controllers
         public async Task<ActionResult<Customers>> PostCustomers(Customers customers)
         {
             _context.Customers.Add(customers);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers.Id);
+            }
+            catch (DbUpdateException)
+            {
+                return new StatusCodeResult(422);
+            }
         }
 
         //POST: api/Customers/Login
         [HttpPost]
-        [Route("api/Customers/Login")]
-        public async Task<ActionResult> Login(string email, string passwordHash)
+        [Route("Login")]
+        public async Task<ActionResult> Login(LoginCredentials loginCredentials)
         {
             Customers customer = await _context.Customers
-                .Where(cust => cust.Email == email && cust.PasswordHash == passwordHash)
+                .Where(cust => cust.Email == loginCredentials.Email && cust.PasswordHash == loginCredentials.PasswordHash)
                 .SingleOrDefaultAsync();
             if (customer != null)
             {
