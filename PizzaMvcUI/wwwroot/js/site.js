@@ -3,5 +3,9 @@
 
 // Write your JavaScript code.
 
+// Where this front-end is hosted
 baseUrl = "http://localhost:53101";
-apiUrl = "http://localhost:62476";//"https://krazpizza.azurewebsites.net";
+//baseUrl = "https://mvcpizza.azurewebsites.net";
+// API location
+apiUrl = "http://localhost:62476";
+//apiUrl = "https://krazpizza.azurewebsites.net";
