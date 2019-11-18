@@ -57,6 +57,16 @@ namespace PizzaMvcUI
             return customer;
         }
 
+        public static async Task<IEnumerable<Sides>> GetSides()
+        {
+            HttpResponseMessage response = await client.GetAsync($"api/Sides");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<IEnumerable<Sides>>();
+            }
+            return null;
+        }
+
         public static async Task<int> Login(LoginCredentials credentials)
         {
             var response = await client.PostAsJsonAsync($"api/Customers/Login", credentials);

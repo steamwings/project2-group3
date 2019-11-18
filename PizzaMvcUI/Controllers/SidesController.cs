@@ -8,9 +8,9 @@ namespace PizzaMvcUI.Controllers
 {
     public class SidesController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await API.GetSides());
         }
     }
 }
