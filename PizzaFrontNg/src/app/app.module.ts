@@ -13,6 +13,8 @@ import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-group.component';
+import { CookieService } from 'ngx-cookie-service';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 
 @NgModule({
@@ -25,7 +27,7 @@ import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-gro
     routingComponents,
     CheckboxComponent,
     CheckboxGroupComponent,
-    
+    ShoppingCartComponent
     
     
   ],
@@ -39,8 +41,11 @@ import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-gro
     HttpClientModule,
  
   ],
-  providers: [],
-  bootstrap: [AppComponent
+  providers: [
+    CookieService
+    ],
+  bootstrap: [
+    AppComponent
     ]
 })
 export class AppModule { }
