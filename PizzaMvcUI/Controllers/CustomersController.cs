@@ -32,6 +32,11 @@ namespace PizzaMvcUI.Controllers
             return View(login);
         }
 
+        public ActionResult LogOut()
+        {
+            return View();
+        }
+
         public IActionResult Register()
         {
             return View();

@@ -53,7 +53,7 @@ namespace PizzaMvcUI
             {
                 return await response.Content.ReadAsAsync<int>();
             }
-            return -1;
+            return -1; // returns -1 on error
         }
     }
 }
