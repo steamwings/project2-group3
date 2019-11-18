@@ -34,7 +34,6 @@ export class OrderPizzaComponent implements OnInit {
 
   orderPizza(orderData){
 
-    
     console.log( this.orderForm.value.toppings );
 
     var orderObject = {
