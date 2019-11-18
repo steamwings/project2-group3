@@ -1,17 +1,18 @@
 
 <nav>
-    <button mat-button [matMenuTriggerFor]="aboveMenu">Home</button>
-<button mat-button [matMenuTriggerFor]="aboveMenu" >Order</button>
-<mat-menu #aboveMenu="matMenu" yPosition="above">
+<button mat-button >Home</button>
+
+<button mat-button [matMenuTriggerFor]="Order" >Order</button>
+<mat-menu #Order="matMenu" yPosition="above">
   <button mat-menu-item routerLink="orderpizza">Build Pizza</button>
   <button mat-menu-item>Menu</button>
   <button mat-menu-item  routerLink="orders" >Order History</button>
 </mat-menu>
 
-<button mat-button >Tracker</button>
+<!-- <button mat-button >Tracker</button> -->
 
 
-<button mat-button [matMenuTriggerFor]="beforeMenu">Locations</button>
+<button mat-button [matMenuTriggerFor]="Locations">Locations</button>
 <mat-menu #beforeMenu="matMenu"  yPosition="above">
   <button mat-menu-item>Location 1</button>
   <button mat-menu-item>Location 2</button>
@@ -23,4 +24,5 @@
   <button mat-menu-item>View Cart</button>
   <button mat-menu-item >Check Out</button>
 </mat-menu>
+<button mat-button routerLink="login" >Log In</button>
 </nav>
