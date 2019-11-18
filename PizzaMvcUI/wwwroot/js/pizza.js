@@ -28,6 +28,7 @@ function cheese() {
 }
 
 function toppings() {
+    addOptionToCart("/api/cart/cheese/");
     addToProgressBar('Toppings');
     $("#btnIWant").val("Whelp this doesn't work yet");
     $("#btnIWant").unbind('click');
