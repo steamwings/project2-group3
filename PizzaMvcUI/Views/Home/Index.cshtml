@@ -6,7 +6,14 @@
     @if (TempData["User"] != null)
     {
         var cust = await API.GetCustomer((int)TempData["User"]);
-        <h1 class="display-4">Welcome, @cust.FirstName</h1>
+        if (cust != null)
+        {
+            <h1 class="display-4">Welcome, @cust.FirstName</h1>
+        }
+        else
+        {
+            <h1 class="display-4">Welcome</h1>
+        }
         TempData.Keep();
     }
     else

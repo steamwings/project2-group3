@@ -9,6 +9,19 @@ namespace PizzaMvcUI.Controllers
 {
     public class CustomersController : Controller
     {
+        public async Task<IActionResult> Account()
+        {
+            if (TempData["User"] != null)
+            {
+                var user = await API.GetCustomer((int)TempData["User"]);
+                return View(user);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpGet]
         public ActionResult LogIn()
         {
