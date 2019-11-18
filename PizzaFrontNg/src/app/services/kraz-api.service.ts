@@ -11,6 +11,13 @@ export class KrazAPIService {
   constructor(private http:HttpClient) { }
 
   getPizzas(): Observable<IPizza[]>{
+    
     return this.http.get<IPizza[]>('https://krazpizza.azurewebsites.net/api/crusttypes');
+  }
+  
+  placeOrder(order){
+
+    return this.http.post('https://krazpizza.azurewebsites.net/api/placeorder',order)
+
   }
 }

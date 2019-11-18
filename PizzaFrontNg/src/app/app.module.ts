@@ -10,7 +10,10 @@ import { LandingGridComponent } from './components/landing-grid/landing-grid.com
 import { FooterComponent } from './components/footer/footer.component';
 import { LandingContentComponent } from './components/landing-content/landing-content.component';
 import { AppRoutingModule, routingComponents} from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-group.component';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +22,11 @@ import { HttpClientModule } from '@angular/common/http'
     LandingGridComponent,
     FooterComponent,
     LandingContentComponent,
-    routingComponents
+    routingComponents,
+    CheckboxComponent,
+    CheckboxGroupComponent
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -28,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http'
     MatButtonModule,
     MatGridListModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+ 
   ],
   providers: [],
   bootstrap: [AppComponent

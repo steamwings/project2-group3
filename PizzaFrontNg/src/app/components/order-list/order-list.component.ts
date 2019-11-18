@@ -14,8 +14,9 @@ export class OrderListComponent implements OnInit {
 
   ngOnInit() {
     this._getPizzaService.getPizzas()
-    .subscribe( data => this.pizzas = data );
-    console.log(this.pizzas);
+    .subscribe((data: any[])=>{
+      console.log(data)});
+    //.subscribe( data => this.pizzas = data );
   }
 
 }
