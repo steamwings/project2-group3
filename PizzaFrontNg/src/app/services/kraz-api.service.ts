@@ -17,7 +17,7 @@ export class KrazAPIService {
   
   placeOrder(order){
 
-    return this.http.post('https://krazpizza.azurewebsites.net/api/placeorder',order)
+    return this.http.post('https://krazpizza.azurewebsites.net/api/orders',order)
 
   }
 }
