@@ -29,24 +29,40 @@ function cheese() {
 
 function toppings() {
     addOptionToCart("/api/cart/cheese/");
+    makeCheckboxOptions('/api/toppings');
     addToProgressBar('Toppings');
-    $("#btnIWant").val("Whelp this doesn't work yet");
+    $("#btnIWant").val("I Want These!");
     $("#btnIWant").unbind('click');
+    $("#btnIWant").click(reviewPizza);
+}
+
+function reviewPizza() {
+    addOptionsToCart("/api/cart/topping/");
+    addToProgressBar('Review');
+    $("#btnIWant").unbind('click');
+    $("#btnIWant").val("Add to My Order");
+    //$("#btnIWant").click(); //Robert update this
 }
 
 
 function addToProgressBar(name) {
     var pbar = document.createElement('div');
-    pbar.setAttribute('class', 'progress-bar progress-bar-striped progress-bar-success active');
+    pbar.setAttribute('class', 'progress-bar progress-bar-striped active');
     pbar.setAttribute('role', 'progressbar');
     pbar.setAttribute('style', 'width:20%');
     pbar.innerHTML = name;
     $("#progressBuildPizza").append(pbar);
 }
 
-function addOptionToCart(uri) {
-    var id = $("input[name=pizzaOption]:checked").val();
-    console.log("Read value is " + id);
+function addOptionsToCart(uri) {
+    $("input[name=optionGroup]:checked").map((_, e) => {
+        addOptionToCart(uri, e.value);
+    });
+}
+
+function addOptionToCart(uri, val=null) {
+    var id = (val != null) ? val : $("input[name=optionGroup]:checked").val();
+    console.log("Read value " + id);
     $.ajax({
         //            contentType: 'application/json',
         type: "GET",
@@ -63,39 +79,52 @@ function addOptionToCart(uri) {
 }
 
 function makeRadioOptions(resource, headerText) {
-    makeOptions(resource, headerText, populateRadio);
+    makeOptions("divDoStuff", resource, headerText, populate);
 }
 
-function makeOptions(resource, headerText, callback) {
-    $("#divDoStuff").innerHTML = 'Loading...';
+function makeCheckboxOptions(resource, headerText) {
+    var pop = (divId, data) => {
+        populate(divId, data, 'checkbox');
+    };
+    makeOptions("divDoStuff", resource, headerText, pop);
+}
+
+
+function makeOptions(divId, resource, headerText, callback, headerId = null) {
+    $(`#${divId}`).innerHTML = 'Loading options...';
+    var path = apiUrl + resource;
     $.ajax({
         contentType: 'application/json',
         type: "GET",
-        url: apiUrl + resource,
+        url: path,
         //        headers: { "Access-Control-Request-Method": "GET"},
         //       xhrFields: { withCredentials: true },
         success: (data, textStatus, jqXHR) => {
-            console.log("API GET succeeded");
-            $("#headerSelect").val(headerText);
-            $("#divDoStuff").innerHTML = '';
-            callback(data);
+            console.log(`API GET succeeded (${path})`);
+            if (headerId) $(`#${headerId}`).val(headerText);
+            $(`#${divId}`).innerHTML = '';
+            callback(divId, data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log("API GET failed");
-            $("#headerSelect").val(jqXHR.statusText);
+            console.log(`API GET failed (${path})`);
+            if (headerId) $(`#${headerId}`).val(jqXHR.statusText);
         }
     });
 }
 
-function populateRadio (data) {
-    var groupName = 'pizzaDiv';
-    $("#divDoStuff").empty();
-    data.forEach(function (option) {
+function makepop(type) {
+    return (divId, data) => {
+        populate(divId, data, type);
+    };
+}
+
+function populate (divId, data, type='radio') {
+    $(`#${divId}`).empty();
+    data.forEach((option) => {
         var d = document.createElement('div');
-        d.setAttribute('name', groupName);
         var o = document.createElement('input');
-        o.setAttribute('type', 'radio');
-        o.setAttribute('name', 'pizzaOption');
+        o.setAttribute('type', type);
+        o.setAttribute('name', 'optionGroup');
         o.setAttribute('id', option.name);
         o.setAttribute('value', option.id);
         var l = document.createElement('label');
@@ -104,6 +133,6 @@ function populateRadio (data) {
         l.innerHTML = " <strong>" + option.name + "</strong> - " + option.description;
         $(d).append(o);
         $(d).append(l);
-        $("#divDoStuff").prepend(d);
+        $(`#${divId}`).append(d);
     });
 }

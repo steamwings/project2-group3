@@ -17,18 +17,10 @@
 </div>
 
 <div id="divDoStuff">
-    @* @{ await Html.RenderPartialAsync("_SelectCrust", await API.GetCrusts()); }
-        <h4>Select your Sauce </h4>
-        @{ await Html.RenderPartialAsync("_SelectCheese"); }
-        <h4>Select your Cheese</h4>
-        @{ await Html.RenderPartialAsync("_SelectCheese"); }
-        <h4>Select your Toppings</h4>
-        @{ await Html.RenderPartialAsync("_SelectCheese"); }
-        <h4>Review your Pizza</h4>
-        @{ await Html.RenderPartialAsync("_SelectCheese"); }*@
+
 </div>
 
-<div class="center">
+<div id="divButtons" class="center">
     <input type="button" id="btnIWant" value="Start Building" class="btn-primary" />
 </div>
 
