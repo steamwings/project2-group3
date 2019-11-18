@@ -24,6 +24,23 @@ a {
   border-color: #1861ac;
 }
 
+h4 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+label {
+    margin-left: 5px;
+}
+
+.center {
+    text-align: center;
+}
+
+input[type=button] {
+    margin-top: 10px;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

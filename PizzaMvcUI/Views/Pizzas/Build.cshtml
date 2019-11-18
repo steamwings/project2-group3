@@ -10,13 +10,12 @@
 <div class="text-center">
     <h1 class="display-4">Build your Perfect Pizza</h1>
 </div>
-<div class="progress">
-    <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" style="width:20%">
+<div class="progress" id="progressBuildPizza">
+    @*<div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" style="width:20%">
         Crust
-    </div>
+    </div>*@
 </div>
 
-<h4 id="headerSelect">Select your Crust</h4>
 <div id="divDoStuff">
     @* @{ await Html.RenderPartialAsync("_SelectCrust", await API.GetCrusts()); }
         <h4>Select your Sauce </h4>
@@ -29,7 +28,7 @@
         @{ await Html.RenderPartialAsync("_SelectCheese"); }*@
 </div>
 
-<div>
-    <input type="button" id="btnIWant" value="I Want This!" class="btn-primary" />
+<div class="center">
+    <input type="button" id="btnIWant" value="Start Building" class="btn-primary" />
 </div>
 
