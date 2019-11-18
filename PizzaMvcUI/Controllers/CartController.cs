@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
+using PizzaMvcUI.Extensions;
+using PizzaData.Models;
 
 namespace PizzaMvcUI.Controllers
 {
@@ -30,29 +32,46 @@ namespace PizzaMvcUI.Controllers
         [Route("crust/{id}")]
         public void PostCrust(int id)
         {
-            TempData["crust"] = id;
-            //TempData.Keep("crust");
+            Cart cart = TempData.GetCart();
+            cart.BuildPizza();
+            cart.AddCrust(id);
+            TempData.Keep("Cart");
         }
 
         [HttpGet]
         [Route("cheese/{id}")]
         public void PostCheese(int id)
         {
-
+            Cart cart = TempData.GetCart();
+            cart.AddCheese(id);
+            TempData.Keep("Cart");
         }
 
         [HttpGet]
         [Route("sauce/{id}")]
         public void PostSauce(int id)
         {
-
+            Cart cart = TempData.GetCart();
+            cart.AddSauce(id);
+            TempData.Keep("Cart");
         }
 
         [HttpGet]
         [Route("topping/{id}")]
         public void PostTopping(int id)
         {
+            Cart cart = TempData.GetCart();
+            cart.AddTopping(id);
+            TempData.Keep("Cart");
+        }
 
+        [HttpGet]
+        [Route("AddPizza")]
+        public void PostPizza()
+        {
+            Cart cart = TempData.GetCart();
+            cart.AddPizza();
+            TempData.Keep("Cart");
         }
 
         // POST: api/Cart

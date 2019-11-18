@@ -41,9 +41,20 @@ function reviewPizza() {
     addToProgressBar('Review');
     $("#btnIWant").unbind('click');
     $("#btnIWant").val("Add to My Order");
-    //$("#btnIWant").click(); //Robert update this
+    $("#btnIWant").click(confirmOrder);
 }
 
+function confirmOrder() {
+    var popup = document.getElementById("PizzaConfirm");
+    var close = document.getElementById("closeButton");
+    popup.style.display = "block";
+    $("#closeButton").click(closeTest);
+}
+
+function closeTest() {
+    var popup = document.getElementById("PizzaConfirm");
+    popup.style.display = "none"
+}
 
 function addToProgressBar(name) {
     var pbar = document.createElement('div');
