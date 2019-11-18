@@ -24,7 +24,8 @@ import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-gro
     LandingContentComponent,
     routingComponents,
     CheckboxComponent,
-    CheckboxGroupComponent
+    CheckboxGroupComponent,
+    
     
     
   ],

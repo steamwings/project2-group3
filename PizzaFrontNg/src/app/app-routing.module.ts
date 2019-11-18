@@ -11,13 +11,15 @@ import { MatCheckboxModule,
         MatSelectModule,
         MatInputModule  } from '@angular/material';
 
+import { RegisterComponent } from './components/register/register.component';
 
 
 
 const routes: Routes = [
     {path:'login', component: LoginComponent},
     {path:'orders', component : OrderListComponent},
-    {path : 'orderpizza' , component : OrderPizzaComponent }
+    {path : 'orderpizza' , component : OrderPizzaComponent },
+    {path : 'login/register' , component : RegisterComponent }
 ];
 
 @NgModule({
@@ -45,4 +47,4 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule{ }
-export const routingComponents =[LoginComponent,OrderListComponent, OrderPizzaComponent]
+export const routingComponents =[LoginComponent,OrderListComponent, OrderPizzaComponent,RegisterComponent]
