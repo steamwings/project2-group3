@@ -112,12 +112,6 @@ function makeOptions(divId, resource, headerText, callback, headerId = null) {
     });
 }
 
-function makepop(type) {
-    return (divId, data) => {
-        populate(divId, data, type);
-    };
-}
-
 function populate (divId, data, type='radio') {
     $(`#${divId}`).empty();
     data.forEach((option) => {
