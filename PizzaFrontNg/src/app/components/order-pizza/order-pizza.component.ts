@@ -32,7 +32,7 @@ export class OrderPizzaComponent implements OnInit {
   })
   }
 
-  orderPizza(orderData){
+  orderPizza(){
 
     console.log( this.orderForm.value.toppings );
 
@@ -54,23 +54,8 @@ export class OrderPizzaComponent implements OnInit {
       "OrderTime": "2019-11-15T17:00:00.000Z"
    };
 
-   console.log (JSON.stringify({
-    "Pizzas": [
-        {
-            "CrustTypesId": 1,
-            "CheeseTypesId": 1,
-            "SauceTypesId": 1,
-            "Size": "Large",
-            "ToppingsId": [ 1, 2, 3]
-        }
-    ],
-    "SidesIds": [
-        1,
-        2
-    ],
-    "CustomerId": 15,
-    "OrderTime": "2019-11-15T17:00:00.000Z"
- }))
+  
+ 
 
     this.KrazService.placeOrder({
       "Pizzas": [
@@ -90,9 +75,6 @@ export class OrderPizzaComponent implements OnInit {
       "OrderTime": "2019-11-15T17:00:00.000Z"
    }).subscribe(response=> console.log(response))
 
-    //    this.KrazService.placeOrder(orderObject).pipe(tap(res => {
-//     console.log(res);
-//  }))
   }
 
 }

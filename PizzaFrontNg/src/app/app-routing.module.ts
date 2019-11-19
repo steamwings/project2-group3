@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OrderListComponent } from './components/order-list/order-list.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginLandingComponent } from './components/login-landing/login-landing.component';
 import { OrderPizzaComponent } from './components/order-pizza/order-pizza.component'
 import { FormsModule, ReactiveFormsModule } from'@angular/forms';
 import { MatCheckboxModule,
@@ -12,14 +12,16 @@ import { MatCheckboxModule,
         MatInputModule  } from '@angular/material';
 
 import { RegisterComponent } from './components/register/register.component';
-
+import { LoginComponent} from './components/login/login.component'
 
 
 const routes: Routes = [
-    {path:'login', component: LoginComponent},
+    {path:'loginlanding', component: LoginLandingComponent},
     {path:'orders', component : OrderListComponent},
     {path : 'orderpizza' , component : OrderPizzaComponent },
-    {path : 'login/register' , component : RegisterComponent }
+    {path : 'loginlanding/register' , component : RegisterComponent },
+    {path : 'loginlanding/login' , component : LoginComponent },
+
 ];
 
 @NgModule({
@@ -47,4 +49,4 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule{ }
-export const routingComponents =[LoginComponent,OrderListComponent, OrderPizzaComponent,RegisterComponent]
+export const routingComponents =[LoginComponent,OrderListComponent, OrderPizzaComponent,RegisterComponent,LoginLandingComponent]

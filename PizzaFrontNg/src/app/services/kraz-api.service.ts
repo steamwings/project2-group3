@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import { IPizza } from '../interfaces/pizza';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { IPizza } from '../interfaces/type-interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,6 +18,14 @@ export class KrazAPIService {
   placeOrder(order){
 
     return this.http.post('https://krazpizza.azurewebsites.net/api/orders',order)
-
   }
+
+  registerCustomer(customer){
+
+   const headers = new HttpHeaders().set( 'Content-Type','application/json', )
+
+    return this.http.post('https://krazpizza.azurewebsites.net/api/customers', customer, {headers})
+  }
+
+    
 }
