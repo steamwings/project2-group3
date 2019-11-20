@@ -10,11 +10,11 @@ namespace PizzaMvcUI
     {
         public List<Pizzas> Pizzas { get; set; }
         public List<int> Sides { get; set; }
-        private Pizzas currentPizza;
+        public Pizzas currentPizza;
 
         public void BuildPizza()
         {
-            currentPizza = new Pizzas();
+            currentPizza = new Pizzas { ToppingsId = new List<int>()};
         }
 
         public void AddCrust(int id)

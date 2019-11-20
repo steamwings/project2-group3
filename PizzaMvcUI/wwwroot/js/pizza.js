@@ -45,16 +45,26 @@ function reviewPizza() {
 }
 
 function confirmOrder() {
+    finalizePizza();
     var popup = document.getElementById("PizzaConfirm");
     var close = document.getElementById("closeButton");
     popup.style.display = "block";
-    $("#closeButton").click(closeTest);
 }
 
-function closeTest() {
-    var popup = document.getElementById("PizzaConfirm");
-    popup.style.display = "none"
+function finalizePizza() {
+    console.log("Adding Pizza To Cart...");
+    $.ajax({
+        type: "GET",
+        url: baseUrl + "/api/Cart/AddPizza/",
+        success: function (data, textStatus, jqXHR) {
+            console.log("GET success");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("GET failed: " + textStatus);
+        }
+    });
 }
+
 
 function addToProgressBar(name) {
     var pbar = document.createElement('div');

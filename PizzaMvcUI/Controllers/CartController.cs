@@ -12,7 +12,7 @@ namespace PizzaMvcUI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CartAPIController : Controller
+    public class CartController : Controller
     {
         // GET: api/Cart
         [HttpGet]
@@ -35,6 +35,7 @@ namespace PizzaMvcUI.Controllers
             Cart cart = TempData.GetCart();
             cart.BuildPizza();
             cart.AddCrust(id);
+            TempData.SetCart(cart);
             TempData.Keep("Cart");
         }
 
@@ -44,6 +45,7 @@ namespace PizzaMvcUI.Controllers
         {
             Cart cart = TempData.GetCart();
             cart.AddCheese(id);
+            TempData.SetCart(cart);
             TempData.Keep("Cart");
         }
 
@@ -53,6 +55,7 @@ namespace PizzaMvcUI.Controllers
         {
             Cart cart = TempData.GetCart();
             cart.AddSauce(id);
+            TempData.SetCart(cart);
             TempData.Keep("Cart");
         }
 
@@ -62,6 +65,7 @@ namespace PizzaMvcUI.Controllers
         {
             Cart cart = TempData.GetCart();
             cart.AddTopping(id);
+            TempData.SetCart(cart);
             TempData.Keep("Cart");
         }
 
@@ -71,6 +75,7 @@ namespace PizzaMvcUI.Controllers
         {
             Cart cart = TempData.GetCart();
             cart.AddPizza();
+            TempData.SetCart(cart);
             TempData.Keep("Cart");
         }
 

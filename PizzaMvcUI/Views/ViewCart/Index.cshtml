@@ -7,6 +7,48 @@
     <h1 class="display-4">Sides</h1>
 </div>
 
+
+<h2>Last Pizza</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Description
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Cart.currentPizza != null)
+        {
+            <tr>
+                <td>
+                    @if (Model.Cart.currentPizza.Name != null)
+                    {
+                        <span>@Model.Cart.currentPizza.Name: </span>
+                    }
+                    @Model.Menu.Crusts.Where(crust => crust.Id == Model.Cart.currentPizza.CrustTypesId).FirstOrDefault().Name,
+                    @Model.Menu.Sauces.Where(sauce => sauce.Id == Model.Cart.currentPizza.SauceTypesId).FirstOrDefault().Name,
+                    @Model.Menu.Cheeses.Where(cheese => cheese.Id == Model.Cart.currentPizza.CheeseTypesId).FirstOrDefault().Name
+                    @foreach (var toppingId in Model.Cart.currentPizza.ToppingsId)
+                    {
+                        <span>, @Model.Menu.Toppings.Where(topping => topping.Id == toppingId).FirstOrDefault().Name</span>
+                    }
+                </td>
+                <td>
+                    Price TBD
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
 <h2>Pizzas</h2>
 <table class="table">
     <thead>
@@ -20,6 +62,7 @@
         </tr>
     </thead>
     <tbody>
+
         @if (Model.Cart.Pizzas.Count > 0)
         {
             @foreach (var pizza in Model.Cart.Pizzas)
