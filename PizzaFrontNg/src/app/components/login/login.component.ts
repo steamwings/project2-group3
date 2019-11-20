@@ -35,9 +35,11 @@ export class LoginComponent implements OnInit {
   logIn(){
 
     let logInObj = new Object();
+    let hashwSalt = this.EncrDecr.set(this.loginForm.value.password);
+
 
     logInObj['Email'] = this.loginForm.value.email;
-    logInObj['Password'] = this.loginForm.value.password;
+    logInObj['PasswordHash'] = hashwSalt.hash;
 
     let jsonlogInObj = JSON.stringify(logInObj);
 
