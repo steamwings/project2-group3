@@ -27,6 +27,26 @@ namespace PizzaShop.Controllers
             return await _context.Customers.ToListAsync();
         }
 
+        // GET: api/Customers/Salt
+        [Route("Salt")]
+        [HttpPost]
+        public async Task<ActionResult<string>> GetSalt(SaltRequest r)
+        {
+            try
+            {
+                return (await _context.Customers.SingleAsync(c => c.Email == r.Email)).Salt;
+            }
+            catch (ArgumentNullException) // TODO Grab exception and log it
+            {
+                return Problem("Server error.", statusCode:500);
+            }
+            catch(InvalidOperationException)
+            {
+                return NotFound();
+            }
+        }
+
+        // TODO: Remove this
         // GET: api/Customers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Customers>> GetCustomers(int id)
@@ -79,6 +99,13 @@ namespace PizzaShop.Controllers
         [HttpPost]
         public async Task<ActionResult<Customers>> PostCustomers(Customers customers)
         {
+            // check for duplicate Email
+            var existing = _context.Customers.Where(c => c.Email == customers.Email);
+            if (existing.Any())
+            {
+                return Conflict();
+            }
+
             _context.Customers.Add(customers);
             try
             {
