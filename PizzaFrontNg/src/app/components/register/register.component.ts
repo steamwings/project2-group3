@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators,FormControl,FormArray } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { KrazAPIService } from '../../services/kraz-api.service';
 import { EncrDecrService } from '../../services/encr-decr.service'
 
@@ -13,19 +13,20 @@ export class RegisterComponent implements OnInit {
   hide = true;
 
   email = new FormControl('', );
-
+  
   constructor(private fb: FormBuilder, 
               private KrazService: KrazAPIService,
               private EncrDecr : EncrDecrService) { }
+  
+  
 
   ngOnInit() {
 
     this.registerForm = this.fb.group({
       firstname: new FormControl(''),
       lastname: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl('',[Validators.required, Validators.email]),
-      
+      password: new FormControl(''),
+      email: new FormControl('',[Validators.required, Validators.email])    
   })
 
   }
@@ -41,12 +42,9 @@ export class RegisterComponent implements OnInit {
     regObj["Salt"] = hashwSalt.salt;
     regObj["Email"] = this.registerForm.value.email;
     
-   // let jsonRegObj = JSON.stringify(regObj);
+   //let jsonRegObj = JSON.stringify(regObj);
 
-   
-
-    console.log(regObj);
-
+    console.log(regObj)
    
     this.KrazService.registerCustomer(regObj)
     .subscribe( response => console.log(response))
@@ -54,10 +52,12 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  getErrorMessage() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-        this.email.hasError('email') ? 'Not a valid email' :
-            '';
-  }
+  // getErrorMessage() {
+
+
+  //   return this.email.hasError('required') ? 'You must enter a value' :
+  //       this.email.hasError('email') ? 'Not a valid email' :
+  //           '';
+  // }
 
 }

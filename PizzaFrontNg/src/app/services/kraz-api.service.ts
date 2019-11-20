@@ -10,6 +10,8 @@ export class KrazAPIService {
 
   constructor(private http:HttpClient) { }
 
+  
+
   getPizzas(): Observable<IPizza[]>{
     
     return this.http.get<IPizza[]>('https://krazpizza.azurewebsites.net/api/crusttypes');
@@ -27,5 +29,13 @@ export class KrazAPIService {
     return this.http.post('https://krazpizza.azurewebsites.net/api/customers', customer, {headers})
   }
 
+  logInCustomer(customer){
+
+    const headers = new HttpHeaders().set( 'Content-Type','application/json', )
+
+    return this.http.post('https://krazpizza.azurewebsites.net/api/customers/login', customer, {headers})
+
+    
+  }
     
 }
