@@ -63,9 +63,6 @@ export class OrderPizzaComponent implements OnInit {
 
     //this.KrazService.placeOrder(order).subscribe(response=> console.log(response))
 
-    //    this.KrazService.placeOrder(orderObject).pipe(tap(res => {
-//     console.log(res);
-//  }))
   }
 
 }

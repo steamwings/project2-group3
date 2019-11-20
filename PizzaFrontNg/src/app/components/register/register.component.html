@@ -1,15 +1,27 @@
-<div >
+<form [formGroup]="registerForm"  (ngSubmit)= "registerCustomer()">
         <mat-form-field>
-          <input matInput placeholder="First Name">
+          <input matInput placeholder="First Name" formControlName="firstname">
         </mat-form-field>
       
         <mat-form-field>
-          <textarea matInput placeholder="Textarea"></textarea>
+            <input matInput placeholder="Last Name" formControlName="lastname">
         </mat-form-field>
-      
+    
+
+        <!-- Option for another password input field -->
         <mat-form-field>
-          <mat-select placeholder="Select">
-            <mat-option value="option">Option</mat-option>
-          </mat-select>
+                <input matInput placeholder="Enter your email" formControlName="email" required>
+                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
-      </div>
+
+        <mat-form-field>
+                <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'" formControlName="password">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+              <div>        
+                  <button type="submit" mat-button>Register</button>
+              </div>
+
+</form>
