@@ -15,6 +15,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-group.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { EncrDecrService } from './services/encr-decr.service'
 
 @NgModule({
@@ -27,10 +28,7 @@ import { EncrDecrService } from './services/encr-decr.service'
     routingComponents,
     CheckboxComponent,
     CheckboxGroupComponent,
-    ShoppingCartComponent,
-    
-    
-    
+    ShoppingCartComponent,    
   ],
   imports: [
     BrowserModule,
@@ -40,7 +38,7 @@ import { EncrDecrService } from './services/encr-decr.service'
     MatGridListModule,
     AppRoutingModule,
     HttpClientModule,
- 
+    ReactiveFormsModule,
   ],
   providers: [
     CookieService,

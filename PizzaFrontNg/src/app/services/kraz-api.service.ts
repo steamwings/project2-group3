@@ -1,25 +1,42 @@
 import { Injectable } from '@angular/core';
+import { Topping, IPizzaOption, IOrder, Menu, CrustType, CheeseType, SauceType } from '../interfaces/models';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { IPizza } from '../interfaces/type-interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KrazAPIService {
+  private baseUrl = 'https://krazpizza.azurewebsites.net';
 
   constructor(private http:HttpClient) { }
-
   
+  private getTypes<T extends IPizzaOption>(uri: string): Observable<T[]> {
+    return this.http.get<T[]>(this.baseUrl + uri);
+  }
 
-  getPizzas(): Observable<IPizza[]>{
-    
-    return this.http.get<IPizza[]>('https://krazpizza.azurewebsites.net/api/crusttypes');
+  getCrustTypes(): Observable<CrustType[]>{
+    return this.getTypes<CrustType>('/api/crusttypes');
   }
   
-  placeOrder(order){
+  getCheeseTypes(): Observable<CheeseType[]> {
+    return this.getTypes<CheeseType>('/api/cheesetypes');
+  }
 
-    return this.http.post('https://krazpizza.azurewebsites.net/api/orders',order)
+  getSauceTypes(): Observable<SauceType[]> {
+    return this.getTypes<SauceType>('/api/saucetypes');
+  }
+
+  getToppings(): Observable<Topping[]> {
+    return this.getTypes<Topping>('/api/toppings');
+  }
+
+  getMenu(): Observable<Menu> {
+    return this.http.get<Menu>(this.baseUrl + '/api/menu');
+  }
+  
+  placeOrder(order : IOrder){
+    return this.http.post(this.baseUrl + '/api/orders', order)
   }
 
   registerCustomer(customer){
