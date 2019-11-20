@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PizzaData.Models;
@@ -78,8 +79,28 @@ namespace PizzaMvcUI.Controllers
                 };
 
                 // TODO API call to post new user, check for duplicate email error
+                var statusCode = await API.CreateCustomer(cust);
+                if (statusCode == HttpStatusCode.Conflict)
+                {
+                    ModelState.AddModelError("Email", "Error: Email already in use.");
+                    return View(entry);
+                }
+                else if (statusCode == HttpStatusCode.UnprocessableEntity)
+                {
+                    ModelState.AddModelError("Password", "Error: The registration could not be processed.");
+                    return View(entry);
+                }
+                else if (statusCode == HttpStatusCode.Created)
+                {
+                    return RedirectToAction("RegisterSuccess");
+                }
             }
             return View(entry);
+        }
+
+        public IActionResult RegisterSuccess()
+        {
+            return View();
         }
     }
 }

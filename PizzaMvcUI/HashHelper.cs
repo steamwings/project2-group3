@@ -14,8 +14,8 @@ namespace PizzaMvcUI
             using var hasher = new SHA256Managed();
 
             // convert to bytes
-            var passBytes = Encoding.Default.GetBytes(pass);
-            var saltBytes = Encoding.Default.GetBytes(salt);
+            var passBytes = Encoding.UTF8.GetBytes(pass);
+            var saltBytes = Convert.FromBase64String(salt);
 
             byte[] combinedBytes = new byte[passBytes.Length + saltBytes.Length];
             for (int i = 0; i < passBytes.Length; i++)
@@ -36,7 +36,7 @@ namespace PizzaMvcUI
             var random = new Random();
 
             // convert to bytes
-            var passBytes = Encoding.Default.GetBytes(pass);
+            var passBytes = Encoding.UTF8.GetBytes(pass);
 
             // generate salt bytes & convert to string for out variable
             var saltBytes = new byte[16];

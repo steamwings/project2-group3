@@ -3,6 +3,7 @@ using PizzaData.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -22,6 +23,12 @@ namespace PizzaMvcUI
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public static async Task<HttpStatusCode> CreateCustomer(Customers customer)
+        {
+            var response = await client.PostAsJsonAsync($"api/Customers", customer);
+            return response.StatusCode;
         }
 
         public static async Task<IEnumerable<CrustTypes>> GetCrusts()
