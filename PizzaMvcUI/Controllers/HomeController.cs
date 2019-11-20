@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PizzaData.Models;
+using PizzaMvcUI.Extensions;
 using PizzaMvcUI.Models;
 
 namespace PizzaMvcUI.Controllers
@@ -20,6 +22,8 @@ namespace PizzaMvcUI.Controllers
 
         public IActionResult Index()
         {
+            TempData.SetCart(new Cart { Pizzas = new List<Pizzas>(), Sides = new List<int>()});
+            TempData.Keep("Cart");
             return View();
         }
 
@@ -31,7 +35,7 @@ namespace PizzaMvcUI.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new Models.ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
