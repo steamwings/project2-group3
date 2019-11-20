@@ -17,6 +17,15 @@ export class EncrDecrService {
     return {"salt" : stringsalt, "hash": stringhash};
   }
 
+  setLogin(password){
+
+    let hash = CryptoJS.SHA256(password);
+    let stringhash = hash.toString(CryptoJS.enc.Base64);
+    return stringhash
+
+
+  }
+
   //The get method is use for decrypt the value.
   get(keys, value){
     var key = CryptoJS.enc.Utf8.parse(keys);
