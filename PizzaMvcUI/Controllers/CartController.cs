@@ -12,7 +12,7 @@ namespace PizzaMvcUI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CartController : Controller
+    public class CartAPIController : Controller
     {
         // GET: api/Cart
         [HttpGet]
