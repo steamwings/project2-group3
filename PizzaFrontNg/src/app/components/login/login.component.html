@@ -1,3 +1,5 @@
+<div class="logInWrapper">
+        <h3>Welcome Back!</h3>
 <form [formGroup]="loginForm" (ngSubmit) = "logIn()" >
         <mat-form-field>
                 <input matInput placeholder="Enter your email" formControlName="email" required>
@@ -13,4 +15,5 @@
               <div>        
                   <button type="submit" mat-button>Log In</button>
               </div>
-        </form>
+</form>
+</div>

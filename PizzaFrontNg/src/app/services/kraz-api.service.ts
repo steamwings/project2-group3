@@ -48,9 +48,18 @@ export class KrazAPIService {
 
   logInCustomer(customer){
 
-    const headers = new HttpHeaders().set( 'Content-Type','application/json', )
+    const headers = new HttpHeaders().set( 'Content-Type','application/json' )
 
     return this.http.post('https://krazpizza.azurewebsites.net/api/customers/login', customer, {headers})
+
+    
+  }
+
+  getSalt(email){
+
+    const headers = new HttpHeaders().set( 'Content-Type','application/json' )
+
+    return this.http.post('https://krazpizza.azurewebsites.net/api/customers/salt', email, {headers,responseType: 'text'})
 
     
   }

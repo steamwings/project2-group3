@@ -33,16 +33,25 @@ export class LoginComponent implements OnInit {
   }
 
   logIn(){
+    
+    let salt;
 
-    let logInObj = new Object();
+    this.KrazService.getSalt({"email":this.loginForm.value.email}).subscribe(response=> console.log(response))
+    
 
-    logInObj['Email'] = this.loginForm.value.email;
-    logInObj['Password'] = this.loginForm.value.password;
+    this.EncrDecr.setLogin(this.loginForm.value.password)
 
-    let jsonlogInObj = JSON.stringify(logInObj);
+    // let logInObj = new Object();
+    // let hashwSalt = this.EncrDecr.set(this.loginForm.value.password);
 
 
-    this.KrazService.logInCustomer(jsonlogInObj).subscribe( response => console.log(response))
+    // logInObj['Email'] = this.loginForm.value.email;
+    // logInObj['PasswordHash'] = hashwSalt.hash;
+
+    // let jsonlogInObj = JSON.stringify(logInObj);
+
+
+    // this.KrazService.logInCustomer(jsonlogInObj).subscribe( response => console.log(response))
 
   }
 
