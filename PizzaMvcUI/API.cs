@@ -57,9 +57,20 @@ namespace PizzaMvcUI
             return customer;
         }
 
+        public static async Task<string> GetSalt(string email)
+        {
+            var request = new SaltRequest() { Email = email };
+            var response = await client.PostAsJsonAsync($"api/Customers/Salt", request);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<string>();
+            }
+            return null;
+        }
+
         public static async Task<IEnumerable<Sides>> GetSides()
         {
-            HttpResponseMessage response = await client.GetAsync($"api/Sides");
+            var response = await client.GetAsync($"api/Sides");
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsAsync<IEnumerable<Sides>>();

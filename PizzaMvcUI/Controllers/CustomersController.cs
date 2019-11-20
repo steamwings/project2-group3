@@ -33,10 +33,17 @@ namespace PizzaMvcUI.Controllers
         {
             if (ModelState.IsValid)
             {
+                var salt = await API.GetSalt(login.Email);
+                if (salt == null)
+                {
+                    ModelState.AddModelError("Email", "Error: No user found with given email.");
+                    return View(login);
+                }
+                var hashedPass = HashHelper.HashWithExistingSalt(login.Password, salt);
                 var credentials = new LoginCredentials()
                 {
                     Email = login.Email,
-                    PasswordHash = login.Password
+                    PasswordHash = hashedPass
                 };
                 int Id = await API.Login(credentials);
                 TempData["User"] = Id;
@@ -56,11 +63,21 @@ namespace PizzaMvcUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterVM entry)
+        public async Task<IActionResult> Register(RegisterVM entry)
         {
             if (ModelState.IsValid)
             {
-                // create new account here
+                var passHash = HashHelper.HashWithNewSalt(entry.Password, out string salt);
+                var cust = new Customers()
+                {
+                    Email = entry.Email,
+                    PasswordHash = passHash,
+                    Salt = salt,
+                    FirstName = entry.FirstName,
+                    LastName = entry.LastName
+                };
+
+                // TODO API call to post new user, check for duplicate email error
             }
             return View(entry);
         }
