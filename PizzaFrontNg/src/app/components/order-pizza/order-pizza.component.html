@@ -1,8 +1,9 @@
-<h3 > Build your Kraz Pizza</h3>
+<h3 > Build your Perfect Pizza</h3>
 
 <form [formGroup]="dynForm" (ngSubmit)="addPizza()">
     <p id="loadCrust" [hidden]="crustLoaded"> Loading crusts... </p>
     <div *ngIf="crustLoaded | async">
+        <h4 > Select your Crust </h4>
         <div *ngFor="let crust of crustList; let i = index; first as isFirst">
             <label for="radio_{{crust.name}}">
                 <input id="radio_{{crust.name}}" [formControl]="dynForm.controls['crust']"
@@ -10,10 +11,10 @@
                 {{crust.name}}
             </label>
         </div>
-        Crust: {{dynForm.controls['crust'].value}}
     </div>
     <p id="loadSauce" [hidden]="sauceLoaded"> Loading sauces... </p>
     <div *ngIf="sauceLoaded | async">
+        <h4> Select your Sauce </h4>
         <div *ngFor="let sauce of sauceList; let i = index; first as isFirst">
             <label for="radio_{{sauce.name}}">
                 <input id="radio_{{sauce.name}}" [formControl]="dynForm.controls['sauce']" [value]="sauce.id" type="radio"
@@ -21,10 +22,10 @@
                 {{sauce.name}}
             </label>
         </div>
-        Sauce: {{dynForm.controls['sauce'].value}}
     </div>
     <p id="loadCheese" [hidden]="cheeseLoaded"> Loading cheeses... </p>
     <div *ngIf="cheeseLoaded | async">
+        <h4> Select your Cheese </h4>
         <div *ngFor="let cheese of cheeseList; let i = index; first as isFirst">
             <label for="radio_{{cheese.name}}">
                 <input id="radio_{{cheese.name}}" [formControl]="dynForm.controls['cheese']" [value]="cheese.id" type="radio"
@@ -32,16 +33,14 @@
                 {{cheese.name}}
             </label>
         </div>
-        Cheese: {{dynForm.controls['cheese'].value}}
     </div>
     <p id="loadToppings" [hidden]="toppingsLoaded"> Loading toppings... </p>
     <div *ngIf="toppingsLoaded | async">
+        <h4> Select your Toppings </h4>
         <div *ngFor="let topping of dynForm.controls['toppings'].controls; let i = index">
             <input type="checkbox" [formControl]="topping" [checked]="false">
             <label>{{ toppingsList[i].name }}</label>
         </div>
-        Selected: <strong>{{ dynForm.get('toppings').value }}</strong>
-        Toppings: <strong>{{ toppings }}</strong>
     </div>
     <div id="divLoading">
     </div>
