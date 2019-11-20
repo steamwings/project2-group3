@@ -99,6 +99,13 @@ namespace PizzaShop.Controllers
         [HttpPost]
         public async Task<ActionResult<Customers>> PostCustomers(Customers customers)
         {
+            // check for duplicate Email
+            var existing = _context.Customers.Where(c => c.Email == customers.Email);
+            if (existing.Any())
+            {
+                return Conflict();
+            }
+
             _context.Customers.Add(customers);
             try
             {
