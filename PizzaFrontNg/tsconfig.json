@@ -23,5 +23,6 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
   },
-  "types": ["jasmine"]
+  "types": ["jasmine"],
+  "experimentalDecorators": true
 }

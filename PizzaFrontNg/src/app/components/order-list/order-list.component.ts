@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {KrazAPIService } from '../../services/kraz-api.service'
+import { KrazAPIService } from '../../services/kraz-api.service'
 
 @Component({
   selector: 'app-order-list',
@@ -13,7 +13,7 @@ export class OrderListComponent implements OnInit {
   constructor(private _getPizzaService : KrazAPIService) { }
 
   ngOnInit() {
-    this._getPizzaService.getPizzas()
+    this._getPizzaService.getCrustTypes()
     .subscribe((data: any[])=>{
       console.log(data)});
     //.subscribe( data => this.pizzas = data );

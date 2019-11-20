@@ -15,7 +15,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-group.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,9 +27,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
     routingComponents,
     CheckboxComponent,
     CheckboxGroupComponent,
-    ShoppingCartComponent
-    
-    
+    ShoppingCartComponent,    
   ],
   imports: [
     BrowserModule,
@@ -39,7 +37,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
     MatGridListModule,
     AppRoutingModule,
     HttpClientModule,
- 
+    ReactiveFormsModule,
   ],
   providers: [
     CookieService

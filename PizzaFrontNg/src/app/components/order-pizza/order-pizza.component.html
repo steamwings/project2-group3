@@ -1,48 +1,60 @@
-<h3 > Build your KraZpiZZa</h3>
+<h3 > Build your Kraz Pizza</h3>
 
-        <form  [formGroup]="orderForm" (ngSubmit)="orderPizza()">
+        <form [formGroup]="dynForm" (ngSubmit)="addPizza()" >
+            <div *ngIf="toppingsLoaded | async">
+                <div *ngFor="let topping of dynForm.controls['toppings'].controls; let i = index">
+                    <input type="checkbox" [formControl]="topping" [checked]="false">
+                    <label>{{ toppingsList[i].name }}</label>
+                </div>
+                Selected: <strong>{{ dynForm.get('toppings').value }}</strong>
+                Toppings: <strong>{{ toppings }}</strong>
+            </div>
+            <button type="submit" [disabled]="!allowSubmit">Order</button>
+        </form>
+
+        <form  [formGroup]="orderForm" (ngSubmit)="addPizza()">
 
             <div class="orderGroup">
                 <h4>Choose Your Crust</h4>
-            <label for="crust">  
-                <input  type="radio" value="Thin" name="crust" formControlName="crust">Thin  </label>          
-            <label for="crust"> 
+            <label>  
+                <input type="radio" value="Thin" name="crust" formControlName="crust">Thin  </label>          
+            <label> 
                 <input  type="radio" value="Thick" name="crust" formControlName="crust">Thick
             </label>            
-            <label for="crust">    
+            <label>    
                 <input  type="radio" value="Deep Dish" name="crust" formControlName="crust">Deep Dish
             </label>           
-            <label for="crust">    
+            <label>    
                 <input  type="radio" value="Classic" name="crust" formControlName="crust">Classic
             </label>
             </div>
 
             <div>
                     <h4>Choose Your Sauce</h4>
-                <label for="crust">
+                <label>
                     <input type="radio" value="Bechamel" name="sauce" formControlName="sauce">Bechamel</label>
-                <label for="crust">
+                <label>
                     <input type="radio" value="Pesto" name="sauce" formControlName="sauce">Pesto
                 </label>
-                <label for="crust">
+                <label>
                     <input type="radio" value="Marinara" name="sauce" formControlName="sauce">Marinara
                 </label>
-                <label for="crust">
+                <label>
                     <input type="radio" value="Special" name="sauce" formControlName="sauce">Special
                 </label>
             </div>
 
             <div>
                     <h4>Choose Your Cheese</h4>
-                <label for="crust">
+                <label>
                     <input type="radio" value="Mozzerella" name="cheese" formControlName="cheese">Mozzerella</label>
-                <label for="crust">
+                <label>
                     <input type="radio" value="Cheddar" name="cheese" formControlName="cheese">Cheddar
                 </label>
-                <label for="crust">
+                <label>
                     <input type="radio" value="Feta" name="cheese" formControlName="cheese">Feta
                 </label>
-                <label for="crust">
+                <label>
                     <input type="radio" value="Gorganzolla" name="cheese" formControlName="cheese">Gorganzolla
                 </label>
             </div>
@@ -58,7 +70,7 @@
             </div>
      
 
-        <button type="submit" mat-button>Order</button>
+        <button type="submit">Order</button>
 
         </form>
       
