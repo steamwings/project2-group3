@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { IOrder, IPizza, Pizza, Order } from '../interfaces/models';
+import { IOrder, IPizza, Pizza, Order } from 'src/app/modules/models/models.module';
 
 @Injectable({
   providedIn: 'root'
