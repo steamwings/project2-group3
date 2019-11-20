@@ -76,5 +76,16 @@ namespace PizzaMvcUI
             }
             return -1; // returns -1 on error
         }
+
+        public static async Task<Menu> GetMenu()
+        {
+            Menu menu = null;
+            HttpResponseMessage response = await client.GetAsync($"api/Menu");
+            if (response.IsSuccessStatusCode)
+            {
+                menu = await response.Content.ReadAsAsync<Menu>();
+            }
+            return menu;
+        }
     }
 }
