@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
 using PizzaMvcUI.Extensions;
 using PizzaData.Models;
+using System.Threading;
 
 namespace PizzaMvcUI.Controllers
 {
@@ -14,6 +15,8 @@ namespace PizzaMvcUI.Controllers
     [ApiController]
     public class CartController : Controller
     {
+        private static Mutex mut = new Mutex();
+
         // GET: api/Cart
         [HttpGet]
         public IEnumerable<string> Get()
@@ -32,51 +35,61 @@ namespace PizzaMvcUI.Controllers
         [Route("crust/{id}")]
         public void PostCrust(int id)
         {
+            mut.WaitOne();
             Cart cart = TempData.GetCart();
             cart.BuildPizza();
             cart.AddCrust(id);
             TempData.SetCart(cart);
             TempData.Keep("Cart");
+            mut.ReleaseMutex();
         }
 
         [HttpGet]
         [Route("cheese/{id}")]
         public void PostCheese(int id)
         {
+            mut.WaitOne();
             Cart cart = TempData.GetCart();
             cart.AddCheese(id);
             TempData.SetCart(cart);
             TempData.Keep("Cart");
+            mut.ReleaseMutex();
         }
 
         [HttpGet]
         [Route("sauce/{id}")]
         public void PostSauce(int id)
         {
+            mut.WaitOne();
             Cart cart = TempData.GetCart();
             cart.AddSauce(id);
             TempData.SetCart(cart);
             TempData.Keep("Cart");
+            mut.ReleaseMutex();
         }
 
         [HttpGet]
         [Route("topping/{id}")]
         public void PostTopping(int id)
         {
+            mut.WaitOne();
             Cart cart = TempData.GetCart();
             cart.AddTopping(id);
             TempData.SetCart(cart);
             TempData.Keep("Cart");
+            mut.ReleaseMutex();
         }
 
         [HttpGet]
         [Route("AddPizza")]
         public void PostPizza()
         {
+            mut.WaitOne();
             Cart cart = TempData.GetCart();
             cart.AddPizza();
             TempData.SetCart(cart);
             TempData.Keep("Cart");
+            mut.ReleaseMutex();
         }
 
         // POST: api/Cart
