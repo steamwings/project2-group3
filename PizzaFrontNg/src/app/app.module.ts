@@ -16,8 +16,9 @@ import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-gro
 import { CookieService } from 'ngx-cookie-service';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { EncrDecrService } from './services/encr-decr.service';
-
+import { EncrDecrService } from './services/encr-decr.service'
+import { KrazAPIService } from './services/kraz-api.service';
+import { ModelsModule } from './modules/models/models.module';
 
 @NgModule({
   declarations: [
@@ -40,10 +41,12 @@ import { EncrDecrService } from './services/encr-decr.service';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ModelsModule,
   ],
   providers: [
     CookieService,
-    EncrDecrService
+    EncrDecrService,
+    KrazAPIService,
     ],
   bootstrap: [
     AppComponent
