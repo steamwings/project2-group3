@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using PizzaShop.Repositories;
 
 namespace PizzaShop.Controllers
 {
@@ -13,27 +14,27 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class CheeseTypesController : ControllerBase
     {
-        private readonly Project2DatabaseContext _context;
+        private readonly CheeseTypesRepo _repo;
 
-        public CheeseTypesController(Project2DatabaseContext context)
+        public CheeseTypesController(CheeseTypesRepo repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: api/CheeseTypes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CheeseTypes>>> GetCheeseTypes()
         {
-            return await _context.CheeseTypes.ToListAsync();
+            return await _repo.Get().ToListAsync();
         }
 
         // GET: api/CheeseTypes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CheeseTypes>> GetCheeseTypes(int id)
         {
-            var cheeseTypes = await _context.CheeseTypes.FindAsync(id);
+            var cheeseTypes = await _repo.Get(id);
 
-            if (cheeseTypes == null)
+            if (cheeseTypes is null)
             {
                 return NotFound();
             }
@@ -52,11 +53,9 @@ namespace PizzaShop.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(cheeseTypes).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.Edit(cheeseTypes);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -66,10 +65,10 @@ namespace PizzaShop.Controllers
                 }
                 else
                 {
+                 //TODO Exception Logging
                     throw;
                 }
             }
-
             return NoContent();
         }
 
@@ -79,8 +78,7 @@ namespace PizzaShop.Controllers
         [HttpPost]
         public async Task<ActionResult<CheeseTypes>> PostCheeseTypes(CheeseTypes cheeseTypes)
         {
-            _context.CheeseTypes.Add(cheeseTypes);
-            await _context.SaveChangesAsync();
+            await _repo.Add(cheeseTypes);
 
             return CreatedAtAction("GetCheeseTypes", new { id = cheeseTypes.Id }, cheeseTypes);
         }
@@ -89,21 +87,20 @@ namespace PizzaShop.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<CheeseTypes>> DeleteCheeseTypes(int id)
         {
-            var cheeseTypes = await _context.CheeseTypes.FindAsync(id);
+            var cheeseTypes = await _repo.Get(id);
             if (cheeseTypes == null)
             {
                 return NotFound();
             }
 
-            _context.CheeseTypes.Remove(cheeseTypes);
-            await _context.SaveChangesAsync();
+            await _repo.Remove(cheeseTypes);
 
             return cheeseTypes;
         }
 
         private bool CheeseTypesExists(int id)
         {
-            return _context.CheeseTypes.Any(e => e.Id == id);
+            return _repo.Exists(id);
         }
     }
 }

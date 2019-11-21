@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using PizzaShop.Repositories;
 
 namespace PizzaShop.Controllers
 {
@@ -13,25 +14,25 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class ToppingsController : ControllerBase
     {
-        private readonly Project2DatabaseContext _context;
+        private readonly ToppingsRepo _repo;
 
-        public ToppingsController(Project2DatabaseContext context)
+        public ToppingsController(ToppingsRepo repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: api/Toppings
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Toppings>>> GetToppings()
         {
-            return await _context.Toppings.ToListAsync();
+            return await _repo.Get().ToListAsync();
         }
 
         // GET: api/Toppings/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Toppings>> GetToppings(int id)
         {
-            var toppings = await _context.Toppings.FindAsync(id);
+            var toppings = await _repo.Get(id);
 
             if (toppings == null)
             {
@@ -52,11 +53,9 @@ namespace PizzaShop.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(toppings).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.Edit(toppings);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,8 +78,8 @@ namespace PizzaShop.Controllers
         [HttpPost]
         public async Task<ActionResult<Toppings>> PostToppings(Toppings toppings)
         {
-            _context.Toppings.Add(toppings);
-            await _context.SaveChangesAsync();
+            
+            await _repo.Add(toppings);
 
             return CreatedAtAction("GetToppings", new { id = toppings.Id }, toppings);
         }
@@ -89,21 +88,20 @@ namespace PizzaShop.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Toppings>> DeleteToppings(int id)
         {
-            var toppings = await _context.Toppings.FindAsync(id);
+            var toppings = await _repo.Get(id);
             if (toppings == null)
             {
                 return NotFound();
             }
 
-            _context.Toppings.Remove(toppings);
-            await _context.SaveChangesAsync();
+            await _repo.Remove(toppings);
 
             return toppings;
         }
 
         private bool ToppingsExists(int id)
         {
-            return _context.Toppings.Any(e => e.Id == id);
+            return _repo.Exists(id);
         }
     }
 }

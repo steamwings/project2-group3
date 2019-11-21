@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using PizzaShop.Repositories;
 
 namespace PizzaShop.Controllers
 {
@@ -14,25 +15,25 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class CrustTypesController : ControllerBase
     {
-        private readonly Project2DatabaseContext _context;
+        private readonly CrustTypesRepo _repo;
 
-        public CrustTypesController(Project2DatabaseContext context)
+        public CrustTypesController(CrustTypesRepo repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: api/CrustTypes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CrustTypes>>> GetCrustTypes()
         {
-            return await _context.CrustTypes.ToListAsync();
+            return await _repo.Get().ToListAsync();
         }
 
         // GET: api/CrustTypes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CrustTypes>> GetCrustTypes(int id)
         {
-            var crustTypes = await _context.CrustTypes.FindAsync(id);
+            var crustTypes = await _repo.Get(id);
 
             if (crustTypes == null)
             {
@@ -53,11 +54,9 @@ namespace PizzaShop.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(crustTypes).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.Edit(crustTypes);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,8 +80,8 @@ namespace PizzaShop.Controllers
         [Authorize]
         public async Task<ActionResult<CrustTypes>> PostCrustTypes(CrustTypes crustTypes)
         {
-            _context.CrustTypes.Add(crustTypes);
-            await _context.SaveChangesAsync();
+            
+            await _repo.Add(crustTypes);
 
             return CreatedAtAction("GetCrustTypes", new { id = crustTypes.Id }, crustTypes);
         }
@@ -92,21 +91,20 @@ namespace PizzaShop.Controllers
         [Authorize]
         public async Task<ActionResult<CrustTypes>> DeleteCrustTypes(int id)
         {
-            var crustTypes = await _context.CrustTypes.FindAsync(id);
+            var crustTypes = await _repo.Get(id);
             if (crustTypes == null)
             {
                 return NotFound();
             }
 
-            _context.CrustTypes.Remove(crustTypes);
-            await _context.SaveChangesAsync();
+            await _repo.Remove(crustTypes);
 
             return crustTypes;
         }
 
         private bool CrustTypesExists(int id)
         {
-            return _context.CrustTypes.Any(e => e.Id == id);
+            return _repo.Exists(id);
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using PizzaShop.Repositories;
 
 namespace PizzaShop.Controllers
 {
@@ -13,25 +14,25 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class PizzasController : ControllerBase
     {
-        private readonly Project2DatabaseContext _context;
+        private readonly NPizzasRepo _repo;
 
-        public PizzasController(Project2DatabaseContext context)
+        public PizzasController(NPizzasRepo repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: api/Pizzas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NPizzas>>> GetPizzas()
         {
-            return await _context.NPizzas.ToListAsync();
+            return await _repo.Get().ToListAsync();
         }
 
         // GET: api/Pizzas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<NPizzas>> GetPizzas(int id)
         {
-            var pizzas = await _context.NPizzas.FindAsync(id);
+            var pizzas = await _repo.Get(id);
 
             if (pizzas == null)
             {
@@ -52,11 +53,9 @@ namespace PizzaShop.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(pizzas).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.Edit(pizzas);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,8 +78,8 @@ namespace PizzaShop.Controllers
         [HttpPost]
         public async Task<ActionResult<NPizzas>> PostPizzas(NPizzas pizzas)
         {
-            _context.NPizzas.Add(pizzas);
-            await _context.SaveChangesAsync();
+            
+            await _repo.Add(pizzas);
 
             return CreatedAtAction("GetPizzas", new { id = pizzas.Id }, pizzas);
         }
@@ -89,21 +88,20 @@ namespace PizzaShop.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<NPizzas>> DeletePizzas(int id)
         {
-            var pizzas = await _context.NPizzas.FindAsync(id);
+            var pizzas = await _repo.Get(id);
             if (pizzas == null)
             {
                 return NotFound();
             }
 
-            _context.NPizzas.Remove(pizzas);
-            await _context.SaveChangesAsync();
+            await _repo.Remove(pizzas);
 
             return pizzas;
         }
 
         private bool PizzasExists(int id)
         {
-            return _context.NPizzas.Any(e => e.Id == id);
+            return _repo.Exists(id);
         }
     }
 }
