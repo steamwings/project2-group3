@@ -76,12 +76,25 @@ function addToProgressBar(name) {
 }
 
 function addOptionsToCart(uri) {
+
+    function x(val, callback) {
+        return (uri) => {
+            addOptionToCart(uri, val, callback);
+        }
+    }
+    var nextf = (p) => { };
+    var fs = [];
     $("input[name=optionGroup]:checked").map((_, e) => {
-        addOptionToCart(uri, e.value);
+        var func = x(e.value, nextf);
+        fs.push(func);
+        nextf = func;
     });
+    console.log("Length: " + fs.length + " fs:" + fs);
+    fs[fs.length - 1](uri);
 }
 
-function addOptionToCart(uri, val=null) {
+function addOptionToCart(uri, val = null, callback = null) {
+    console.log("uri: " + uri + " val: " + val);
     var id = (val != null) ? val : $("input[name=optionGroup]:checked").val();
     console.log("Read value " + id);
     $.ajax({
@@ -89,30 +102,30 @@ function addOptionToCart(uri, val=null) {
         type: "GET",
         url: baseUrl + uri + id,
         success: function (data, textStatus, jqXHR) {
-            $("#headerSelect").val("Success!");
-            console.log("GET was successful...I think.");
+            console.log("GET was successful to " + uri + " with " + id);
+            if (callback != null) callback(uri);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            $("#headerSelect").val(jqXHR.statusText);
             console.log("GET failed: " + textStatus);
         }
     });
 }
 
-function makeRadioOptions(resource, headerText) {
-    makeOptions("divDoStuff", resource, headerText, populate);
+function makeRadioOptions(resource) {
+    makeOptions("divDoStuff", "btnIWant", resource, populate);
 }
 
-function makeCheckboxOptions(resource, headerText) {
+function makeCheckboxOptions(resource) {
     var pop = (divId, data) => {
         populate(divId, data, 'checkbox');
     };
-    makeOptions("divDoStuff", resource, headerText, pop);
+    makeOptions("divDoStuff", "btnIWant", resource, pop);
 }
 
 
-function makeOptions(divId, resource, headerText, callback, headerId = null) {
-    $(`#${divId}`).innerHTML = 'Loading options...';
+function makeOptions(divId, btnId, resource, callback, headerId = null, headerText = null) {
+    $(`#${divId}`).html('<div class="text-center">Loading options...</div>');
+    $(`#${btnId}`).prop('disabled', true);
     var path = apiUrl + resource;
     $.ajax({
         contentType: 'application/json',
@@ -123,7 +136,8 @@ function makeOptions(divId, resource, headerText, callback, headerId = null) {
         success: (data, textStatus, jqXHR) => {
             console.log(`API GET succeeded (${path})`);
             if (headerId) $(`#${headerId}`).val(headerText);
-            $(`#${divId}`).innerHTML = '';
+            $(`#${divId}`).html('');
+            $(`#${btnId}`).prop('disabled', false);
             callback(divId, data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
