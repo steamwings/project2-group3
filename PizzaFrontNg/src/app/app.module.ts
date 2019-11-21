@@ -16,7 +16,8 @@ import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-gro
 import { CookieService } from 'ngx-cookie-service';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { EncrDecrService } from './services/encr-decr.service'
+import { EncrDecrService } from './services/encr-decr.service';
+
 
 @NgModule({
   declarations: [

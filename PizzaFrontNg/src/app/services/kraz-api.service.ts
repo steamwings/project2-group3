@@ -47,10 +47,13 @@ export class KrazAPIService {
   }
 
   logInCustomer(customer){
+    console.log(customer);
 
     const headers = new HttpHeaders().set( 'Content-Type','application/json' )
 
-    return this.http.post('https://krazpizza.azurewebsites.net/api/customers/login', customer, {headers})
+   // return this.http.post('http://localhost:51251/api/customers/login', customer, {headers,responseType: 'text'})
+
+    return this.http.post('https://krazpizza.azurewebsites.net/api/customers/login', customer, {headers,responseType: 'text'})
 
     
   }
