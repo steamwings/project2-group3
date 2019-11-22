@@ -14,14 +14,14 @@ namespace PizzaShop.Repositories
             _context = ctx;
         }
 
-        public DbSet<SauceTypes> Get()
+        public IQueryable<SauceTypes> Get()
         {
-            return _context.SauceTypes;
+            return _context.SauceTypes.Include(s => s.PriceCategory);
         }
 
         public async Task<SauceTypes> Get(int id)
         {
-            return await _context.SauceTypes.FindAsync(id);
+            return await _context.SauceTypes.Include(s => s.PriceCategory).Where(s => s.Id == id).FirstAsync();
         }
 
         public async Task<bool> Edit(SauceTypes SauceTypes)

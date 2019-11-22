@@ -17,14 +17,14 @@ namespace PizzaShop.Repositories
             _context = ctx;
         }
 
-        public DbSet<CheeseTypes> Get()
+        public IQueryable<CheeseTypes> Get()
         {
-            return _context.CheeseTypes;
+            return _context.CheeseTypes.Include(c => c.PriceCategory);
         }
 
         public async Task<CheeseTypes> Get(int id)
         {
-            return await _context.CheeseTypes.FindAsync(id);
+            return await _context.CheeseTypes.Include(c => c.PriceCategory).Where(c => c.Id == id).FirstAsync();
         }
 
         public async Task<bool> Edit(CheeseTypes cheeseTypes)

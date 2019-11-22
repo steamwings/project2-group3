@@ -14,7 +14,7 @@ namespace PizzaShop.Repositories
             _context = ctx;
         }
 
-        public DbSet<NOrders> Get()
+        public IQueryable<NOrders> Get()
         {
             return _context.NOrders;
         }

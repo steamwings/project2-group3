@@ -14,7 +14,7 @@ namespace PizzaShop.Repositories
             _context = ctx;
         }
 
-        public DbSet<NPizzas> Get()
+        public IQueryable<NPizzas> Get()
         {
             return _context.NPizzas;
         }

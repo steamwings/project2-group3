@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories
 {
     public interface ICustomersRepo
     {
-        DbSet<Customers> Get();
+        IQueryable<Customers> Get();
         Task<Customers> Get(int id);
         Task<bool> Edit(Customers Customers);
         Task<bool> Add(Customers Customers);
