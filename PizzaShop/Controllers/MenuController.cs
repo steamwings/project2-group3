@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using PizzaShop.Repositories;
 
 namespace PizzaShop.Controllers
 {
@@ -12,11 +13,20 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class MenuController : ControllerBase
     {
-        private readonly Project2DatabaseContext _context;
+        private readonly IBasicRepo<CrustTypes> _crustRepo;
+        private readonly IBasicRepo<CheeseTypes> _cheeseRepo;
+        private readonly IBasicRepo<SauceTypes> _sauceRepo;
+        private readonly IBasicRepo<Toppings> _toppingRepo;
+        private readonly IBasicRepo<Sides> _sideRepo;
 
-        public MenuController(Project2DatabaseContext context)
+        public MenuController(IBasicRepo<CrustTypes> crustRepo, IBasicRepo<CheeseTypes> cheeseRepo,
+            IBasicRepo<SauceTypes> sauceRepo, IBasicRepo<Toppings> toppingRepo, IBasicRepo<Sides> sideRepo)
         {
-            _context = context;
+            _crustRepo = crustRepo;
+            _cheeseRepo = cheeseRepo;
+            _sauceRepo = sauceRepo;
+            _toppingRepo = toppingRepo;
+            _sideRepo = sideRepo;
         }
 
         // GET: api/Menu
@@ -25,11 +35,11 @@ namespace PizzaShop.Controllers
         {
             return new Menu()
             {
-                Cheeses = await _context.CheeseTypes.ToListAsync(),
-                Crusts = await _context.CrustTypes.ToListAsync(),
-                Sauces = await _context.SauceTypes.ToListAsync(),
-                Sides = await _context.Sides.ToListAsync(),
-                Toppings = await _context.Toppings.ToListAsync()
+                Cheeses = await _cheeseRepo.Get().ToListAsync(),
+                Crusts = await _crustRepo.Get().ToListAsync(),
+                Sauces = await _sauceRepo.Get().ToListAsync(),
+                Sides = await _sideRepo.Get().ToListAsync(),
+                Toppings = await _toppingRepo.Get().ToListAsync()
             };
         }
     }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using PizzaShop.Repositories;
 
 namespace PizzaShop.Controllers
 {
@@ -13,25 +14,25 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class SauceTypesController : ControllerBase
     {
-        private readonly Project2DatabaseContext _context;
+        private readonly IBasicRepo<SauceTypes> _repo;
 
-        public SauceTypesController(Project2DatabaseContext context)
+        public SauceTypesController(IBasicRepo<SauceTypes> repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: api/SauceTypes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SauceTypes>>> GetSauceTypes()
         {
-            return await _context.SauceTypes.ToListAsync();
+            return await _repo.Get().ToListAsync();
         }
 
         // GET: api/SauceTypes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<SauceTypes>> GetSauceTypes(int id)
         {
-            var sauceTypes = await _context.SauceTypes.FindAsync(id);
+            var sauceTypes = await _repo.Get(id);
 
             if (sauceTypes == null)
             {
@@ -52,11 +53,9 @@ namespace PizzaShop.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(sauceTypes).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.Edit(sauceTypes);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,8 +78,8 @@ namespace PizzaShop.Controllers
         [HttpPost]
         public async Task<ActionResult<SauceTypes>> PostSauceTypes(SauceTypes sauceTypes)
         {
-            _context.SauceTypes.Add(sauceTypes);
-            await _context.SaveChangesAsync();
+            
+            await _repo.Add(sauceTypes);
 
             return CreatedAtAction("GetSauceTypes", new { id = sauceTypes.Id }, sauceTypes);
         }
@@ -89,21 +88,21 @@ namespace PizzaShop.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<SauceTypes>> DeleteSauceTypes(int id)
         {
-            var sauceTypes = await _context.SauceTypes.FindAsync(id);
+            var sauceTypes = await _repo.Get(id);
             if (sauceTypes == null)
             {
                 return NotFound();
             }
 
-            _context.SauceTypes.Remove(sauceTypes);
-            await _context.SaveChangesAsync();
+            
+            await _repo.Remove(sauceTypes);
 
             return sauceTypes;
         }
 
         private bool SauceTypesExists(int id)
         {
-            return _context.SauceTypes.Any(e => e.Id == id);
+            return _repo.Exists(id);
         }
     }
 }

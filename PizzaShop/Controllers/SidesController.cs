@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using PizzaShop.Repositories;
 
 namespace PizzaShop.Controllers
 {
@@ -13,25 +14,25 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class SidesController : ControllerBase
     {
-        private readonly Project2DatabaseContext _context;
+        private readonly IBasicRepo<Sides> _repo;
 
-        public SidesController(Project2DatabaseContext context)
+        public SidesController(IBasicRepo<Sides> repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: api/Sides
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Sides>>> GetSides()
         {
-            return await _context.Sides.ToListAsync();
+            return await _repo.Get().ToListAsync();
         }
 
         // GET: api/Sides/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Sides>> GetSides(int id)
         {
-            var sides = await _context.Sides.FindAsync(id);
+            var sides = await _repo.Get(id);
 
             if (sides == null)
             {
@@ -52,11 +53,9 @@ namespace PizzaShop.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(sides).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.Edit(sides);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,8 +78,8 @@ namespace PizzaShop.Controllers
         [HttpPost]
         public async Task<ActionResult<Sides>> PostSides(Sides sides)
         {
-            _context.Sides.Add(sides);
-            await _context.SaveChangesAsync();
+            
+            await _repo.Add(sides);
 
             return CreatedAtAction("GetSides", new { id = sides.Id }, sides);
         }
@@ -89,21 +88,20 @@ namespace PizzaShop.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Sides>> DeleteSides(int id)
         {
-            var sides = await _context.Sides.FindAsync(id);
+            var sides = await _repo.Get(id);
             if (sides == null)
             {
                 return NotFound();
             }
 
-            _context.Sides.Remove(sides);
-            await _context.SaveChangesAsync();
+            await _repo.Remove(sides);
 
             return sides;
         }
 
         private bool SidesExists(int id)
         {
-            return _context.Sides.Any(e => e.Id == id);
+            return _repo.Exists(id);
         }
     }
 }
