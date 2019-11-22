@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories
 {
-    public class CheeseTypesRepo
+    public class CheeseTypesRepo : IBasicRepo<CheeseTypes>
     {
         private readonly Project2DatabaseContext _context;
 

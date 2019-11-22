@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories
 {
-    public class SauceTypesRepo
+    public class SauceTypesRepo : IBasicRepo<SauceTypes>
     {
         private readonly Project2DatabaseContext _context;
 
@@ -27,21 +24,21 @@ namespace PizzaShop.Repositories
             return await _context.SauceTypes.FindAsync(id);
         }
 
-        public async Task<bool> Put(SauceTypes SauceTypes)
+        public async Task<bool> Edit(SauceTypes SauceTypes)
         {
             _context.Entry(SauceTypes).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> Post(SauceTypes SauceTypes)
+        public async Task<bool> Add(SauceTypes SauceTypes)
         {
             _context.SauceTypes.Add(SauceTypes);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> Delete(SauceTypes SauceTypes)
+        public async Task<bool> Remove(SauceTypes SauceTypes)
         {
             _context.SauceTypes.Remove(SauceTypes);
             await _context.SaveChangesAsync();

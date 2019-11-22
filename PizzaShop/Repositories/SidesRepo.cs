@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories
 {
-    public class SidesRepo
+    public class SidesRepo : IBasicRepo<Sides>
     {
         private readonly Project2DatabaseContext _context;
 

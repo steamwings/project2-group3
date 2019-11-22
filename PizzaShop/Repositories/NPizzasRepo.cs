@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories
 {
-    public class NPizzasRepo
+    public class NPizzasRepo : INPizzasRepo
     {
         private readonly Project2DatabaseContext _context;
 
@@ -37,6 +34,12 @@ namespace PizzaShop.Repositories
         public async Task<bool> Add(NPizzas NPizzas)
         {
             _context.NPizzas.Add(NPizzas);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> Add(PizzaToppings PizzaToppings)
+        {
+            _context.PizzaToppings.Add(PizzaToppings);
             await _context.SaveChangesAsync();
             return true;
         }

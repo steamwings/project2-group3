@@ -55,7 +55,7 @@ namespace PizzaShop.Controllers
 
             try
             {
-                await _repo.Put(sauceTypes);
+                await _repo.Edit(sauceTypes);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,7 +79,7 @@ namespace PizzaShop.Controllers
         public async Task<ActionResult<SauceTypes>> PostSauceTypes(SauceTypes sauceTypes)
         {
             
-            await _repo.Post(sauceTypes);
+            await _repo.Add(sauceTypes);
 
             return CreatedAtAction("GetSauceTypes", new { id = sauceTypes.Id }, sauceTypes);
         }
@@ -95,7 +95,7 @@ namespace PizzaShop.Controllers
             }
 
             
-            await _repo.Delete(sauceTypes);
+            await _repo.Remove(sauceTypes);
 
             return sauceTypes;
         }
