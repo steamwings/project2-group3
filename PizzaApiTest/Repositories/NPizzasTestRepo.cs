@@ -3,6 +3,7 @@ using PizzaData.Models;
 using PizzaShop.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,7 +31,7 @@ namespace PizzaApiTest.Repositories
             throw new NotImplementedException();
         }
 
-        public DbSet<NPizzas> Get()
+        public IQueryable<NPizzas> Get()
         {
             throw new NotImplementedException();
         }

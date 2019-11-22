@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
 using PizzaShop.Repositories;
@@ -27,7 +28,7 @@ namespace PizzaApiTest.Repositories
             throw new System.NotImplementedException();
         }
 
-        public DbSet<Customers> Get()
+        public IQueryable<Customers> Get()
         {
             throw new System.NotImplementedException();
         }

@@ -34,7 +34,7 @@ namespace PizzaApiTest.Repositories
             return CheeseTypes.Any(e => e.Id == id);
         }
 
-        public DbSet<CheeseTypes> Get()
+        public IQueryable<CheeseTypes> Get()
         {
             throw new System.NotImplementedException();
         }
