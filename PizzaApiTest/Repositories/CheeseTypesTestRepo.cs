@@ -1,25 +1,37 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
 using PizzaShop.Repositories;
 
 namespace PizzaApiTest.Repositories
 {
-    class CheeseTypesTestRepository : IBasicRepo<CheeseTypes>
+    class CheeseTypesTestRepo : IBasicRepo<CheeseTypes>
     {
-        public Task<bool> Add(CheeseTypes input)
+        public List<CheeseTypes> CheeseTypes = new List<CheeseTypes>();
+        public async Task<bool> Add(CheeseTypes input)
         {
-            throw new System.NotImplementedException();
+            CheeseTypes.Add(input);
+            return true;
         }
 
-        public Task<bool> Edit(CheeseTypes input)
+        public async Task<bool> Edit(CheeseTypes input)
         {
-            throw new System.NotImplementedException();
+            var cheese = await Get(input.Id);
+            if (cheese is null)
+            {
+                throw new DbUpdateConcurrencyException();
+            }
+            int index = CheeseTypes.FindIndex(c => c.Id == input.Id);
+            CheeseTypes[index] = input;
+            return true;
         }
 
         public bool Exists(int id)
         {
-            throw new System.NotImplementedException();
+            return CheeseTypes.Any(e => e.Id == id);
         }
 
         public DbSet<CheeseTypes> Get()
@@ -27,14 +39,21 @@ namespace PizzaApiTest.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<CheeseTypes> Get(int id)
+        public async Task<CheeseTypes> Get(int id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                return CheeseTypes.Where(cheese => cheese.Id == id).First();
+            }catch (InvalidOperationException)
+            {
+                return null;
+            }
         }
 
-        public Task<bool> Remove(CheeseTypes input)
+        public async Task<bool> Remove(CheeseTypes input)
         {
-            throw new System.NotImplementedException();
+            CheeseTypes.Remove(input);
+            return true;
         }
     }
 }

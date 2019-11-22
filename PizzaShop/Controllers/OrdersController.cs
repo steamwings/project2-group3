@@ -14,10 +14,10 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly NOrdersRepo _orederRepo;
-        private readonly NPizzasRepo _pizzaRepo;
+        private readonly INOrdersRepo _orederRepo;
+        private readonly INPizzasRepo _pizzaRepo;
 
-        public OrdersController(NOrdersRepo oRepo, NPizzasRepo pRepo)
+        public OrdersController(INOrdersRepo oRepo, INPizzasRepo pRepo)
         {
             _orederRepo = oRepo;
             _pizzaRepo = pRepo;

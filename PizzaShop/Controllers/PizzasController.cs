@@ -14,9 +14,9 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class PizzasController : ControllerBase
     {
-        private readonly NPizzasRepo _repo;
+        private readonly INPizzasRepo _repo;
 
-        public PizzasController(NPizzasRepo repo)
+        public PizzasController(INPizzasRepo repo)
         {
             _repo = repo;
         }

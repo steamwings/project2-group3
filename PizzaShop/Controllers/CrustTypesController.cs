@@ -15,9 +15,9 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class CrustTypesController : ControllerBase
     {
-        private readonly CrustTypesRepo _repo;
+        private readonly IBasicRepo<CrustTypes> _repo;
 
-        public CrustTypesController(CrustTypesRepo repo)
+        public CrustTypesController(IBasicRepo<CrustTypes> repo)
         {
             _repo = repo;
         }

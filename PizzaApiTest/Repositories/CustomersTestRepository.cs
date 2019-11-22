@@ -5,7 +5,7 @@ using PizzaShop.Repositories;
 
 namespace PizzaApiTest.Repositories
 {
-    class CustomersTestRepository : ICustomersRepo
+    class CustomersTestRepo : ICustomersRepo
     {
         public Task<bool> Add(Customers Customers)
         {
@@ -22,12 +22,22 @@ namespace PizzaApiTest.Repositories
             throw new System.NotImplementedException();
         }
 
+        public bool Exists(string email)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public DbSet<Customers> Get()
         {
             throw new System.NotImplementedException();
         }
 
         public Task<Customers> Get(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Customers> Login(LoginCredentials loginCredentials)
         {
             throw new System.NotImplementedException();
         }

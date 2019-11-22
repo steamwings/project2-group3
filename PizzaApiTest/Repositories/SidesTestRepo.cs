@@ -5,7 +5,7 @@ using PizzaShop.Repositories;
 
 namespace PizzaApiTest.Repositories
 {
-    class SidesTestRepository : IBasicRepo<Sides>
+    class SidesTestRepo : IBasicRepo<Sides>
     {
         public Task<bool> Add(Sides input)
         {

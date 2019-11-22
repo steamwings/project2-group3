@@ -5,7 +5,7 @@ using PizzaShop.Repositories;
 
 namespace PizzaApiTest.Repositories
 {
-    class CrustTypesTestRepository : IBasicRepo<CrustTypes>
+    class CrustTypesTestRepo : IBasicRepo<CrustTypes>
     {
         public Task<bool> Add(CrustTypes input)
         {

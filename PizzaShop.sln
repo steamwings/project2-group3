@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaShop", "PizzaShop\Pizz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaData", "PizzaData\PizzaData.csproj", "{529A6237-770F-48F9-8E9C-9EFB50E052C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaApiTest", "PizzaApiTest\PizzaApiTest.csproj", "{C23C503F-DA91-4FB8-8966-1B676A15E150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaApiTest", "PizzaApiTest\PizzaApiTest.csproj", "{C23C503F-DA91-4FB8-8966-1B676A15E150}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

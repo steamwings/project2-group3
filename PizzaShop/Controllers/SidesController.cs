@@ -14,9 +14,9 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class SidesController : ControllerBase
     {
-        private readonly SidesRepo _repo;
+        private readonly IBasicRepo<Sides> _repo;
 
-        public SidesController(SidesRepo repo)
+        public SidesController(IBasicRepo<Sides> repo)
         {
             _repo = repo;
         }

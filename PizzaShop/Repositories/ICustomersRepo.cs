@@ -11,6 +11,8 @@ namespace PizzaShop.Repositories
         Task<bool> Edit(Customers Customers);
         Task<bool> Add(Customers Customers);
         Task<bool> Remove(Customers Customers);
+        Task<Customers> Login(LoginCredentials loginCredentials);
         bool Exists(int id);
+        bool Exists(string email);
     }
 }

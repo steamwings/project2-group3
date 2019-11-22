@@ -14,9 +14,9 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class ToppingsController : ControllerBase
     {
-        private readonly ToppingsRepo _repo;
+        private readonly IBasicRepo<Toppings> _repo;
 
-        public ToppingsController(ToppingsRepo repo)
+        public ToppingsController(IBasicRepo<Toppings> repo)
         {
             _repo = repo;
         }

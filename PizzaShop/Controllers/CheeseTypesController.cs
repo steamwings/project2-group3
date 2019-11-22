@@ -14,9 +14,9 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class CheeseTypesController : ControllerBase
     {
-        private readonly CheeseTypesRepo _repo;
+        private readonly IBasicRepo<CheeseTypes> _repo;
 
-        public CheeseTypesController(CheeseTypesRepo repo)
+        public CheeseTypesController(IBasicRepo<CheeseTypes> repo)
         {
             _repo = repo;
         }

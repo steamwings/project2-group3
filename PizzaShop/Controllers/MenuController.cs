@@ -13,14 +13,14 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class MenuController : ControllerBase
     {
-        private readonly CrustTypesRepo _crustRepo;
-        private readonly CheeseTypesRepo _cheeseRepo;
-        private readonly SauceTypesRepo _sauceRepo;
-        private readonly ToppingsRepo _toppingRepo;
-        private readonly SidesRepo _sideRepo;
+        private readonly IBasicRepo<CrustTypes> _crustRepo;
+        private readonly IBasicRepo<CheeseTypes> _cheeseRepo;
+        private readonly IBasicRepo<SauceTypes> _sauceRepo;
+        private readonly IBasicRepo<Toppings> _toppingRepo;
+        private readonly IBasicRepo<Sides> _sideRepo;
 
-        public MenuController(CrustTypesRepo crustRepo, CheeseTypesRepo cheeseRepo,
-            SauceTypesRepo sauceRepo, ToppingsRepo toppingRepo, SidesRepo sideRepo)
+        public MenuController(IBasicRepo<CrustTypes> crustRepo, IBasicRepo<CheeseTypes> cheeseRepo,
+            IBasicRepo<SauceTypes> sauceRepo, IBasicRepo<Toppings> toppingRepo, IBasicRepo<Sides> sideRepo)
         {
             _crustRepo = crustRepo;
             _cheeseRepo = cheeseRepo;
