@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatMenuModule} from '@angular/material/menu';
+import { MatButtonModule} from '@angular/material/button';
+import { MatGridListModule} from '@angular/material/grid-list';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -15,6 +15,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-group.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { ShoppingCartService } from './services/shopping-cart.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EncrDecrService } from './services/encr-decr.service'
 import { KrazAPIService } from './services/kraz-api.service';
@@ -47,6 +48,7 @@ import { ModelsModule } from './modules/models/models.module';
     CookieService,
     EncrDecrService,
     KrazAPIService,
+    ShoppingCartService,
     ],
   bootstrap: [
     AppComponent
