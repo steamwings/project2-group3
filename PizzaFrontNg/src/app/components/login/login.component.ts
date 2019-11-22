@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { KrazAPIService } from '../../services/kraz-api.service';
 import { EncrDecrService } from '../../services/encr-decr.service'
-import { subscribeOn } from 'rxjs/operators';
-
+import { SessionCookieService } from '../../services/session-cookie.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, 
     private KrazService: KrazAPIService,
+    private SessionCookie:SessionCookieService,
     private EncrDecr : EncrDecrService) { }
 
   ngOnInit() {
@@ -34,25 +34,32 @@ export class LoginComponent implements OnInit {
 
   logIn(){
     
-    let salt;
+    let promise = this.KrazService.getSalt({"email":this.loginForm.value.email}).toPromise()
 
-    this.KrazService.getSalt({"email":this.loginForm.value.email}).subscribe(response=> console.log(response))
+
+    promise.then((salt)=>{
+
+      let passwordHash = this.EncrDecr.setLogin(this.loginForm.value.password, salt);
+      let email = this.loginForm.value.email;
+      let logInObj = new Object();
+
+      logInObj["Email"] = email;
+      logInObj["PasswordHash"] = passwordHash;
+        
+      console.log(logInObj)
+      this.KrazService.logInCustomer(logInObj).subscribe( response => this.SessionCookie.setUserID(response) )
+
+
+
+    }).catch((error)=>{
+      console.log("Promise rejected with " + JSON.stringify(error));
+    });
+
+
+
     
 
-    this.EncrDecr.setLogin(this.loginForm.value.password)
-
-    // let logInObj = new Object();
-    // let hashwSalt = this.EncrDecr.set(this.loginForm.value.password);
-
-
-    // logInObj['Email'] = this.loginForm.value.email;
-    // logInObj['PasswordHash'] = hashwSalt.hash;
-
-    // let jsonlogInObj = JSON.stringify(logInObj);
-
-
-    // this.KrazService.logInCustomer(jsonlogInObj).subscribe( response => console.log(response))
-
+    
   }
 
 }

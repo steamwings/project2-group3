@@ -17,10 +17,11 @@ export class EncrDecrService {
     return {"salt" : stringsalt, "hash": stringhash};
   }
 
-  setLogin(password){
+  setLogin(password, salt){
 
-    let hash = CryptoJS.SHA256(password);
+    let hash = CryptoJS.SHA256(password,salt);
     let stringhash = hash.toString(CryptoJS.enc.Base64);
+    console.log(stringhash)
     return stringhash
 
 
