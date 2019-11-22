@@ -9,16 +9,22 @@ namespace PizzaMvcUI.Extensions
 {
     public static class TempDataExtensions
     {
+        private static readonly string[] MyKeys = { "Cart", "User" };
+
+        public static void KeepUserData(this ITempDataDictionary tempData)
+        {
+            foreach(var key in MyKeys) { tempData.Keep(key);  }
+        }
+
         public static void Set<T>(this ITempDataDictionary tempData, string key, T value) where T : class
         {
             tempData[key] = JsonConvert.SerializeObject(value);
         }
         public static T Get<T>(this ITempDataDictionary tempData, string key) where T : class
         {
-            tempData.TryGetValue(key, out object o);
+            object o = tempData.Peek(key);
             return o == null ? null : JsonConvert.DeserializeObject<T>((string)o);
         }
-
 
         public static void SetCart(this ITempDataDictionary tempData, Cart cart)
         {

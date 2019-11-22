@@ -89,7 +89,6 @@ function addOptionsToCart(uri) {
         fs.push(func);
         nextf = func;
     });
-    console.log("Length: " + fs.length + " fs:" + fs);
     fs[fs.length - 1](uri);
 }
 
@@ -102,11 +101,11 @@ function addOptionToCart(uri, val = null, callback = null) {
         type: "GET",
         url: baseUrl + uri + id,
         success: function (data, textStatus, jqXHR) {
-            console.log("GET was successful to " + uri + " with " + id);
+            console.log("GET success to " + uri + " with " + id);
             if (callback != null) callback(uri);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log("GET failed: " + textStatus);
+            console.log("GET failed (" + textStatus + "): " + errorThrown);
         }
     });
 }

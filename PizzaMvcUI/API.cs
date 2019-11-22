@@ -95,6 +95,7 @@ namespace PizzaMvcUI
             return -1; // returns -1 on error
         }
 
+        //TODO Cache this!!
         public static async Task<Menu> GetMenu()
         {
             Menu menu = null;

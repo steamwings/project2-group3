@@ -3,14 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PizzaData.Models;
+using PizzaMvcUI.Extensions;
+using PizzaMvcUI.Models;
+using PizzaMvcUI.Utilities;
 
 namespace PizzaMvcUI
 {
     public class Cart
     {
         public List<Pizzas> Pizzas { get; set; }
+        public List<int> PrebuiltPizzas { get; set; }
         public List<int> Sides { get; set; }
         public Pizzas currentPizza;
+
+        public async Task<List<Item>> GetItems()
+        {
+            List<Item> list = new List<Item>();
+            //TODO: list.AddRange(await PrebuiltPizzas.Select(async p => await ItemFormatter.GetItemFromPizzaId(p)).WhenAll());
+            list.AddRange(await Pizzas.Select(async p => await ItemFormatter.GetItem(p)).WhenAll());
+            list.AddRange(await Sides.Select(async s => await ItemFormatter.GetItemFromSideId(s)).WhenAll());
+            if(list.Count == 0) { list.Add(ItemFormatter.EmptyItem()); }
+            return list;
+        }
 
         public void BuildPizza()
         {

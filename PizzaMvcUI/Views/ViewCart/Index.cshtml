@@ -1,133 +1,43 @@
 ﻿@model PizzaMvcUI.Models.CartVM
 @{
-    ViewData["Title"] = "Sides";
+    ViewData["Title"] = "Cart";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Sides</h1>
+    <h2 class="display-4">Your Cart</h2>
 </div>
 
-
-<h2>Last Pizza</h2>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Description
+                @Html.DisplayNameFor(model => model.Items.First().Name)
             </th>
             <th>
-                Price
+                @Html.DisplayNameFor(model => model.Items.First().Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items.First().Price)
             </th>
         </tr>
     </thead>
     <tbody>
-        @if (Model.Cart.currentPizza != null)
+        @foreach (var item in Model.Items)
         {
-            <tr>
-                <td>
-                    @if (Model.Cart.currentPizza.Name != null)
-                    {
-                        <span>@Model.Cart.currentPizza.Name: </span>
-                    }
-                    @Model.Menu.Crusts.Where(crust => crust.Id == Model.Cart.currentPizza.CrustTypesId).FirstOrDefault().Name,
-                    @Model.Menu.Sauces.Where(sauce => sauce.Id == Model.Cart.currentPizza.SauceTypesId).FirstOrDefault().Name,
-                    @Model.Menu.Cheeses.Where(cheese => cheese.Id == Model.Cart.currentPizza.CheeseTypesId).FirstOrDefault().Name
-                    @foreach (var toppingId in Model.Cart.currentPizza.ToppingsId)
-                    {
-                        <span>, @Model.Menu.Toppings.Where(topping => topping.Id == toppingId).FirstOrDefault().Name</span>
-                    }
-                </td>
-                <td>
-                    Price TBD
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
-
-
-
-<h2>Pizzas</h2>
-<table class="table">
-    <thead>
         <tr>
-            <th>
-                Description
-            </th>
-            <th>
-                Price
-            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
         </tr>
-    </thead>
-    <tbody>
-
-        @if (Model.Cart.Pizzas.Count > 0)
-        {
-            @foreach (var pizza in Model.Cart.Pizzas)
-            {
-                <tr>
-                    <td>
-                        @if (pizza.Name != null)
-                        {
-                            <span>@pizza.Name: </span>
-                        }
-                        @Model.Menu.Crusts.Where(crust => crust.Id == pizza.CrustTypesId).FirstOrDefault().Name,
-                        @Model.Menu.Sauces.Where(sauce => sauce.Id == pizza.SauceTypesId).FirstOrDefault().Name,
-                        @Model.Menu.Cheeses.Where(cheese => cheese.Id == pizza.CheeseTypesId).FirstOrDefault().Name
-                        @foreach (var toppingId in pizza.ToppingsId)
-                        {
-                            <span>,@Model.Menu.Toppings.Where(topping => topping.Id == toppingId).FirstOrDefault().Name</span>
-                        }
-                    </td>
-                    <td>
-                        Price TBD
-                    </td>
-                </tr>
-            }
         }
     </tbody>
 </table>
 
-<h2>Sides</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Price
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.Cart.Sides.Count > 0)
-        {
-            @foreach (var item in Model.Menu.Sides)
-            {
-                if (Model.Cart.Sides.Contains(item.Id))
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                    </tr>
-                }
-            }
-        }
-    </tbody>
-</table>
-
-<button class="btn-primary" style="float:right;">Checkout</button>
+    <button class="btn-primary" style="text-align:center;">Checkout</button>
 

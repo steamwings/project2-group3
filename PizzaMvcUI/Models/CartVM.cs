@@ -7,7 +7,6 @@ namespace PizzaMvcUI.Models
 {
     public class CartVM
     {
-        public Cart Cart { get; set; }
-        public Menu Menu { get; set; }
+        public List<Item> Items {get; set;}
     }
 }

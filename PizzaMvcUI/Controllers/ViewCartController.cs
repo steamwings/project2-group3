@@ -13,10 +13,8 @@ namespace PizzaMvcUI.Controllers
         public async Task<IActionResult> Index()
         {
             CartVM cartVM = new CartVM {
-                Menu = await API.GetMenu(),
-                Cart = TempData.GetCart()
+                Items = await TempData.GetCart().GetItems()
             };
-            TempData.Keep("Cart");
             return View(cartVM);
         }
     }
