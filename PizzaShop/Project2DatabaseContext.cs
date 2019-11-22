@@ -27,6 +27,7 @@ namespace PizzaShop
         public virtual DbSet<SauceTypes> SauceTypes { get; set; }
         public virtual DbSet<Sides> Sides { get; set; }
         public virtual DbSet<Toppings> Toppings { get; set; }
+        public virtual DbSet<PriceCategory> PriceCategories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -50,7 +51,7 @@ namespace PizzaShop
             modelBuilder.Entity<CrustTypes>(entity =>
             {
                 entity.Property(e => e.Description).IsRequired();
-                
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -142,6 +143,47 @@ namespace PizzaShop
                     .HasForeignKey(d => d.ToppingId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Recipes_Toppings");
+            });
+
+            modelBuilder.Entity<PriceCategory>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Price).IsRequired();
+
+                entity.HasMany(cr => cr.CrustTypes)
+                    .WithOne(p => p.PriceCategory)
+                    .HasForeignKey(cr => cr.PriceCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CrustTypes_PriceCategory");
+
+                entity.HasMany(ch => ch.CheeseTypes)
+                    .WithOne(p => p.PriceCategory)
+                    .HasForeignKey(ch => ch.PriceCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CheeseTypes_PriceCategory");
+
+                entity.HasMany(s => s.SauceTypes)
+                    .WithOne(p => p.PriceCategory)
+                    .HasForeignKey(s => s.PriceCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_SauceTypes_PriceCategory");
+
+                entity.HasMany(t => t.Toppings)
+                    .WithOne(p => p.PriceCategory)
+                    .HasForeignKey(t => t.PriceCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Toppings_PriceCategory");
+
+                entity.HasMany(t => t.Sides)
+                    .WithOne(p => p.PriceCategory)
+                    .HasForeignKey(t => t.PriceCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Sides_PriceCategory");
             });
 
             modelBuilder.Entity<SauceTypes>(entity =>

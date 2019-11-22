@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20191115154014_NamingConventions.Designer.cs" />
     <Compile Remove="Migrations\20191115155037_NamingConventions.cs" />
     <Compile Remove="Migrations\20191115155037_NamingConventions.Designer.cs" />
+    <Compile Remove="Migrations\20191122184455_PriceCat.cs" />
+    <Compile Remove="Migrations\20191122184455_PriceCat.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
