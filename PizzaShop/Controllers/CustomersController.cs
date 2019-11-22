@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using PizzaShop.Repositories;
 
 namespace PizzaShop.Controllers
 {
@@ -13,18 +14,18 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly Project2DatabaseContext _context;
+        private readonly CustomersRepo _repo;
 
-        public CustomersController(Project2DatabaseContext context)
+        public CustomersController(CustomersRepo repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: api/Customers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customers>>> GetCustomers()
         {
-            return await _context.Customers.ToListAsync();
+            return await _repo.Get().ToListAsync();
         }
 
         // GET: api/Customers/Salt
@@ -34,7 +35,7 @@ namespace PizzaShop.Controllers
         {
             try
             {
-                return (await _context.Customers.SingleAsync(c => c.Email == r.Email)).Salt;
+                return (await _repo.Get().SingleAsync(c => c.Email == r.Email)).Salt;
             }
             catch (ArgumentNullException) // TODO Grab exception and log it
             {
@@ -46,20 +47,20 @@ namespace PizzaShop.Controllers
             }
         }
 
-        // TODO: Remove this
-        // GET: api/Customers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Customers>> GetCustomers(int id)
-        {
-            var customers = await _context.Customers.FindAsync(id);
+        //// TODO: Remove this
+        //// GET: api/Customers/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Customers>> GetCustomers(int id)
+        //{
+        //    var customers = await _context.Customers.FindAsync(id);
 
-            if (customers == null)
-            {
-                return NotFound();
-            }
+        //    if (customers == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return customers;
-        }
+        //    return customers;
+        //}
 
         // PUT: api/Customers/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
@@ -72,11 +73,9 @@ namespace PizzaShop.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(customers).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.Edit(customers);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -100,16 +99,14 @@ namespace PizzaShop.Controllers
         public async Task<ActionResult<Customers>> PostCustomers(Customers customers)
         {
             // check for duplicate Email
-            var existing = _context.Customers.Where(c => c.Email == customers.Email);
-            if (existing.Any())
+            if (_repo.Exists(customers.Email))
             {
                 return Conflict();
             }
 
-            _context.Customers.Add(customers);
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.Add(customers);
                 return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers.Id);
             }
             catch (DbUpdateException)
@@ -123,9 +120,7 @@ namespace PizzaShop.Controllers
         [Route("Login")]
         public async Task<ActionResult> Login(LoginCredentials loginCredentials)
         {
-            Customers customer = await _context.Customers
-                .Where(cust => cust.Email == loginCredentials.Email && cust.PasswordHash == loginCredentials.PasswordHash)
-                .SingleOrDefaultAsync();
+            Customers customer = await _repo.Login(loginCredentials);
             if (customer != null)
             {
                 return Ok(customer.Id);
@@ -140,21 +135,20 @@ namespace PizzaShop.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Customers>> DeleteCustomers(int id)
         {
-            var customers = await _context.Customers.FindAsync(id);
+            var customers = await _repo.Get(id);
             if (customers == null)
             {
                 return NotFound();
             }
 
-            _context.Customers.Remove(customers);
-            await _context.SaveChangesAsync();
+            await _repo.Remove(customers);
 
             return customers;
         }
 
         private bool CustomersExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _repo.Exists(id);
         }
     }
 }
