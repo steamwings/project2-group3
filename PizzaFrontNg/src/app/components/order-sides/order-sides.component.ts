@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './order-sides.component.html',
   styleUrls: ['./order-sides.component.css']
 })
+
 export class OrderSidesComponent implements OnInit {
 
   constructor() { }
