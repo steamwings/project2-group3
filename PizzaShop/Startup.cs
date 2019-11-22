@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PizzaData.Models;
+using PizzaShop.Repositories;
 
 namespace PizzaShop
 {
@@ -55,6 +56,14 @@ namespace PizzaShop
                 });
             });
 
+            services.AddTransient<ICustomersRepo, CustomersRepo>();
+            services.AddTransient<INOrdersRepo, NOrdersRepo>();
+            services.AddTransient<INPizzasRepo, NPizzasRepo>();
+            services.AddTransient<IBasicRepo<CheeseTypes>, CheeseTypesRepo>();
+            services.AddTransient<IBasicRepo<CrustTypes>, CrustTypesRepo>();
+            services.AddTransient<IBasicRepo<SauceTypes>, SauceTypesRepo>();
+            services.AddTransient<IBasicRepo<Toppings>, ToppingsRepo>();
+            services.AddTransient<IBasicRepo<Sides>, SidesRepo>();
 
         }
 
