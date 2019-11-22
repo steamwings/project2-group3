@@ -19,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EncrDecrService } from './services/encr-decr.service'
 import { KrazAPIService } from './services/kraz-api.service';
 import { ModelsModule } from './modules/models/models.module';
+import { OrderSidesComponent } from './components/order-sides/order-sides.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ModelsModule } from './modules/models/models.module';
     routingComponents,
     CheckboxComponent,
     CheckboxGroupComponent,
-    ShoppingCartComponent,    
+    ShoppingCartComponent,
+    OrderSidesComponent,    
   ],
   imports: [
     BrowserModule,
