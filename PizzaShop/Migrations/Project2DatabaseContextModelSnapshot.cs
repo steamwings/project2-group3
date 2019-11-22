@@ -35,7 +35,12 @@ namespace PizzaShop.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("PriceCategoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PriceCategoryId");
 
                     b.ToTable("CheeseTypes");
                 });
@@ -56,7 +61,12 @@ namespace PizzaShop.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("PriceCategoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PriceCategoryId");
 
                     b.ToTable("CrustTypes");
                 });
@@ -137,6 +147,9 @@ namespace PizzaShop.Migrations
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("isPremade")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CheeseTypeId");
@@ -214,6 +227,26 @@ namespace PizzaShop.Migrations
                     b.ToTable("PizzaToppings");
                 });
 
+            modelBuilder.Entity("PizzaData.Models.PriceCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PriceCategories");
+                });
+
             modelBuilder.Entity("PizzaData.Models.SauceTypes", b =>
                 {
                     b.Property<int>("Id")
@@ -230,7 +263,12 @@ namespace PizzaShop.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("PriceCategoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PriceCategoryId");
 
                     b.ToTable("SauceTypes");
                 });
@@ -251,10 +289,12 @@ namespace PizzaShop.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("PriceCategoryId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PriceCategoryId");
 
                     b.ToTable("Sides");
                 });
@@ -275,9 +315,32 @@ namespace PizzaShop.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("PriceCategoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("PriceCategoryId");
+
                     b.ToTable("Toppings");
+                });
+
+            modelBuilder.Entity("PizzaData.Models.CheeseTypes", b =>
+                {
+                    b.HasOne("PizzaData.Models.PriceCategory", "PriceCategory")
+                        .WithMany("CheeseTypes")
+                        .HasForeignKey("PriceCategoryId")
+                        .HasConstraintName("FK_CheeseTypes_PriceCategory")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PizzaData.Models.CrustTypes", b =>
+                {
+                    b.HasOne("PizzaData.Models.PriceCategory", "PriceCategory")
+                        .WithMany("CrustTypes")
+                        .HasForeignKey("PriceCategoryId")
+                        .HasConstraintName("FK_CrustTypes_PriceCategory")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PizzaData.Models.NOrders", b =>
@@ -357,6 +420,33 @@ namespace PizzaShop.Migrations
                         .WithMany("Recipes")
                         .HasForeignKey("ToppingId")
                         .HasConstraintName("FK_Recipes_Toppings")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PizzaData.Models.SauceTypes", b =>
+                {
+                    b.HasOne("PizzaData.Models.PriceCategory", "PriceCategory")
+                        .WithMany("SauceTypes")
+                        .HasForeignKey("PriceCategoryId")
+                        .HasConstraintName("FK_SauceTypes_PriceCategory")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PizzaData.Models.Sides", b =>
+                {
+                    b.HasOne("PizzaData.Models.PriceCategory", "PriceCategory")
+                        .WithMany("Sides")
+                        .HasForeignKey("PriceCategoryId")
+                        .HasConstraintName("FK_Sides_PriceCategory")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PizzaData.Models.Toppings", b =>
+                {
+                    b.HasOne("PizzaData.Models.PriceCategory", "PriceCategory")
+                        .WithMany("Toppings")
+                        .HasForeignKey("PriceCategoryId")
+                        .HasConstraintName("FK_Toppings_PriceCategory")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
