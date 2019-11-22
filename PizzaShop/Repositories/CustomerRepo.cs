@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories
 {
-    public class CustomersRepo
+    public class CustomersRepo : ICustomersRepo
     {
         private readonly Project2DatabaseContext _context;
 
