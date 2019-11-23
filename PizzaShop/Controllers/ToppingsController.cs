@@ -23,14 +23,14 @@ namespace PizzaShop.Controllers
 
         // GET: api/Toppings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Toppings>>> GetToppings()
+        public async Task<ActionResult<IEnumerable<ToppingsVM>>> GetToppings()
         {
-            return await _repo.Get().ToListAsync();
+            return ConvertToVM(await _repo.Get().ToListAsync());
         }
 
         // GET: api/Toppings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Toppings>> GetToppings(int id)
+        public async Task<ActionResult<ToppingsVM>> GetToppings(int id)
         {
             var toppings = await _repo.Get(id);
 
@@ -39,7 +39,7 @@ namespace PizzaShop.Controllers
                 return NotFound();
             }
 
-            return toppings;
+            return ConvertToVM(toppings);
         }
 
         // PUT: api/Toppings/5
@@ -86,7 +86,7 @@ namespace PizzaShop.Controllers
 
         // DELETE: api/Toppings/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Toppings>> DeleteToppings(int id)
+        public async Task<ActionResult<ToppingsVM>> DeleteToppings(int id)
         {
             var toppings = await _repo.Get(id);
             if (toppings == null)
@@ -96,12 +96,37 @@ namespace PizzaShop.Controllers
 
             await _repo.Remove(toppings);
 
-            return toppings;
+            return ConvertToVM(toppings);
         }
 
         private bool ToppingsExists(int id)
         {
             return _repo.Exists(id);
+        }
+
+
+
+        public ToppingsVM ConvertToVM(Toppings sides)
+        {
+            ToppingsVM returnTopping = new ToppingsVM
+            {
+                Id = sides.Id,
+                Name = sides.Name,
+                Description = sides.Description,
+                Price = sides.PriceCategory.Price
+            };
+
+            return returnTopping;
+        }
+
+        public List<ToppingsVM> ConvertToVM(List<Toppings> sauceTypes)
+        {
+            List<ToppingsVM> returnToppings = new List<ToppingsVM>();
+            foreach (var item in sauceTypes)
+            {
+                returnToppings.Add(ConvertToVM(item));
+            }
+            return returnToppings;
         }
     }
 }

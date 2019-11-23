@@ -24,9 +24,9 @@ namespace PizzaShop.Controllers
 
         // GET: api/CrustTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CrustTypes>>> GetCrustTypes()
+        public async Task<ActionResult<IEnumerable<CrustTypesVM>>> GetCrustTypes()
         {
-            return await _repo.Get().ToListAsync();
+            return ConvertToVM(await _repo.Get().ToListAsync());
         }
 
         // GET: api/CrustTypes/5
@@ -105,6 +105,30 @@ namespace PizzaShop.Controllers
         private bool CrustTypesExists(int id)
         {
             return _repo.Exists(id);
+        }
+
+
+        public CrustTypesVM ConvertToVM(CrustTypes crustTypes)
+        {
+            CrustTypesVM returnCrust = new CrustTypesVM
+            {
+                Id = crustTypes.Id,
+                Name = crustTypes.Name,
+                Description = crustTypes.Description,
+                Price = crustTypes.PriceCategory.Price
+            };
+
+            return returnCrust;
+        }
+
+        public List<CrustTypesVM> ConvertToVM(List<CrustTypes> cheeseTypes)
+        {
+            List<CrustTypesVM> returnCrusts = new List<CrustTypesVM>();
+            foreach (var item in cheeseTypes)
+            {
+                returnCrusts.Add(ConvertToVM(item));
+            }
+            return returnCrusts;
         }
     }
 }

@@ -23,14 +23,14 @@ namespace PizzaShop.Controllers
 
         // GET: api/Sides
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Sides>>> GetSides()
+        public async Task<ActionResult<IEnumerable<SidesVM>>> GetSides()
         {
-            return await _repo.Get().ToListAsync();
+            return ConvertToVM(await _repo.Get().ToListAsync());
         }
 
         // GET: api/Sides/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Sides>> GetSides(int id)
+        public async Task<ActionResult<SidesVM>> GetSides(int id)
         {
             var sides = await _repo.Get(id);
 
@@ -39,7 +39,7 @@ namespace PizzaShop.Controllers
                 return NotFound();
             }
 
-            return sides;
+            return ConvertToVM(sides);
         }
 
         // PUT: api/Sides/5
@@ -86,7 +86,7 @@ namespace PizzaShop.Controllers
 
         // DELETE: api/Sides/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Sides>> DeleteSides(int id)
+        public async Task<ActionResult<SidesVM>> DeleteSides(int id)
         {
             var sides = await _repo.Get(id);
             if (sides == null)
@@ -96,12 +96,37 @@ namespace PizzaShop.Controllers
 
             await _repo.Remove(sides);
 
-            return sides;
+            return ConvertToVM(sides);
         }
 
         private bool SidesExists(int id)
         {
             return _repo.Exists(id);
+        }
+
+
+
+        public SidesVM ConvertToVM(Sides sides)
+        {
+            SidesVM returnSide = new SidesVM
+            {
+                Id = sides.Id,
+                Name = sides.Name,
+                Description = sides.Description,
+                Price = sides.PriceCategory.Price
+            };
+
+            return returnSide;
+        }
+
+        public List<SidesVM> ConvertToVM(List<Sides> sauceTypes)
+        {
+            List<SidesVM> returnSides = new List<SidesVM>();
+            foreach (var item in sauceTypes)
+            {
+                returnSides.Add(ConvertToVM(item));
+            }
+            return returnSides;
         }
     }
 }

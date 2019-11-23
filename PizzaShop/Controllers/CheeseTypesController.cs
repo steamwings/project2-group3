@@ -23,14 +23,14 @@ namespace PizzaShop.Controllers
 
         // GET: api/CheeseTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CheeseTypes>>> GetCheeseTypes()
+        public async Task<ActionResult<IEnumerable<CheeseTypesVM>>> GetCheeseTypes()
         {
-            return await _repo.Get().ToListAsync();
+            return ConvertToVM(await _repo.Get().ToListAsync());
         }
 
         // GET: api/CheeseTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CheeseTypes>> GetCheeseTypes(int id)
+        public async Task<ActionResult<CheeseTypesVM>> GetCheeseTypes(int id)
         {
             var cheeseTypes = await _repo.Get(id);
 
@@ -39,7 +39,7 @@ namespace PizzaShop.Controllers
                 return NotFound();
             }
 
-            return cheeseTypes;
+            return ConvertToVM(cheeseTypes);
         }
 
         // PUT: api/CheeseTypes/5
@@ -76,7 +76,7 @@ namespace PizzaShop.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<CheeseTypes>> PostCheeseTypes(CheeseTypes cheeseTypes)
+        public async Task<ActionResult<CheeseTypesVM>> PostCheeseTypes(CheeseTypes cheeseTypes)
         {
             await _repo.Add(cheeseTypes);
 
@@ -85,7 +85,7 @@ namespace PizzaShop.Controllers
 
         // DELETE: api/CheeseTypes/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CheeseTypes>> DeleteCheeseTypes(int id)
+        public async Task<ActionResult<CheeseTypesVM>> DeleteCheeseTypes(int id)
         {
             var cheeseTypes = await _repo.Get(id);
             if (cheeseTypes == null)
@@ -95,12 +95,35 @@ namespace PizzaShop.Controllers
 
             await _repo.Remove(cheeseTypes);
 
-            return cheeseTypes;
+            return ConvertToVM(cheeseTypes);
         }
 
         private bool CheeseTypesExists(int id)
         {
             return _repo.Exists(id);
+        }
+
+        public CheeseTypesVM ConvertToVM(CheeseTypes cheeseTypes)
+        {
+            CheeseTypesVM returnCheese = new CheeseTypesVM
+            {
+                Id = cheeseTypes.Id,
+                Name = cheeseTypes.Name,
+                Description = cheeseTypes.Description,
+                Price = cheeseTypes.PriceCategory.Price
+            };
+
+            return returnCheese;
+        }
+
+        public List<CheeseTypesVM> ConvertToVM(List<CheeseTypes> cheeseTypes)
+        {
+            List<CheeseTypesVM> returnCheeses = new List<CheeseTypesVM>();
+            foreach (var item in cheeseTypes)
+            {
+                returnCheeses.Add(ConvertToVM(item));
+            }
+            return returnCheeses;
         }
     }
 }

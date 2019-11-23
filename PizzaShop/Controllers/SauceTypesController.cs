@@ -23,14 +23,14 @@ namespace PizzaShop.Controllers
 
         // GET: api/SauceTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SauceTypes>>> GetSauceTypes()
+        public async Task<ActionResult<IEnumerable<SauceTypesVM>>> GetSauceTypes()
         {
-            return await _repo.Get().ToListAsync();
+            return ConvertToVM(await _repo.Get().ToListAsync());
         }
 
         // GET: api/SauceTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SauceTypes>> GetSauceTypes(int id)
+        public async Task<ActionResult<SauceTypesVM>> GetSauceTypes(int id)
         {
             var sauceTypes = await _repo.Get(id);
 
@@ -39,7 +39,7 @@ namespace PizzaShop.Controllers
                 return NotFound();
             }
 
-            return sauceTypes;
+            return ConvertToVM(sauceTypes);
         }
 
         // PUT: api/SauceTypes/5
@@ -86,7 +86,7 @@ namespace PizzaShop.Controllers
 
         // DELETE: api/SauceTypes/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<SauceTypes>> DeleteSauceTypes(int id)
+        public async Task<ActionResult<SauceTypesVM>> DeleteSauceTypes(int id)
         {
             var sauceTypes = await _repo.Get(id);
             if (sauceTypes == null)
@@ -97,12 +97,37 @@ namespace PizzaShop.Controllers
             
             await _repo.Remove(sauceTypes);
 
-            return sauceTypes;
+            return ConvertToVM(sauceTypes);
         }
 
         private bool SauceTypesExists(int id)
         {
             return _repo.Exists(id);
+        }
+
+
+
+        public SauceTypesVM ConvertToVM(SauceTypes sauceTypes)
+        {
+            SauceTypesVM returnSauce = new SauceTypesVM
+            {
+                Id = sauceTypes.Id,
+                Name = sauceTypes.Name,
+                Description = sauceTypes.Description,
+                Price = sauceTypes.PriceCategory.Price
+            };
+
+            return returnSauce;
+        }
+
+        public List<SauceTypesVM> ConvertToVM(List<SauceTypes> sauceTypes)
+        {
+            List<SauceTypesVM> returnSauces = new List<SauceTypesVM>();
+            foreach (var item in sauceTypes)
+            {
+                returnSauces.Add(ConvertToVM(item));
+            }
+            return returnSauces;
         }
     }
 }
