@@ -35,12 +35,89 @@ namespace PizzaShop.Controllers
         {
             return new Menu()
             {
-                Cheeses = await _cheeseRepo.Get().ToListAsync(),
-                Crusts = await _crustRepo.Get().ToListAsync(),
-                Sauces = await _sauceRepo.Get().ToListAsync(),
-                Sides = await _sideRepo.Get().ToListAsync(),
-                Toppings = await _toppingRepo.Get().ToListAsync()
+                Cheeses = ConvertToVM(await _cheeseRepo.Get().ToListAsync()),
+                Crusts = ConvertToVM(await _crustRepo.Get().ToListAsync()),
+                Sauces = ConvertToVM(await _sauceRepo.Get().ToListAsync()),
+                Sides = ConvertToVM(await _sideRepo.Get().ToListAsync()),
+                Toppings = ConvertToVM(await _toppingRepo.Get().ToListAsync())
             };
+        }
+
+
+        public List<CheeseTypesVM> ConvertToVM(List<CheeseTypes> cheeseTypes)
+        {
+            List<CheeseTypesVM> returnCheeses = new List<CheeseTypesVM>();
+            foreach (var item in cheeseTypes)
+            {
+                returnCheeses.Add(new CheeseTypesVM
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Price = item.PriceCategory.Price
+                });
+            }
+            return returnCheeses;
+        }
+        public List<CrustTypesVM> ConvertToVM(List<CrustTypes> cheeseTypes)
+        {
+            List<CrustTypesVM> returnCrusts = new List<CrustTypesVM>();
+            foreach (var item in cheeseTypes)
+            {
+                returnCrusts.Add(new CrustTypesVM
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Price = item.PriceCategory.Price
+                });
+            }
+            return returnCrusts;
+        }
+        public List<SauceTypesVM> ConvertToVM(List<SauceTypes> sauceTypes)
+        {
+            List<SauceTypesVM> returnSauces = new List<SauceTypesVM>();
+            foreach (var item in sauceTypes)
+            {
+                returnSauces.Add(new SauceTypesVM
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Price = item.PriceCategory.Price
+                });
+            }
+            return returnSauces;
+        }
+        public List<SidesVM> ConvertToVM(List<Sides> sauceTypes)
+        {
+            List<SidesVM> returnSides = new List<SidesVM>();
+            foreach (var item in sauceTypes)
+            {
+                returnSides.Add(new SidesVM
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Price = item.PriceCategory.Price
+                });
+            }
+            return returnSides;
+        }
+        public List<ToppingsVM> ConvertToVM(List<Toppings> sauceTypes)
+        {
+            List<ToppingsVM> returnToppings = new List<ToppingsVM>();
+            foreach (var item in sauceTypes)
+            {
+                returnToppings.Add(new ToppingsVM
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Price = item.PriceCategory.Price
+                });
+            }
+            return returnToppings;
         }
     }
 }
