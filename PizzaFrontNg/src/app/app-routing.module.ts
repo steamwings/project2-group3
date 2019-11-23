@@ -13,6 +13,7 @@ import { MatCheckboxModule,
 
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent} from './components/login/login.component'
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
     {path : 'orderpizza' , component : OrderPizzaComponent },
     {path : 'loginlanding/register' , component : RegisterComponent },
     {path : 'loginlanding/login' , component : LoginComponent },
-
+    {path : 'cart', component: ShoppingCartComponent},
 ];
 
 @NgModule({

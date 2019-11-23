@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { IOrder, IPizza, Pizza, Order } from 'src/app/modules/models/models.module';
+import { IOrder, IPizza, Pizza, Order, Item, Menu } from 'src/app/modules/models/models.module';
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+import { KrazAPIService } from './kraz-api.service';
+import { Observable, zip } from 'rxjs';
+import { ItemFormatterService } from './item-formatter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +12,17 @@ import { IOrder, IPizza, Pizza, Order } from 'src/app/modules/models/models.modu
 
 export class ShoppingCartService {
 
-  constructor(private cookies: CookieService) { }
+  constructor(private cookies: CookieService,
+              private api: KrazAPIService,
+              private formatter: ItemFormatterService,
+  ) { }
 
   private currentPizza : IPizza = null;
 
+  /* TODOish: We *should* have a mutex to ensure this doesn't get called from 
+     multiple places. We could probably use Observables to synchronize as well,
+     but let's avoid that work unless we have to do it.
+  */
   private Cart() : IOrder {
     if(!this.cookies.check('cart')){
       return new Order();
@@ -23,40 +34,9 @@ export class ShoppingCartService {
     this.cookies.set('cart', JSON.stringify(cart));
   }
 
-  private checkNullPizza(){
-    if(this.currentPizza == null){
-      this.currentPizza = new Pizza();
-    }
-  }
-
-  public startPizza(){
-    this.currentPizza = new Pizza();
-  }
-
-  // TODO use Number.isInteger() to validate
-  public crust(crustId : number){
-    this.checkNullPizza();
-    this.currentPizza.crustTypesId = crustId;
-  }
-
-  public sauce(sauceId: number) {
-    this.checkNullPizza();
-    this.currentPizza.sauceTypesId = sauceId;
-  }
-
-  public cheese(cheeseId: number) {
-    this.checkNullPizza();
-    this.currentPizza.cheeseTypesId = cheeseId;
-  }
-
-  public topping(toppingId: number) {
-    this.checkNullPizza();
-    this.currentPizza.toppingsId.push(toppingId);
-  }
-
-  public pizza() {
+  public addPizza(p: Pizza) {
     var cart = this.Cart();
-    cart.pizzas.push(this.currentPizza);
+    cart.pizzas.push(p);
     this.Save(cart);
   }
 
@@ -64,6 +44,21 @@ export class ShoppingCartService {
     var cart = this.Cart();
     cart.sidesIds.push(sideId);
     this.Save(cart);
+  }
+
+  private formatAsItems() : Observable<Item>[]{
+    var list = new Array<Observable<Item>>();
+    var cart = this.Cart();
+    if(cart.pizzas)
+      cart.pizzas.forEach(p => {
+        list.push(this.formatter.format(p));
+      });
+    list.push(this.formatter.emptyItem());
+    return list;
+  }
+
+  public getItems() : Observable<Item[]>{
+    return zip(...this.formatAsItems());
   }
 
 }

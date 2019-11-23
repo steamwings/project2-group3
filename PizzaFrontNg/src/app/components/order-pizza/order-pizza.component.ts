@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators,FormControl,FormArray } from '@angular/forms';
 import { Pizza, Topping, CrustType, CheeseType, SauceType } from 'src/app/modules/models/models.module';
 import { KrazAPIService } from 'src/app/services/kraz-api.service';
-import { Observable } from 'rxjs';
+import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({
   selector: 'app-order-pizza',
@@ -32,7 +32,8 @@ export class OrderPizzaComponent implements OnInit {
   setting = "start";
 
   constructor(private fb: FormBuilder, 
-              private api: KrazAPIService)
+              private api: KrazAPIService,
+              private cart: ShoppingCartService)
   {
     this.dynForm = new FormGroup({});
 
@@ -100,6 +101,7 @@ export class OrderPizzaComponent implements OnInit {
     pizza.crustTypesId = this.dynForm.controls['crust'].value;
     pizza.sauceTypesId = this.dynForm.controls['sauce'].value;
     pizza.toppingsId = this.toppings;
+    this.cart.addPizza(pizza);
     console.log(JSON.stringify(pizza));
   }
 

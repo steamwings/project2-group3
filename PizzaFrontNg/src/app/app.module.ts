@@ -19,7 +19,8 @@ import { ShoppingCartService } from './services/shopping-cart.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EncrDecrService } from './services/encr-decr.service'
 import { KrazAPIService } from './services/kraz-api.service';
-import { ModelsModule } from './modules/models/models.module';
+//import { ModelsModule } from './modules/models/models.module';
+import { ItemFormatterService } from './services/item-formatter.service';
 
 @NgModule({
   declarations: [
@@ -42,13 +43,14 @@ import { ModelsModule } from './modules/models/models.module';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    ModelsModule,
+ //   ModelsModule,
   ],
   providers: [
     CookieService,
     EncrDecrService,
     KrazAPIService,
     ShoppingCartService,
+    ItemFormatterService,
     ],
   bootstrap: [
     AppComponent

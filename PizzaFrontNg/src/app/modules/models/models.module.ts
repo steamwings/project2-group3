@@ -2,16 +2,32 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 
+// TODO: This file is called a module, but it's not really one!
+// @NgModule({
+//   declarations: [],
+//   imports: [
+//     CommonModule
+//   ]
+// })
+// export class ModelsModule { }
 
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
-export class ModelsModule { }
+// TODO: Sizes are "Large", "Medium", "Small"
 
-// Sizes are "Large", "Medium", "Small"
+export class Item{
+  name: string;
+  description: string;
+  price: string;
+
+  public constructor(
+    fields?: {
+      name?: string,
+      description?: string,
+      price?: string
+    }
+  ){
+    if (fields) Object.assign(this, fields);
+  }
+}
 
 export interface IPizza {
   crustTypesId: number,
@@ -37,9 +53,9 @@ export interface IOrder {
 }
 
 export class Order implements IOrder {
-  pizzas: Array<IPizza>;
-  sidesIds: Array<number>;
-  customerId: number;
+  pizzas: Array<IPizza> = new Array<Pizza>();
+  sidesIds: Array<number> = new Array<number>();
+  customerId: number|null;
   orderTime: string; //TODO Remove
 }
 
@@ -80,6 +96,7 @@ export class CheeseType implements IPizzaOption {
 }
 
 export class Menu {
+  crusts: Array<CrustType>;
   cheeses: Array<CheeseType>;
   sauces: Array<SauceType>;
   sides: Array<Side>;
