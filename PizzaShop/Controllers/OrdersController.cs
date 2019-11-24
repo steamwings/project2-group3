@@ -14,12 +14,12 @@ namespace PizzaShop.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly INOrdersRepo _orederRepo;
+        private readonly INOrdersRepo _orderRepo;
         private readonly INPizzasRepo _pizzaRepo;
 
         public OrdersController(INOrdersRepo oRepo, INPizzasRepo pRepo)
         {
-            _orederRepo = oRepo;
+            _orderRepo = oRepo;
             _pizzaRepo = pRepo;
         }
 
@@ -27,14 +27,14 @@ namespace PizzaShop.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NOrders>>> GetOrders()
         {
-            return await _orederRepo.Get().ToListAsync();
+            return await _orderRepo.Get().ToListAsync();
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
         public async Task<ActionResult<NOrders>> GetOrders(int id)
         {
-            var orders = await _orederRepo.Get(id);
+            var orders = await _orderRepo.Get(id);
 
             if (orders == null)
             {
@@ -55,7 +55,7 @@ namespace PizzaShop.Controllers
                 CustomerId = order.CustomerId,
                 OrderTime = order.OrderTime,
             };
-            await _orederRepo.Add(nOrder);
+            await _orderRepo.Add(nOrder);
             foreach (var pizza in order.Pizzas)
             {
                 NPizzas nPizza = new NPizzas
@@ -67,7 +67,7 @@ namespace PizzaShop.Controllers
                     Name = pizza.Name
                 };
                 await _pizzaRepo.Add(nPizza);
-                await _orederRepo.Add(new OrderPizzas
+                await _orderRepo.Add(new OrderPizzas
                 {
                     NOrderId = nOrder.Id,
                     NPizzaId = nPizza.Id
@@ -88,7 +88,16 @@ namespace PizzaShop.Controllers
                     NOrderId = nOrder.Id,
                     SideId = sideId
                 };
-                await _orederRepo.Add(os);
+                await _orderRepo.Add(os);
+            }
+            foreach (var PreMadePizzaId in order.PreMadePizazIds)
+            {
+                OrderPreMadePizzas opmp = new OrderPreMadePizzas
+                {
+                    NOrderId = nOrder.Id,
+                    PreMadePizzaId = PreMadePizzaId
+                };
+                await _orderRepo.Add(opmp);
             }
 
             return CreatedAtAction("GetOrders", new { id = nOrder.Id }, nOrder.Id);
@@ -102,7 +111,7 @@ namespace PizzaShop.Controllers
 
         private bool OrdersExists(int id)
         {
-            return _orederRepo.Exists(id);
+            return _orderRepo.Exists(id);
         }
 
 

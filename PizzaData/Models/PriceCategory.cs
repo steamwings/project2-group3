@@ -15,5 +15,6 @@ namespace PizzaData.Models
         public virtual ICollection<CheeseTypes> CheeseTypes { get; set; }
         public virtual ICollection<Toppings> Toppings { get; set; }
         public virtual ICollection<Sides> Sides { get; set; }
+        public virtual ICollection<PreMadePizzas> PreMadePizzas{ get; set; }
     }
 }

@@ -18,15 +18,17 @@ namespace PizzaShop.Controllers
         private readonly IBasicRepo<SauceTypes> _sauceRepo;
         private readonly IBasicRepo<Toppings> _toppingRepo;
         private readonly IBasicRepo<Sides> _sideRepo;
+        private readonly IBasicRepo<PreMadePizzas> _pmPizzasRepo;
 
         public MenuController(IBasicRepo<CrustTypes> crustRepo, IBasicRepo<CheeseTypes> cheeseRepo,
-            IBasicRepo<SauceTypes> sauceRepo, IBasicRepo<Toppings> toppingRepo, IBasicRepo<Sides> sideRepo)
+            IBasicRepo<SauceTypes> sauceRepo, IBasicRepo<Toppings> toppingRepo, IBasicRepo<Sides> sideRepo, IBasicRepo<PreMadePizzas> pmPizzasRrepo)
         {
             _crustRepo = crustRepo;
             _cheeseRepo = cheeseRepo;
             _sauceRepo = sauceRepo;
             _toppingRepo = toppingRepo;
             _sideRepo = sideRepo;
+            _pmPizzasRepo = pmPizzasRrepo;
         }
 
         // GET: api/Menu
@@ -39,11 +41,13 @@ namespace PizzaShop.Controllers
                 Crusts = ConvertToVM(await _crustRepo.Get().ToListAsync()),
                 Sauces = ConvertToVM(await _sauceRepo.Get().ToListAsync()),
                 Sides = ConvertToVM(await _sideRepo.Get().ToListAsync()),
-                Toppings = ConvertToVM(await _toppingRepo.Get().ToListAsync())
+                Toppings = ConvertToVM(await _toppingRepo.Get().ToListAsync()),
+                PreMadePizzas = ConvertToVM(await _pmPizzasRepo.Get().ToListAsync())
             };
         }
 
 
+        //Theres probably a better way to do this but it needed to be working before anything
         public List<CheeseTypesVM> ConvertToVM(List<CheeseTypes> cheeseTypes)
         {
             List<CheeseTypesVM> returnCheeses = new List<CheeseTypesVM>();
@@ -73,6 +77,21 @@ namespace PizzaShop.Controllers
                 });
             }
             return returnCrusts;
+        }
+        public List<PreMadePizzasVM> ConvertToVM(List<PreMadePizzas> PreMadePizzas)
+        {
+            List<PreMadePizzasVM> returnSides = new List<PreMadePizzasVM>();
+            foreach (var item in PreMadePizzas)
+            {
+                returnSides.Add(new PreMadePizzasVM
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Price = item.PriceCategory.Price
+                });
+            }
+            return returnSides;
         }
         public List<SauceTypesVM> ConvertToVM(List<SauceTypes> sauceTypes)
         {

@@ -42,6 +42,12 @@ namespace PizzaShop.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> Add(OrderPreMadePizzas OrderPreMadePizzas)
+        {
+            _context.OrderPreMadePizzas.Add(OrderPreMadePizzas);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public bool Exists(int id)
         {
