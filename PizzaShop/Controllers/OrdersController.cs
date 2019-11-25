@@ -90,7 +90,7 @@ namespace PizzaShop.Controllers
                 };
                 await _orderRepo.Add(os);
             }
-            foreach (var PreMadePizzaId in order.PreMadePizazIds)
+            foreach (var PreMadePizzaId in order.PreMadePizzaIds)
             {
                 OrderPreMadePizzas opmp = new OrderPreMadePizzas
                 {
