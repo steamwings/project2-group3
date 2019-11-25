@@ -21,6 +21,7 @@ import { KrazAPIService } from './services/kraz-api.service';
 //import { ModelsModule } from './modules/models/models.module';
 import { ItemFormatterService } from './services/item-formatter.service';
 import { OrderSidesComponent } from './components/order-sides/order-sides.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { OrderSidesComponent } from './components/order-sides/order-sides.compon
     CheckboxComponent,
     CheckboxGroupComponent,
     ShoppingCartComponent,
-    OrderSidesComponent,    
+    OrderSidesComponent,
+    CheckoutComponent,    
   ],
   imports: [
     BrowserModule,

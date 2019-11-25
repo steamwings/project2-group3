@@ -1,63 +1,5 @@
 <mat-toolbar class="kraz-red-background"> Build your Perfect Pizza</mat-toolbar>
 
-<mat-grid-list cols="3" rowHeight="200px">
-    <form [formGroup]="dynForm" (ngSubmit)="addPizza()">
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <p id="loadCrust" [hidden]="crustLoaded"> Loading crusts... </p>
-            <div *ngIf="crustLoaded | async">
-                <h4> Crust </h4>
-                <div *ngFor="let crust of crustList; let i = index; first as isFirst">
-                    <label for="radio_{{crust.name}}">
-                        <input id="radio_{{crust.name}}" [formControl]="dynForm.controls['crust']" [value]="crust.id" type="radio"
-                            name="crust" [checked]="isFirst">
-                        <span class="name">{{crust.name}}</span>
-                        <p class="desc">{{crust.description}}</p>
-                    </label>
-                </div>
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="1">        
-            <p id="loadSauce" [hidden]="sauceLoaded"> Loading sauces... </p>
-            <div *ngIf="sauceLoaded | async">
-                <h4> Sauce </h4>
-                <div *ngFor="let sauce of sauceList; let i = index; first as isFirst">
-                    <label for="radio_{{sauce.name}}">
-                        <input id="radio_{{sauce.name}}" [formControl]="dynForm.controls['sauce']" [value]="sauce.id" type="radio"
-                            name="sauce" [checked]="isFirst">
-                        {{sauce.name}} - {{sauce.description}}
-                    </label>
-                </div>
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <p id="loadCheese" [hidden]="cheeseLoaded"> Loading cheeses... </p>
-            <div *ngIf="cheeseLoaded | async">
-                <h4> Cheese </h4>
-                <div *ngFor="let cheese of cheeseList; let i = index; first as isFirst">
-                    <label for="radio_{{cheese.name}}">
-                        <input id="radio_{{cheese.name}}" [formControl]="dynForm.controls['cheese']" [value]="cheese.id"
-                            type="radio" name="cheese" [checked]="isFirst">
-                        {{cheese.name}} - {{cheese.description}}
-                    </label>
-                </div>
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="2">
-            <p id="loadToppings" [hidden]="toppingsLoaded"> Loading toppings... </p>
-            <div *ngIf="toppingsLoaded | async">
-                <h4> Toppings </h4>
-                <div *ngFor="let topping of dynForm.controls['toppings'].controls; let i = index">
-                    <input type="checkbox" [formControl]="topping" [checked]="false">
-                    <label>{{ toppingsList[i].name }} - {{toppingsList[i].description}}</label>
-                </div>
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="2">
-            <button mat-button class="kraz-default" type="submit" [disabled]="!allowSubmit">Add to Order</button>
-        </mat-grid-tile>
-    </form>
-</mat-grid-list>
-<!-- 
 <form [formGroup]="dynForm" (ngSubmit)="addPizza()">
     <p id="loadCrust" [hidden]="crustLoaded"> Loading crusts... </p>
     <div *ngIf="crustLoaded | async">
@@ -66,7 +8,8 @@
             <label for="radio_{{crust.name}}">
                 <input id="radio_{{crust.name}}" [formControl]="dynForm.controls['crust']"
                     [value]="crust.id" type="radio" name="crust" [checked]="isFirst">
-                <span class="name">{{crust.name}}</span> <p class="desc">{{crust.description}}</p>
+                <span class="name">{{crust.name}}</span> 
+                <p class="desc">{{crust.description}}</p>
             </label>
         </div>
     </div>
@@ -77,7 +20,8 @@
             <label for="radio_{{sauce.name}}">
                 <input id="radio_{{sauce.name}}" [formControl]="dynForm.controls['sauce']" [value]="sauce.id" type="radio"
                     name="sauce" [checked]="isFirst">
-                {{sauce.name}} - {{sauce.description}}
+                <span class="name">{{sauce.name}}</span>
+                <p class="desc">{{sauce.description}}</p>
             </label>
         </div>
     </div>
@@ -88,7 +32,8 @@
             <label for="radio_{{cheese.name}}">
                 <input id="radio_{{cheese.name}}" [formControl]="dynForm.controls['cheese']" [value]="cheese.id" type="radio"
                     name="cheese" [checked]="isFirst">
-                {{cheese.name}} - {{cheese.description}}
+                <span class="name">{{cheese.name}}</span>
+                <p class="desc">{{cheese.description}}</p>
             </label>
         </div>
     </div>
@@ -97,8 +42,13 @@
         <h4> Toppings </h4>
         <div *ngFor="let topping of dynForm.controls['toppings'].controls; let i = index">
             <input type="checkbox" [formControl]="topping" [checked]="false">
-            <label>{{ toppingsList[i].name }} - {{toppingsList[i].description}}</label>
+            <label>
+                <span class="name">{{toppingsList[i].name}}</span>
+                <p class="desc">{{toppingsList[i].description}}</p>
+            </label>
         </div>
     </div>
-    <button mat-button class="kraz-default" type="submit" [disabled]="!allowSubmit">Add to Order</button>
-</form> -->
+    <div>
+        <button mat-button class="kraz-default" type="submit" [disabled]="!allowSubmit">Add to Order</button>
+    </div>
+</form>

@@ -4,25 +4,18 @@
 
 <button mat-button [matMenuTriggerFor]="Order" >Order</button>
 <mat-menu #Order="matMenu" yPosition="above">
-  <button mat-menu-item routerLink="orderpizza">Build Pizza</button>
-  <button mat-menu-item>Menu</button>
-  <button mat-menu-item  routerLink="orders" >Order History</button>
+  <button mat-menu-item routerLink="/orderpizza">Build Pizza</button>
+  <button mat-menu-item> Add a Side </button>
+  <button mat-menu-item routerLink="/orders" >Order History</button>
 </mat-menu>
 
-<!-- <button mat-button >Tracker</button> -->
+<!-- TODO <button mat-button >Tracker</button> -->
 
-
-<button mat-button>Locations</button>
-<mat-menu #beforeMenu="matMenu"  yPosition="above">
-  <button mat-menu-item>Location 1</button>
-  <button mat-menu-item>Location 2</button>
-</mat-menu>
-
-
-<button mat-button routerLink="cart" [matMenuTriggerFor]="afterMenu">Shopping Cart</button>
+<button mat-button [matMenuTriggerFor]="afterMenu">Shopping Cart</button>
 <mat-menu #afterMenu="matMenu"  yPosition="above">
-  <button mat-menu-item routerLink="cart">View Cart</button>
-  <button mat-menu-item >Check Out</button>
+  <button mat-menu-item routerLink="/cart">View Cart</button>
+  <button mat-menu-item routerLink="/checkout">Check Out</button>
 </mat-menu>
-<button mat-button routerLink="loginlanding" >Log In</button>
+
+<button mat-button routerLink="/loginlanding" >Log In</button>
 </nav>

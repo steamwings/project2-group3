@@ -57,8 +57,19 @@ export class ItemFormatterService {
     return obs;
   }
 
-  formatePrebuiltPizza(id: number, index: number) : Item{
-    return new Item({name:"prebuilt pizza", type:ItemType.PrebuiltPizza, index:index});
+  formatePrebuiltPizza(id: number, index: number) : Observable<Item>{
+    var obs = new Observable<Item>(subscriber => {
+      this.api.getMenu().subscribe(menu => {
+        // var pre = menu.prebuilt.find(p => p.id == id);
+        // var item = new Item({
+        //   name: pre.name, description: pre.description,
+        //   price: this.formatPrice(pre.price),
+        //   type: ItemType.PrebuiltPizza, index: index
+        // });
+        subscriber.next(new Item({name:"prebuilt", type:ItemType.PrebuiltPizza, index: index}));
+      });
+    });
+    return obs;
   }
 
   emptyItem() : Observable<Item>{
