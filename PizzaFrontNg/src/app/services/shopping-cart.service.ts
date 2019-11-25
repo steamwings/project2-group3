@@ -13,11 +13,9 @@ import { ItemFormatterService } from './item-formatter.service';
 export class ShoppingCartService {
 
   constructor(private cookies: CookieService,
-              private api: KrazAPIService,
               private formatter: ItemFormatterService,
   ) { }
 
-  private currentPizza : IPizza = null;
   private subject : Subject<Item[]>;
 
   /* TODOish: We *should* have a mutex to ensure this doesn't get called from 
@@ -87,9 +85,22 @@ export class ShoppingCartService {
   }
 
   public getItems() : Observable<Item[]>{
-    this.subject = new BehaviorSubject<Item[]>([]);
+    if(!this.subject) this.subject = new BehaviorSubject<Item[]>([]);
     this.CastChanges();
     return this.subject;
+  }
+
+  public getPrice() : Observable<string>{
+    if (!this.subject) this.getItems();
+    var obs = new Observable<string>(sub => {
+      this.subject.subscribe(items => {
+        let total: number = 0;
+        items.forEach(i => total += i.nprice);
+        console.log("Calculated " + total);
+        sub.next(this.formatter.formatPrice(total));
+      });
+    });
+    return obs;
   }
 
 }

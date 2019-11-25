@@ -23,6 +23,7 @@ export class Item{
   name: string;
   description: string;
   price: string;
+  nprice: number
   type: ItemType; 
   index: number;
 
@@ -30,8 +31,9 @@ export class Item{
     fields?: {
       name?: string,
       description?: string,
-      price?: string
-      type: ItemType
+      price?: string,
+      nprice?: number,
+      type: ItemType,
       index: number
     }
   ){

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -7,7 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor() { }
+  price: Observable<string>;
+
+  constructor(cart: ShoppingCartService) {
+    this.price = cart.getPrice();
+    this.price.subscribe(p => {
+      console.log("Got price " + p);
+    })
+   }
 
   ngOnInit() {
   }
