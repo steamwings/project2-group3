@@ -1,4 +1,4 @@
-<mat-toolbar>Your Cart</mat-toolbar>
+<mat-toolbar class="kraz-red-background"> Your Cart</mat-toolbar>
 
 <table mat-table class="pad-right" class="mat-elevation-z8" [dataSource]="items | async">
     <ng-container matColumnDef="name">
@@ -22,6 +22,6 @@
 
 </table>
 <span>
-    <button mat-button>Checkout</button>
-    <button mat-button (click)="clear()"> Clear </button>
+    <button class="kraz-default" mat-button>Checkout</button>
+    <button class="kraz-default" mat-button (click)="clear()"> Clear </button>
 </span>

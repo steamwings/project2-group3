@@ -1,26 +1,20 @@
 #PageContainer{
   position: relative;
-
   max-height: 100vh;
   padding-bottom: 250px;
-
 }
+
 #PageContainer:after {
 
   clear: both;
 }
-
 
 #LandingContent{
     position: relative;
     border-radius: 5px;
     width: 100%;
     height: auto;
-   
-
 }
-
-
 
 #Footer{
   position: fixed;
@@ -29,7 +23,5 @@
   left:0;
   width:100%;
   border-radius: 5px;
-
   background-color: #cd4545;
-
 }

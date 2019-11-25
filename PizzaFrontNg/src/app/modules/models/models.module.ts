@@ -79,6 +79,7 @@ export class Topping implements IPizzaOption {
   id: number;
   name: string;
   description: string;
+  price: number;
 }
 
 export class Side implements IPizzaOption {
