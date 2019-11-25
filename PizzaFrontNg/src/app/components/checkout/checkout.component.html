@@ -1,2 +1,5 @@
 <mat-toolbar class="kraz-red-background">Checkout</mat-toolbar>
-<p>Total price: {{ price | async }}</p>
+<h4>Your total is {{ price | async }}</h4>
+
+<button class="kraz-default" [disabled]="disabled" mat-button>Pay at Pickup</button>
+<button class="kraz-default" [disabled]="disabled" mat-button>Pay by Card</button>
