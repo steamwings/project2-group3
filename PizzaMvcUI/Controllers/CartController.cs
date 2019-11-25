@@ -30,7 +30,6 @@ namespace PizzaMvcUI.Controllers
             cart.BuildPizza();
             cart.AddCrust(id);
             TempData.SetCart(cart);
-            TempData.Keep("Cart");
         }
 
         [HttpGet]
@@ -40,7 +39,6 @@ namespace PizzaMvcUI.Controllers
             Cart cart = TempData.GetCart();
             cart.AddCheese(id);
             TempData.SetCart(cart);
-            TempData.Keep("Cart");
         }
 
         [HttpGet]
@@ -50,7 +48,6 @@ namespace PizzaMvcUI.Controllers
             Cart cart = TempData.GetCart();
             cart.AddSauce(id);
             TempData.SetCart(cart);
-            TempData.Keep("Cart");
         }
 
         [HttpGet]
@@ -60,7 +57,6 @@ namespace PizzaMvcUI.Controllers
             Cart cart = TempData.GetCart();
             cart.AddTopping(id);
             TempData.SetCart(cart);
-            TempData.Keep("Cart");
         }
 
         [HttpGet]
@@ -70,8 +66,18 @@ namespace PizzaMvcUI.Controllers
             Cart cart = TempData.GetCart();
             cart.AddPizza();
             TempData.SetCart(cart);
-            TempData.Keep("Cart");
         }
+
+        [HttpGet]
+        [Route("AddSide/{id}")]
+        public void PostSide(int id)
+        {
+            Cart cart = TempData.GetCart();
+            cart.AddSide(id);
+            TempData.SetCart(cart);
+        }
+
+
 
         // POST: api/Cart
         [HttpPost]
