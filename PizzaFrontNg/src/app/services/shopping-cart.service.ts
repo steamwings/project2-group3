@@ -96,7 +96,6 @@ export class ShoppingCartService {
       this.subject.subscribe(items => {
         let total: number = 0;
         items.forEach(i => total += i.nprice);
-        console.log("Calculated " + total);
         sub.next(this.formatter.formatPrice(total));
       });
     });

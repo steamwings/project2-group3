@@ -16,7 +16,6 @@ export class CheckoutComponent implements OnInit {
     this.price = cart.getPrice();
     this.price.subscribe(p => {
       this.disabled = (p == "$0.00"); 
-      console.log("Got price " + p);
     })
    }
 
