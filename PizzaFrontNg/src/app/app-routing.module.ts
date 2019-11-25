@@ -17,12 +17,12 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 
 
 const routes: Routes = [
-    {path:'loginlanding', component: LoginLandingComponent},
-    {path:'orders', component : OrderListComponent},
-    {path : 'orderpizza' , component : OrderPizzaComponent },
-    {path : 'loginlanding/register' , component : RegisterComponent },
-    {path : 'loginlanding/login' , component : LoginComponent },
-    {path : 'cart', component: ShoppingCartComponent},
+    {path: 'loginlanding', component: LoginLandingComponent},
+    {path: 'orders', component: OrderListComponent},
+    {path: 'orderpizza' , component: OrderPizzaComponent },
+    {path: 'loginlanding/register' , component: RegisterComponent },
+    {path: 'loginlanding/login' , component: LoginComponent },
+    {path: 'cart', component: ShoppingCartComponent},
 ];
 
 @NgModule({

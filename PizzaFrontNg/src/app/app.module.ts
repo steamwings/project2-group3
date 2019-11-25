@@ -1,8 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatMenuModule} from '@angular/material/menu';
-import { MatButtonModule} from '@angular/material/button';
-import { MatGridListModule} from '@angular/material/grid-list';
+import { MatMenuModule, MatButtonModule, MatTableModule, 
+  MatGridListModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -39,6 +38,7 @@ import { ItemFormatterService } from './services/item-formatter.service';
     BrowserAnimationsModule,
     MatMenuModule,
     MatButtonModule,
+    MatTableModule,
     MatGridListModule,
     AppRoutingModule,
     HttpClientModule,

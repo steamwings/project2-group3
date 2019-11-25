@@ -12,17 +12,27 @@ import { CommonModule } from '@angular/common';
 // export class ModelsModule { }
 
 // TODO: Sizes are "Large", "Medium", "Small"
+export enum ItemType{
+  Pizza,
+  PrebuiltPizza,
+  Side,
+  Meta
+}
 
 export class Item{
   name: string;
   description: string;
   price: string;
+  type: ItemType; 
+  index: number;
 
   public constructor(
     fields?: {
       name?: string,
       description?: string,
       price?: string
+      type: ItemType
+      index: number
     }
   ){
     if (fields) Object.assign(this, fields);
@@ -75,24 +85,28 @@ export class Side implements IPizzaOption {
   id: number;
   name: string;
   description: string;
+  price: number;
 }
 
 export class CrustType implements IPizzaOption {
   id: number;
   name: string;
   description: string;
+  price: number;
 }
 
 export class SauceType implements IPizzaOption {
   id: number;
   name: string;
   description: string;
+  price: number;
 }
 
 export class CheeseType implements IPizzaOption {
   id: number;
   name: string;
   description: string;
+  price: number;
 }
 
 export class Menu {

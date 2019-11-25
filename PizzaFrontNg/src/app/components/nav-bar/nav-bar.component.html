@@ -1,6 +1,6 @@
 
 <nav>
-<button mat-button >Home</button>
+<button mat-button> Home </button>
 
 <button mat-button [matMenuTriggerFor]="Order" >Order</button>
 <mat-menu #Order="matMenu" yPosition="above">
@@ -19,7 +19,7 @@
 </mat-menu>
 
 
-<button mat-button [matMenuTriggerFor]="afterMenu">Shopping Cart</button>
+<button mat-button routerLink="cart" [matMenuTriggerFor]="afterMenu">Shopping Cart</button>
 <mat-menu #afterMenu="matMenu"  yPosition="above">
   <button mat-menu-item routerLink="cart">View Cart</button>
   <button mat-menu-item >Check Out</button>

@@ -3,3 +3,19 @@
 white {
     color: azure;
 }
+
+table {
+  width: 100%;
+  table-layout: auto;
+}
+
+th, td {
+  overflow: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pad-right {
+    padding-right: 100px;
+    padding-left: 0;
+}

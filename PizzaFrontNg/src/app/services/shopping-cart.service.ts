@@ -3,7 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { IOrder, IPizza, Pizza, Order, Item, Menu } from 'src/app/modules/models/models.module';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 import { KrazAPIService } from './kraz-api.service';
-import { Observable, zip } from 'rxjs';
+import { Observable, zip, Subject, BehaviorSubject } from 'rxjs';
 import { ItemFormatterService } from './item-formatter.service';
 
 @Injectable({
@@ -18,6 +18,7 @@ export class ShoppingCartService {
   ) { }
 
   private currentPizza : IPizza = null;
+  private subject : Subject<Item[]>;
 
   /* TODOish: We *should* have a mutex to ensure this doesn't get called from 
      multiple places. We could probably use Observables to synchronize as well,
@@ -32,6 +33,15 @@ export class ShoppingCartService {
 
   private Save(cart : IOrder){
     this.cookies.set('cart', JSON.stringify(cart));
+    this.CastChanges();
+  }
+
+  private CastChanges(){
+    if (this.subject) {
+      zip(...this.formatAsItems()).subscribe(v => {
+        this.subject.next(v);
+      });
+    }
   }
 
   public addPizza(p: Pizza) {
@@ -46,19 +56,40 @@ export class ShoppingCartService {
     this.Save(cart);
   }
 
+  // TODO Add prebuiltpizza methods
+
+  public removePizza(index: number){
+    var cart = this.Cart();
+    cart.pizzas = cart.pizzas.filter((_, i) => index != i );
+    this.Save(cart); 
+  }
+
+  public removeSide(index: number){
+    var cart = this.Cart();
+    cart.sidesIds = cart.sidesIds.filter((_, i) => { index != i } );
+    this.Save(cart);
+  }
+
+  public clear(){
+    this.Save(new Order());
+  }
+
   private formatAsItems() : Observable<Item>[]{
     var list = new Array<Observable<Item>>();
     var cart = this.Cart();
     if(cart.pizzas)
-      cart.pizzas.forEach(p => {
-        list.push(this.formatter.format(p));
+      cart.pizzas.forEach((p, index) => {
+        list.push(this.formatter.format(p, index));
       });
-    list.push(this.formatter.emptyItem());
+    if(list.length==0)
+      list.push(this.formatter.emptyItem());
     return list;
   }
 
   public getItems() : Observable<Item[]>{
-    return zip(...this.formatAsItems());
+    this.subject = new BehaviorSubject<Item[]>([]);
+    this.CastChanges();
+    return this.subject;
   }
 
 }
