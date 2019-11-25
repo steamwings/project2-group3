@@ -20,6 +20,7 @@ import { EncrDecrService } from './services/encr-decr.service'
 import { KrazAPIService } from './services/kraz-api.service';
 //import { ModelsModule } from './modules/models/models.module';
 import { ItemFormatterService } from './services/item-formatter.service';
+import { OrderSidesComponent } from './components/order-sides/order-sides.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ItemFormatterService } from './services/item-formatter.service';
     routingComponents,
     CheckboxComponent,
     CheckboxGroupComponent,
-    ShoppingCartComponent,    
+    ShoppingCartComponent,
+    OrderSidesComponent,    
   ],
   imports: [
     BrowserModule,
