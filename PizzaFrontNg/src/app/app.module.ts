@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatMenuModule, MatButtonModule, MatTableModule, 
-  MatGridListModule } from '@angular/material';
+  MatGridListModule, MatToolbarModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -42,6 +42,7 @@ import { OrderSidesComponent } from './components/order-sides/order-sides.compon
     MatButtonModule,
     MatTableModule,
     MatGridListModule,
+    MatToolbarModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
