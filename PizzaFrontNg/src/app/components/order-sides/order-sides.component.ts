@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { KrazAPIService } from 'src/app/services/kraz-api.service';
 
 @Component({
   selector: 'app-order-sides',
@@ -8,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 
 export class OrderSidesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private api: KrazAPIService) {
+    
+  }
 
   ngOnInit() {
   }
