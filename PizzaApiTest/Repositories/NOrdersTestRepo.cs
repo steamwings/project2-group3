@@ -26,6 +26,11 @@ namespace PizzaApiTest.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<bool> Add(OrderPreMadePizzas OrderPreMadePizzas)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Exists(int id)
         {
             throw new NotImplementedException();

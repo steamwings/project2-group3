@@ -10,6 +10,7 @@ namespace PizzaData.Models
         public int CheeseTypesId { get; set; }
         public int SauceTypesId { get; set; }
         public List<int> ToppingsId { get; set; }
+        public decimal Price { get; set; }
         public string Name { get; set; }
         public string Size { get; set; }
     }

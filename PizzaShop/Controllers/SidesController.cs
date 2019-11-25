@@ -119,10 +119,10 @@ namespace PizzaShop.Controllers
             return returnSide;
         }
 
-        public List<SidesVM> ConvertToVM(List<Sides> sauceTypes)
+        public List<SidesVM> ConvertToVM(List<Sides> Sides)
         {
             List<SidesVM> returnSides = new List<SidesVM>();
-            foreach (var item in sauceTypes)
+            foreach (var item in Sides)
             {
                 returnSides.Add(ConvertToVM(item));
             }

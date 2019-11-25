@@ -64,6 +64,7 @@ namespace PizzaShop
             services.AddTransient<IBasicRepo<SauceTypes>, SauceTypesRepo>();
             services.AddTransient<IBasicRepo<Toppings>, ToppingsRepo>();
             services.AddTransient<IBasicRepo<Sides>, SidesRepo>();
+            services.AddTransient<IBasicRepo<PreMadePizzas>, PreMadePizzasRepo>();
 
         }
 

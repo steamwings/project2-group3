@@ -183,6 +183,28 @@ namespace PizzaShop.Migrations
                     b.ToTable("OrderPizzas");
                 });
 
+            modelBuilder.Entity("PizzaData.Models.OrderPreMadePizzas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("NOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PreMadePizzaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NOrderId");
+
+                    b.HasIndex("PreMadePizzaId");
+
+                    b.ToTable("OrderPreMadePizzas");
+                });
+
             modelBuilder.Entity("PizzaData.Models.OrderSides", b =>
                 {
                     b.Property<int>("Id")
@@ -225,6 +247,32 @@ namespace PizzaShop.Migrations
                     b.HasIndex("ToppingId");
 
                     b.ToTable("PizzaToppings");
+                });
+
+            modelBuilder.Entity("PizzaData.Models.PreMadePizzas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("PriceCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PriceCategoryId");
+
+                    b.ToTable("PreMadePizzas");
                 });
 
             modelBuilder.Entity("PizzaData.Models.PriceCategory", b =>
@@ -391,6 +439,23 @@ namespace PizzaShop.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PizzaData.Models.OrderPreMadePizzas", b =>
+                {
+                    b.HasOne("PizzaData.Models.NOrders", "NOrder")
+                        .WithMany("OrderPreMadePizzas")
+                        .HasForeignKey("NOrderId")
+                        .HasConstraintName("FK_OrderPreMadePizzas_NOrders")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PizzaData.Models.PreMadePizzas", "PreMadePizza")
+                        .WithMany("OrderPreMadePizzas")
+                        .HasForeignKey("PreMadePizzaId")
+                        .HasConstraintName("FK_OrderPreMadePizzas_PreMadePizzas")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PizzaData.Models.OrderSides", b =>
                 {
                     b.HasOne("PizzaData.Models.NOrders", "NOrder")
@@ -420,6 +485,15 @@ namespace PizzaShop.Migrations
                         .WithMany("Recipes")
                         .HasForeignKey("ToppingId")
                         .HasConstraintName("FK_Recipes_Toppings")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PizzaData.Models.PreMadePizzas", b =>
+                {
+                    b.HasOne("PizzaData.Models.PriceCategory", "PriceCategory")
+                        .WithMany("PreMadePizzas")
+                        .HasForeignKey("PriceCategoryId")
+                        .HasConstraintName("FK_PreMadePizzas_PriceCategory")
                         .IsRequired();
                 });
 

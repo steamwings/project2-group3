@@ -28,6 +28,8 @@ namespace PizzaShop
         public virtual DbSet<Sides> Sides { get; set; }
         public virtual DbSet<Toppings> Toppings { get; set; }
         public virtual DbSet<PriceCategory> PriceCategories { get; set; }
+        public virtual DbSet<PreMadePizzas> PreMadePizzas { get; set; }
+        public virtual DbSet<OrderPreMadePizzas> OrderPreMadePizzas { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -92,6 +94,21 @@ namespace PizzaShop
                     .HasConstraintName("FK_OrderPizza_NPizzas");
             });
 
+            modelBuilder.Entity<OrderPreMadePizzas>(entity =>
+            {
+                entity.HasOne(e => e.NOrder)
+                    .WithMany(o => o.OrderPreMadePizzas)
+                    .HasForeignKey(e => e.NOrderId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_OrderPreMadePizzas_NOrders");
+
+                entity.HasOne(e => e.PreMadePizza)
+                    .WithMany(p => p.OrderPreMadePizzas)
+                    .HasForeignKey(e => e.PreMadePizzaId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_OrderPreMadePizzas_PreMadePizzas");
+            });
+
             modelBuilder.Entity<OrderSides>(entity =>
             {
                 entity.HasOne(e => e.NOrder)
@@ -145,6 +162,17 @@ namespace PizzaShop
                     .HasConstraintName("FK_Recipes_Toppings");
             });
 
+            modelBuilder.Entity<PreMadePizzas>(entity =>
+            {
+                entity.Property(e => e.Description).IsRequired();
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<PriceCategory>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
@@ -179,11 +207,17 @@ namespace PizzaShop
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Toppings_PriceCategory");
 
-                entity.HasMany(t => t.Sides)
+                entity.HasMany(s => s.Sides)
                     .WithOne(p => p.PriceCategory)
-                    .HasForeignKey(t => t.PriceCategoryId)
+                    .HasForeignKey(s => s.PriceCategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Sides_PriceCategory");
+
+                entity.HasMany(pmp => pmp.PreMadePizzas)
+                    .WithOne(p => p.PriceCategory)
+                    .HasForeignKey(pmp => pmp.PriceCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PreMadePizzas_PriceCategory");
             });
 
             modelBuilder.Entity<SauceTypes>(entity =>

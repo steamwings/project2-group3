@@ -119,10 +119,10 @@ namespace PizzaShop.Controllers
             return returnTopping;
         }
 
-        public List<ToppingsVM> ConvertToVM(List<Toppings> sauceTypes)
+        public List<ToppingsVM> ConvertToVM(List<Toppings> Toppings)
         {
             List<ToppingsVM> returnToppings = new List<ToppingsVM>();
-            foreach (var item in sauceTypes)
+            foreach (var item in Toppings)
             {
                 returnToppings.Add(ConvertToVM(item));
             }

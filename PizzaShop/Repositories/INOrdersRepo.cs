@@ -12,6 +12,7 @@ namespace PizzaShop.Repositories
         Task<bool> Add(NOrders NOrders);
         Task<bool> Add(OrderPizzas OrderPizzas);
         Task<bool> Add(OrderSides OrderSides);
+        Task<bool> Add(OrderPreMadePizzas OrderPreMadePizzas);
         bool Exists(int id);
     }
 }
