@@ -53,5 +53,34 @@ namespace PizzaShop.Repositories
         {
             return _context.NOrders.Any(e => e.Id == id);
         }
+
+        public IQueryable<NOrders> GetByCustomerId(int id)
+        {
+            return _context.NOrders
+                .Include(order => order.OrderPizzas)
+                    .ThenInclude(oPizzas => oPizzas.NPizza)
+                        .ThenInclude(Pizza => Pizza.CheeseType)
+                            .ThenInclude(Cheese => Cheese.PriceCategory)
+                .Include(order => order.OrderPizzas)
+                    .ThenInclude(oPizzas => oPizzas.NPizza)
+                        .ThenInclude(Pizza => Pizza.CrustType)
+                            .ThenInclude(Cheese => Cheese.PriceCategory)
+                .Include(order => order.OrderPizzas)
+                    .ThenInclude(oPizzas => oPizzas.NPizza)
+                        .ThenInclude(Pizza => Pizza.SauceType)
+                            .ThenInclude(Cheese => Cheese.PriceCategory)
+                .Include(order => order.OrderPizzas)
+                    .ThenInclude(oPizzas => oPizzas.NPizza)
+                        .ThenInclude(Pizza => Pizza.PizzaToppings)
+                            .ThenInclude(PToppings => PToppings.Topping)
+                                .ThenInclude(Cheese => Cheese.PriceCategory)
+                .Include(order => order.OrderPreMadePizzas)
+                    .ThenInclude(oPizzas => oPizzas.PreMadePizza)
+                        .ThenInclude(pmPizza => pmPizza.PriceCategory)
+                .Include(order => order.OrderSides)
+                    .ThenInclude(oSides => oSides.Side)
+                        .ThenInclude(side => side.PriceCategory)
+                .Where(o => o.CustomerId == id);
+        }
     }
 }
