@@ -70,7 +70,7 @@ export class Order implements IOrder {
   pizzas: Array<IPizza> = new Array<Pizza>();
   sidesIds: Array<number> = new Array<number>();
   premadePizzaIds: Array<number> = new Array<number>();
-  orderTime: string = "2014-01-01T23:28:56.782Z"; //TODO Remove
+  orderTime: string; //TODO Remove
 }
 
 export interface IPizzaOption {

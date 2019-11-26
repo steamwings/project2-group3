@@ -28,7 +28,7 @@ export class ShoppingCartService {
     if (this.cookies.check('cart')) {
       ret = this.Cart();
     }
-    //TODO this.Save(new Order()); // Clear 
+    this.Save(new Order()); // Clear 
     return ret;
   }
 

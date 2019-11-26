@@ -35,12 +35,11 @@ export class KrazAPIService {
     return this.http.get<Menu>(this.baseUrl + '/api/menu');
   }
   
-  placeOrder(order : IOrder) : Observable<Object>{
-    return this.http.post(this.baseUrl + '/api/orders', order);
+  placeOrder(order : IOrder) : Observable<string>{
+    return this.http.post<string>(this.baseUrl + '/api/orders', order);
   }
 
   registerCustomer(customer){
-
     const headers = new HttpHeaders().set( 'Content-Type','application/json', )
     var obs = this.http.post<string>('https://krazpizza.azurewebsites.net/api/customers', customer, {headers})
     return obs;
