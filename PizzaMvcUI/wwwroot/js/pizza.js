@@ -148,9 +148,10 @@ function makeOptions(divId, btnId, resource, callback, headerId = null, headerTe
 
 function populate (divId, data, type='radio') {
     $(`#${divId}`).empty();
-    data.forEach((option) => {
+    data.forEach((option, index) => {
         var d = document.createElement('div');
         var o = document.createElement('input');
+        if (index == 0) o.setAttribute('checked', true);
         o.setAttribute('type', type);
         o.setAttribute('name', 'optionGroup');
         o.setAttribute('id', option.name);
