@@ -30,7 +30,6 @@ namespace PizzaMvcUI.Extensions
         public static void SetCart(this ITempDataDictionary tempData, Cart cart)
         {
             tempData["Cart"] = JsonConvert.SerializeObject(cart);
-
         }
 
         public static Cart GetCart(this ITempDataDictionary tempData)
