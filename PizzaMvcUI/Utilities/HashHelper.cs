@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace PizzaMvcUI
+namespace PizzaMvcUI.Utilities
 {
     public static class HashHelper
     {
