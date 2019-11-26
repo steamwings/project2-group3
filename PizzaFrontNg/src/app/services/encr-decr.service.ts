@@ -9,22 +9,23 @@ export class EncrDecrService {
 
   constructor() { }
 
-  set(toHash){
-    let salt = CryptoJS.lib.WordArray.random(128/8);
-    let hash = CryptoJS.SHA256(toHash, salt);
-    let stringhash= hash.toString(CryptoJS.enc.Base64)
-    let stringsalt = CryptoJS.enc.Base64.stringify(salt)
-    return {"salt" : stringsalt, "hash": stringhash};
+  private hash(pwd: string, salt: string) : string{
+    let swords: CryptoJS.LibWordArray = CryptoJS.enc.Base64.parse(salt);
+    let pwords: CryptoJS.LibWordArray = CryptoJS.enc.Utf8.parse(pwd);
+    let a = new Array<number>(...pwords.words, ...swords.words);
+    let b = CryptoJS.lib.WordArray.create(a);
+    return CryptoJS.SHA256(b).toString(CryptoJS.enc.Base64);
+  }
+
+  set(password){
+    let saltWords = CryptoJS.lib.WordArray.random(128/8);
+    let salt = CryptoJS.enc.Base64.stringify(saltWords);
+    let hash = this.hash(password, salt);
+    return {"salt" : salt, "hash": hash};
   }
 
   setLogin(password, salt){
-
-    let hash = CryptoJS.SHA256(password,salt);
-    let stringhash = hash.toString(CryptoJS.enc.Base64);
-    console.log(stringhash)
-    return stringhash
-
-
+    return this.hash(password, salt);
   }
 
   //The get method is use for decrypt the value.

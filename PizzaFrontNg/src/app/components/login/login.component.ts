@@ -40,8 +40,9 @@ export class LoginComponent implements OnInit {
     let promise = this.KrazService.getSalt({"email":this.loginForm.value.email}).toPromise()
 
     promise.then((salt)=>{
-
+      console.log("salt: " + salt);
       let passwordHash = this.EncrDecr.setLogin(this.loginForm.value.password, salt);
+      console.log("hash: " + passwordHash);
       let email = this.loginForm.value.email;
       let logInObj = new Object();
 
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(["/","home"]);
       });
     }).catch((error)=>{
-      console.log("Promise rejected with " + JSON.stringify(error));
+      console.log("GetSalt promise rejected with " + JSON.stringify(error));
     });
     
   }

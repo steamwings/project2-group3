@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { KrazAPIService } from '../../services/kraz-api.service';
 import { EncrDecrService } from '../../services/encr-decr.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ export class RegisterComponent implements OnInit {
   
   constructor(private fb: FormBuilder, 
               private KrazService: KrazAPIService,
-              private EncrDecr : EncrDecrService) { }
+              private EncrDecr : EncrDecrService,
+              private router: Router) { }
   
   
 
@@ -46,8 +48,13 @@ export class RegisterComponent implements OnInit {
 
     console.log(regObj)
    
-    this.KrazService.registerCustomer(regObj)
-    .subscribe( response => console.log(response))
+    this.KrazService.registerCustomer(regObj).subscribe(res =>{
+      if(res != null && res != undefined && parseInt(res, 10) > 0){
+        this.router.navigate(['/login']);
+      } else{
+        console.log("Register failed: " + res);
+      }
+    });
 
   }
 
