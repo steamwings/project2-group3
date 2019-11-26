@@ -8,6 +8,7 @@ namespace PizzaData.Models
     {
         public List<Pizzas> Pizzas { get; set; }
         public List<int> SidesIds { get; set; }
+        public List<int> PreMadePizzaIds { get; set; }
         public DateTime OrderTime { get; set; }
         public int CustomerId { get; set; }
     }
