@@ -1,6 +1,5 @@
 ﻿$(document).ready(() => {
     $(".sidesSubmit").on("click", function () {
-
         let id = jQuery(this).attr("sideid");
         addSide(id)
     });
@@ -9,7 +8,7 @@
 
 
 
-function addSide( id) {
+function addSide(id) {
     console.log("Adding Side To Cart...");
 
     console.log(id)
