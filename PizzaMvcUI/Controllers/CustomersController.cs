@@ -109,7 +109,8 @@ namespace PizzaMvcUI.Controllers
         {
             int customerId = (int)TempData.Peek("User");
             List<Orders> orders = await API.GetOrderHistory(customerId);
-            return View(orders);
+            Menu menu = await API.GetMenu();
+            return View(new OrderHistoryVM { orders = orders, menu = menu});
         }
 
     }

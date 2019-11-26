@@ -1,0 +1,65 @@
+﻿@model PizzaData.Models.OrderHistoryVM
+@{
+    ViewData["Title"] = "Order History";
+}
+
+<h1>Order History</h1>
+<hr />
+<table>
+    <thead>
+        <tr>
+            <th>
+                Order Time
+            </th>
+            <th>
+                Details
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.orders != null)
+        {
+            @foreach (var order in Model.orders)
+            {
+                <tr>
+                    <td>
+                        @order.OrderTime
+                    </td>
+                    <td>
+                        @if (order.Pizzas != null)
+                        {
+                            <span>Pizzas</span><br />
+                            @foreach (var pizza in order.Pizzas)
+                            {
+                                <span>Crust: @Model.menu.Crusts.First(c => c.Id == pizza.CrustTypesId).Name - </span>
+                                <span>Sauce: @Model.menu.Sauces.First(c => c.Id == pizza.SauceTypesId).Name - </span>
+                                <span>Cheese: @Model.menu.Cheeses.First(c => c.Id == pizza.CheeseTypesId).Name</span>
+                                @if (pizza.ToppingsId != null)
+                                {
+                                    <span>,Toppings: </span>
+                                    @foreach (var topping in pizza.ToppingsId)
+                                    {
+                                        <span> - @Model.menu.Toppings.First(c => c.Id == pizza.CheeseTypesId).Name</span>
+                                    }
+                                }
+                            }
+                        }
+                        @if (order.SidesIds != null)
+                        {
+                            <span>Sides</span><br />
+                            @foreach (var sideId in order.SidesIds)
+                            {
+                                <span> - @Model.menu.Sides.First(c => c.Id == sideId).Name</span><br />
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td></td><td>No Orders Yet</td></tr>
+        }
+
+    </tbody>
+</table>
