@@ -10,8 +10,8 @@
 <body>
     @{
         PizzaData.Models.Customers cust = null;
-        var user = TempData.Peek("User");
-        if (user != null)
+        var user = (int?)TempData.Peek("User");
+        if (user != null && user != -1)
             cust = await API.GetCustomer((int)user);
     }
     <header>
