@@ -45,5 +45,10 @@ namespace PizzaApiTest.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<NOrders> GetByCustomerId(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

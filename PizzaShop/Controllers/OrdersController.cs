@@ -44,6 +44,50 @@ namespace PizzaShop.Controllers
             return orders;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<List<Orders>> GetOrdersByCustomerId(int id)
+        {
+            var nOrders = _orderRepo.GetByCustomerId(id);
+
+            if (nOrders == null)
+            {
+                return NotFound();
+            }
+
+            List<Orders> orders = new List<Orders>();
+            foreach (var nOrder in nOrders)
+            {
+                Orders order = new Orders {
+                    CustomerId = nOrder.Id,
+                    OrderTime = nOrder.OrderTime,
+                    Pizzas = new List<Pizzas>()
+                };
+                foreach (var oPizzas in nOrder.OrderPizzas)
+                {
+                    Pizzas pizza = new Pizzas {
+                        CheeseTypesId = oPizzas.NPizza.CheeseTypeId,
+                        CrustTypesId = oPizzas.NPizza.CrustTypeId,
+                        SauceTypesId = oPizzas.NPizza.SauceTypeId
+                    };
+                    foreach (var topping in oPizzas.NPizza.PizzaToppings)
+                    {
+                        pizza.ToppingsId.Add(topping.Id);
+                    }
+                    order.Pizzas.Add(pizza);
+                }
+                foreach (var oSides in nOrder.OrderSides)
+                {
+                    order.SidesIds.Add(oSides.SideId);
+                }
+                foreach (var oPMPizzas in nOrder.OrderPreMadePizzas)
+                {
+                    order.PreMadePizzaIds.Add(oPMPizzas.PreMadePizzaId);
+                }
+                orders.Add(order);
+            }
+            return orders;
+        }
+
         // POST: api/Orders
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -53,7 +97,7 @@ namespace PizzaShop.Controllers
             NOrders nOrder = new NOrders
             {
                 CustomerId = order.CustomerId,
-                OrderTime = order.OrderTime,
+                OrderTime = DateTime.Now //order.OrderTime,
             };
             await _orderRepo.Add(nOrder);
             foreach (var pizza in order.Pizzas)
@@ -113,7 +157,6 @@ namespace PizzaShop.Controllers
         {
             return _orderRepo.Exists(id);
         }
-
 
         //// PUT: api/Orders/5
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for

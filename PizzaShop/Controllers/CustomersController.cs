@@ -47,20 +47,19 @@ namespace PizzaShop.Controllers
             }
         }
 
-        //// TODO: Remove this
-        //// GET: api/Customers/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Customers>> GetCustomers(int id)
-        //{
-        //    var customers = await _context.Customers.FindAsync(id);
+        // GET: api/Customers/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Customers>> GetCustomers(int id)
+        {
+            var customers = await _repo.Get(id);
 
-        //    if (customers == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (customers == null)
+            {
+                return NotFound();
+            }
 
-        //    return customers;
-        //}
+            return customers;
+        }
 
         // PUT: api/Customers/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for

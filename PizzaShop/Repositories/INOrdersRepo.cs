@@ -9,6 +9,7 @@ namespace PizzaShop.Repositories
     {
         IQueryable<NOrders> Get();
         Task<NOrders> Get(int id);
+        IQueryable<NOrders> GetByCustomerId(int id);
         Task<bool> Add(NOrders NOrders);
         Task<bool> Add(OrderPizzas OrderPizzas);
         Task<bool> Add(OrderSides OrderSides);
