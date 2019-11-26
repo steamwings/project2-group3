@@ -5,7 +5,7 @@
 
 <h1>Order History</h1>
 <hr />
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>
@@ -23,28 +23,29 @@
             {
                 <tr>
                     <td>
-                        @order.OrderTime
+                        @TimeZoneInfo.ConvertTimeFromUtc(order.OrderTime, TimeZoneInfo.Local);
                     </td>
                     <td>
-                        @if (order.Pizzas != null)
+                        @if (order.Pizzas != null && order.Pizzas.Count > 0)
                         {
                             <span>Pizzas</span><br />
                             @foreach (var pizza in order.Pizzas)
                             {
-                                <span>Crust: @Model.menu.Crusts.First(c => c.Id == pizza.CrustTypesId).Name - </span>
-                                <span>Sauce: @Model.menu.Sauces.First(c => c.Id == pizza.SauceTypesId).Name - </span>
+                                <span> - Crust: @Model.menu.Crusts.First(c => c.Id == pizza.CrustTypesId).Name - </span>
+                                <span>Sauce: @Model.menu.Sauces.First(s => s.Id == pizza.SauceTypesId).Name - </span>
                                 <span>Cheese: @Model.menu.Cheeses.First(c => c.Id == pizza.CheeseTypesId).Name</span>
-                                @if (pizza.ToppingsId != null)
+                                @if (pizza.ToppingsId != null && pizza.ToppingsId.Count > 0)
                                 {
-                                    <span>,Toppings: </span>
+                                    <span> - Toppings: </span>
                                     @foreach (var topping in pizza.ToppingsId)
                                     {
-                                        <span> - @Model.menu.Toppings.First(c => c.Id == pizza.CheeseTypesId).Name</span>
+                                        <span> @Model.menu.Toppings.First(t => t.Id == topping).Name, </span>
                                     }
                                 }
+                                <br />
                             }
                         }
-                        @if (order.SidesIds != null)
+                        @if (order.SidesIds != null && order.SidesIds.Count > 0)
                         {
                             <span>Sides</span><br />
                             @foreach (var sideId in order.SidesIds)
