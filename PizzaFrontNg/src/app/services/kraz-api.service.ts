@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Topping, IPizzaOption, IOrder, Menu, CrustType, CheeseType, SauceType } from 'src/app/modules/models/models.module';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -35,27 +35,21 @@ export class KrazAPIService {
     return this.http.get<Menu>(this.baseUrl + '/api/menu');
   }
   
-  placeOrder(order : IOrder){
-    return this.http.post(this.baseUrl + '/api/orders', order)
+  placeOrder(order : IOrder) : Observable<Object>{
+    return this.http.post(this.baseUrl + '/api/orders', order);
   }
 
   registerCustomer(customer){
 
-   const headers = new HttpHeaders().set( 'Content-Type','application/json', )
-
-    return this.http.post('https://krazpizza.azurewebsites.net/api/customers', customer, {headers})
+    const headers = new HttpHeaders().set( 'Content-Type','application/json', )
+    var obs = this.http.post<string>('https://krazpizza.azurewebsites.net/api/customers', customer, {headers})
+    return obs;
   }
 
   logInCustomer(customer){
-    console.log(customer);
-
-    const headers = new HttpHeaders().set( 'Content-Type','application/json' )
-
-   // return this.http.post('http://localhost:51251/api/customers/login', customer, {headers,responseType: 'text'})
-
-    return this.http.post('https://krazpizza.azurewebsites.net/api/customers/login', customer, {headers,responseType: 'text'})
-
-    
+    const headers = new HttpHeaders().set( 'Content-Type','application/json' );
+    var respObs = this.http.post<string>('https://krazpizza.azurewebsites.net/api/customers/login', customer, {headers})
+    return respObs;
   }
 
   getSalt(email){

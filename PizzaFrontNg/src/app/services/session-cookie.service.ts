@@ -8,29 +8,29 @@ import { BehaviorSubject, Observable } from "rxjs";
 })
 export class SessionCookieService {
 
-// Reference to look into Behaviour Subject Pattern
-//isUserID = new BehaviorSubject<string>(this.getID());
-//
-//getID(){
-//Method to initially acquire user ID when they log in
-//  return '23'
-//}
+  loggedIn = new BehaviorSubject<boolean>(false);
 
-
-  constructor( private cookieService: CookieService ) { }
-
+  constructor( private cookieService: CookieService ) { 
+    this.cookieService.set('UserID', '');
+  }
 
   setUserID(id :string){
-
     this.cookieService.set('UserID', id)
-
+    if(id != null) this.loggedIn.next(true);
     console.log( "from the cookie service", this.cookieService.get('UserID'))
-
   }
 
   getUserID(){
+    return this.cookieService.get('UserID');
+  }
 
-    return this.cookieService.get('UserID')
+  isLoggedIn() : Observable<boolean>{ //TODO Make Observable
+    return this.loggedIn;
+  }
+
+  logOut(){
+    this.cookieService.set('UserID', '');
+    this.loggedIn.next(false);
   }
 
 }

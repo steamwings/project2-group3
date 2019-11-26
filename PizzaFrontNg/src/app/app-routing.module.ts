@@ -15,14 +15,17 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent} from './components/login/login.component'
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 
 const routes: Routes = [
+    {path: 'home', component: OrderPizzaComponent}, //TODO add real home
     {path: 'loginlanding', component: LoginLandingComponent},
     {path: 'orders', component: OrderListComponent},
     {path: 'orderpizza' , component: OrderPizzaComponent },
-    {path: 'loginlanding/register' , component: RegisterComponent },
-    {path: 'loginlanding/login' , component: LoginComponent },
+    {path: 'register' , component: RegisterComponent },
+    {path: 'login' , component: LoginComponent },
+    {path: 'logout', component: LogoutComponent},
     {path: 'cart', component: ShoppingCartComponent},
     {path: 'checkout', component: CheckoutComponent},
 ];

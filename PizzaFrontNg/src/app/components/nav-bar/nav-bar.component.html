@@ -12,10 +12,12 @@
 <!-- TODO <button mat-button >Tracker</button> -->
 
 <button mat-button [matMenuTriggerFor]="afterMenu">Shopping Cart</button>
-<mat-menu #afterMenu="matMenu"  yPosition="above">
+<mat-menu #afterMenu="matMenu" yPosition="above">
   <button mat-menu-item routerLink="/cart">View Cart</button>
   <button mat-menu-item routerLink="/checkout">Check Out</button>
 </mat-menu>
 
-<button mat-button routerLink="/loginlanding" >Log In</button>
+<button *ngIf="!(loggedIn | async)" mat-button routerLink="/loginlanding" > Log In </button>
+<button *ngIf="loggedIn | async" mat-button routerLink="/logout"> Log Out </button>
+
 </nav>

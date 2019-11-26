@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { KrazAPIService } from '../../services/kraz-api.service';
 import { EncrDecrService } from '../../services/encr-decr.service'
 import { SessionCookieService } from '../../services/session-cookie.service';
+import { Router } from '@angular/router';
+import { longStackSupport } from 'q';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, 
     private KrazService: KrazAPIService,
     private SessionCookie:SessionCookieService,
-    private EncrDecr : EncrDecrService) { }
+    private EncrDecr : EncrDecrService,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -36,7 +39,6 @@ export class LoginComponent implements OnInit {
     
     let promise = this.KrazService.getSalt({"email":this.loginForm.value.email}).toPromise()
 
-
     promise.then((salt)=>{
 
       let passwordHash = this.EncrDecr.setLogin(this.loginForm.value.password, salt);
@@ -47,18 +49,17 @@ export class LoginComponent implements OnInit {
       logInObj["PasswordHash"] = passwordHash;
         
       console.log(logInObj)
-      this.KrazService.logInCustomer(logInObj).subscribe( response => this.SessionCookie.setUserID(response) )
-
-
-
+      this.KrazService.logInCustomer(logInObj).subscribe( response => {
+        this.SessionCookie.setUserID(response);
+        this.router.navigate(["/","home"]);
+      });
     }).catch((error)=>{
       console.log("Promise rejected with " + JSON.stringify(error));
     });
-
-
-
     
-
+  }
+  
+  logOut() {
     
   }
 

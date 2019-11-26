@@ -1,5 +1,5 @@
 <mat-toolbar class="kraz-red-background">Checkout</mat-toolbar>
 <h4>Your total is {{ price | async }}</h4>
 
-<button class="kraz-default" [disabled]="disabled" mat-button>Pay at Pickup</button>
-<button class="kraz-default" [disabled]="disabled" mat-button>Pay by Card</button>
+<button class="kraz-default" [disabled]="disabled" (click)="submitOrder()" mat-button>Pay at Pickup</button>
+<button class="kraz-default" [disabled]="disabled" (click)="submitOrder()" mat-button>Pay by Card</button>

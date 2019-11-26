@@ -54,21 +54,23 @@ export class Pizza implements IPizza {
   cheeseTypesId: number;
   sauceTypesId: number;
   size: string;
-  toppingsId: Array<number>;
+  toppingsId: Array<number> = new Array<number>();
 }
 
 export interface IOrder {
+  customerId: number,
   pizzas: Array<IPizza>,
   sidesIds: Array<number>,
-  customerId: Number,
+  premadePizzaIds: Array<number>,
   orderTime: string //TODO Remove
 }
 
 export class Order implements IOrder {
+  customerId: number | null;
   pizzas: Array<IPizza> = new Array<Pizza>();
   sidesIds: Array<number> = new Array<number>();
-  customerId: number|null;
-  orderTime: string; //TODO Remove
+  premadePizzaIds: Array<number> = new Array<number>();
+  orderTime: string = "2014-01-01T23:28:56.782Z"; //TODO Remove
 }
 
 export interface IPizzaOption {

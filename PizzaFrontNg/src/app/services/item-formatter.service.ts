@@ -57,7 +57,7 @@ export class ItemFormatterService {
     return obs;
   }
 
-  formatePrebuiltPizza(id: number, index: number) : Observable<Item>{
+  formatPremadePizza(id: number, index: number) : Observable<Item>{
     var obs = new Observable<Item>(subscriber => {
       this.api.getMenu().subscribe(menu => {
         // var pre = menu.prebuilt.find(p => p.id == id);
