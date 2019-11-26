@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PizzaData.Models;
 using PizzaShop.Repositories;
+using Serilog;
+using Serilog.Sinks.MSSqlServer;
 
 namespace PizzaShop
 {
@@ -18,10 +16,20 @@ namespace PizzaShop
     {
 
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            var logDB = Configuration.GetConnectionString("DataConnection");
+            var logTable = "Logs";
+            var opts = new ColumnOptions();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.MSSqlServer(
+                    connectionString: logDB,
+                    tableName: logTable,
+                    columnOptions: opts,
+                    appConfiguration: Configuration
+                ).CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -65,7 +73,6 @@ namespace PizzaShop
             services.AddTransient<IBasicRepo<Toppings>, ToppingsRepo>();
             services.AddTransient<IBasicRepo<Sides>, SidesRepo>();
             services.AddTransient<IBasicRepo<PreMadePizzas>, PreMadePizzasRepo>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

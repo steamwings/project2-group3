@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
 using PizzaShop.Repositories;
+using PizzaShop.Utilities;
 
 namespace PizzaShop.Controllers
 {
@@ -32,14 +33,17 @@ namespace PizzaShop.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CheeseTypesVM>> GetCheeseTypes(int id)
         {
-            var cheeseTypes = await _repo.Get(id);
-
-            if (cheeseTypes is null)
+            return await TryWrapper.TryCatch<Task<ActionResult<CheeseTypesVM>>>(async () =>
             {
-                return NotFound();
-            }
+                 var cheeseTypes = await _repo.Get(id);
 
-            return ConvertToVM(cheeseTypes);
+                 if (cheeseTypes is null)
+                 {
+                     return NotFound();
+                 }
+
+                 return ConvertToVM(cheeseTypes);
+             });
         }
 
         // PUT: api/CheeseTypes/5
