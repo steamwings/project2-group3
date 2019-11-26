@@ -77,6 +77,15 @@ namespace PizzaMvcUI.Controllers
             TempData.SetCart(cart);
         }
 
+        [HttpGet]
+        [Route("RemoveSide/{id}")]
+        public void RemoveSide(int id)
+        {
+            Cart cart = TempData.GetCart();
+            cart.RemoveSide(id);
+            TempData.SetCart(cart);
+        }
+
 
 
         // POST: api/Cart
