@@ -15,10 +15,12 @@ namespace PizzaShop.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomersRepo _repo;
+        private readonly INOrdersRepo _nOrdersRepo;
 
-        public CustomersController(ICustomersRepo repo)
+        public CustomersController(ICustomersRepo repo, INOrdersRepo nOrdersRepo)
         {
             _repo = repo;
+            _nOrdersRepo = nOrdersRepo;
         }
 
         // GET: api/Customers
@@ -143,6 +145,55 @@ namespace PizzaShop.Controllers
             await _repo.Remove(customers);
 
             return customers;
+        }
+
+        [HttpGet("{id}/OrderHistory")]
+        public ActionResult<List<Orders>> GetOrders(int id)
+        {
+            var nOrders = _nOrdersRepo.GetByCustomerId(id);
+
+            if (nOrders == null)
+            {
+                return NotFound();
+            }
+
+            List<Orders> orders = new List<Orders>();
+            foreach (var nOrder in nOrders)
+            {
+                Orders order = new Orders
+                {
+                    CustomerId = nOrder.CustomerId,
+                    OrderTime = nOrder.OrderTime,
+                    Pizzas = new List<Pizzas>(),
+                    PreMadePizzaIds = new List<int>(),
+                    SidesIds = new List<int>()
+                };
+                foreach (var oPizzas in nOrder.OrderPizzas)
+                {
+                    Pizzas pizza = new Pizzas
+                    {
+                        CheeseTypesId = oPizzas.NPizza.CheeseTypeId,
+                        CrustTypesId = oPizzas.NPizza.CrustTypeId,
+                        SauceTypesId = oPizzas.NPizza.SauceTypeId,
+                        ToppingsId = new List<int>()
+                    };
+                    foreach (var topping in oPizzas.NPizza.PizzaToppings)
+                    {
+                        pizza.ToppingsId.Add(topping.ToppingId);
+                    }
+                    order.Pizzas.Add(pizza);
+                }
+                foreach (var oSides in nOrder.OrderSides)
+                {
+                    order.SidesIds.Add(oSides.SideId);
+                }
+                foreach (var oPMPizzas in nOrder.OrderPreMadePizzas)
+                {
+                    order.PreMadePizzaIds.Add(oPMPizzas.PreMadePizzaId);
+                }
+                orders.Add(order);
+            }
+            return orders;
         }
 
         private bool CustomersExists(int id)

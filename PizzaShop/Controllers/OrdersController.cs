@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaData.Models;
+using PizzaShop.Extensions;
 using PizzaShop.Repositories;
 
 namespace PizzaShop.Controllers
@@ -44,107 +45,81 @@ namespace PizzaShop.Controllers
             return orders;
         }
 
-        [HttpGet("{id}/OrderHistory")]
-        public ActionResult<List<Orders>> GetOrdersByCustomerId(int id)
-        {
-            var nOrders = _orderRepo.GetByCustomerId(id);
-
-            if (nOrders == null)
-            {
-                return NotFound();
-            }
-
-            List<Orders> orders = new List<Orders>();
-            foreach (var nOrder in nOrders)
-            {
-                Orders order = new Orders {
-                    CustomerId = nOrder.Id,
-                    OrderTime = nOrder.OrderTime,
-                    Pizzas = new List<Pizzas>()
-                };
-                foreach (var oPizzas in nOrder.OrderPizzas)
-                {
-                    Pizzas pizza = new Pizzas {
-                        CheeseTypesId = oPizzas.NPizza.CheeseTypeId,
-                        CrustTypesId = oPizzas.NPizza.CrustTypeId,
-                        SauceTypesId = oPizzas.NPizza.SauceTypeId
-                    };
-                    foreach (var topping in oPizzas.NPizza.PizzaToppings)
-                    {
-                        pizza.ToppingsId.Add(topping.Id);
-                    }
-                    order.Pizzas.Add(pizza);
-                }
-                foreach (var oSides in nOrder.OrderSides)
-                {
-                    order.SidesIds.Add(oSides.SideId);
-                }
-                foreach (var oPMPizzas in nOrder.OrderPreMadePizzas)
-                {
-                    order.PreMadePizzaIds.Add(oPMPizzas.PreMadePizzaId);
-                }
-                orders.Add(order);
-            }
-            return orders;
-        }
-
         // POST: api/Orders
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public async Task<ActionResult<NOrders>> PostOrders(Orders order)
         {
-            NOrders nOrder = new NOrders
+            if (order.Pizzas.IsNullOrEmpty() && order.PreMadePizzaIds.IsNullOrEmpty() && order.SidesIds.IsNullOrEmpty())
             {
-                CustomerId = order.CustomerId,
-                OrderTime = DateTime.Now //order.OrderTime,
-            };
-            await _orderRepo.Add(nOrder);
-            foreach (var pizza in order.Pizzas)
+                return UnprocessableEntity();
+            }
+            else
             {
-                NPizzas nPizza = new NPizzas
+                NOrders nOrder = new NOrders
                 {
-                    CheeseTypeId = pizza.CheeseTypesId,
-                    CrustTypeId = pizza.CrustTypesId,
-                    SauceTypeId = pizza.SauceTypesId,
-                    Size = pizza.Size,
-                    Name = pizza.Name
+                    CustomerId = order.CustomerId,
+                    OrderTime = DateTime.Now //order.OrderTime,
                 };
-                await _pizzaRepo.Add(nPizza);
-                await _orderRepo.Add(new OrderPizzas
+                await _orderRepo.Add(nOrder);
+                if (order.Pizzas != null)
                 {
-                    NOrderId = nOrder.Id,
-                    NPizzaId = nPizza.Id
-                });
-                foreach (var topping in pizza.ToppingsId)
-                {
-                    await _pizzaRepo.Add(new PizzaToppings
+                    foreach (var pizza in order.Pizzas)
                     {
-                        NPizzaId = nPizza.Id,
-                        ToppingId = topping
-                    });
+                        NPizzas nPizza = new NPizzas
+                        {
+                            CheeseTypeId = pizza.CheeseTypesId,
+                            CrustTypeId = pizza.CrustTypesId,
+                            SauceTypeId = pizza.SauceTypesId,
+                            Size = pizza.Size,
+                            Name = pizza.Name
+                        };
+                        await _pizzaRepo.Add(nPizza);
+                        await _orderRepo.Add(new OrderPizzas
+                        {
+                            NOrderId = nOrder.Id,
+                            NPizzaId = nPizza.Id
+                        });
+                        if (pizza.ToppingsId != null)
+                        {
+                            foreach (var topping in pizza.ToppingsId)
+                            {
+                                await _pizzaRepo.Add(new PizzaToppings
+                                {
+                                    NPizzaId = nPizza.Id,
+                                    ToppingId = topping
+                                });
+                            }
+                        }
+                    }
                 }
-            }
-            foreach (var sideId in order.SidesIds)
-            {
-                OrderSides os = new OrderSides
+                if (order.SidesIds != null)
                 {
-                    NOrderId = nOrder.Id,
-                    SideId = sideId
-                };
-                await _orderRepo.Add(os);
-            }
-            foreach (var PreMadePizzaId in order.PreMadePizzaIds)
-            {
-                OrderPreMadePizzas opmp = new OrderPreMadePizzas
+                    foreach (var sideId in order.SidesIds)
+                    {
+                        OrderSides os = new OrderSides
+                        {
+                            NOrderId = nOrder.Id,
+                            SideId = sideId
+                        };
+                        await _orderRepo.Add(os);
+                    }
+                }
+                if (order.PreMadePizzaIds != null)
                 {
-                    NOrderId = nOrder.Id,
-                    PreMadePizzaId = PreMadePizzaId
-                };
-                await _orderRepo.Add(opmp);
+                    foreach (var PreMadePizzaId in order.PreMadePizzaIds)
+                    {
+                        OrderPreMadePizzas opmp = new OrderPreMadePizzas
+                        {
+                            NOrderId = nOrder.Id,
+                            PreMadePizzaId = PreMadePizzaId
+                        };
+                        await _orderRepo.Add(opmp);
+                    }
+                }
+                return CreatedAtAction("GetOrders", new { id = nOrder.Id }, nOrder.Id);
             }
-
-            return CreatedAtAction("GetOrders", new { id = nOrder.Id }, nOrder.Id);
         }
 
         public int GetEstimatePickupTime()
