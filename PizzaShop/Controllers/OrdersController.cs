@@ -44,7 +44,7 @@ namespace PizzaShop.Controllers
             return orders;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}/OrderHistory")]
         public ActionResult<List<Orders>> GetOrdersByCustomerId(int id)
         {
             var nOrders = _orderRepo.GetByCustomerId(id);
