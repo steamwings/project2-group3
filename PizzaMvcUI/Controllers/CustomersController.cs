@@ -102,5 +102,14 @@ namespace PizzaMvcUI.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> OrderHistory()
+        {
+            int customerId = (int)TempData.Peek("User");
+            List<Orders> orders = await API.GetOrderHistory(customerId);
+            return View(orders);
+        }
+
     }
 }
