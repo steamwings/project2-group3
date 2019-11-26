@@ -77,8 +77,6 @@ namespace PizzaMvcUI.Controllers
             TempData.SetCart(cart);
         }
 
-
-
         // POST: api/Cart
         [HttpPost]
         public void Post([FromBody] string value)
