@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PizzaData.Models;
+using PizzaMvcUI.Utilities;
 
 namespace PizzaMvcUI.Controllers
 {
@@ -102,5 +103,14 @@ namespace PizzaMvcUI.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> OrderHistory()
+        {
+            int customerId = (int)TempData.Peek("User");
+            List<Orders> orders = await API.GetOrderHistory(customerId);
+            return View(orders);
+        }
+
     }
 }

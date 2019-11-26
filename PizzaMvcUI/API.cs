@@ -106,5 +106,16 @@ namespace PizzaMvcUI
             }
             return menu;
         }
+
+        public static async Task<List<Orders>> GetOrderHistory(int id)
+        {
+            List<Orders> orders = null;
+            HttpResponseMessage response = await client.GetAsync($"api/Customers/{id}/OrderHistory");
+            if (response.IsSuccessStatusCode)
+            {
+                orders = await response.Content.ReadAsAsync<List<Orders>>();
+            }
+            return orders;
+        }
     }
 }
