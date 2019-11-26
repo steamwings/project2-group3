@@ -8,7 +8,9 @@ namespace PizzaData.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public decimal Price { get; set; }
+        public int PriceCategoryId { get; set; }
+
         public virtual ICollection<OrderSides> OrderSides { get; set; }
+        public virtual PriceCategory PriceCategory { get; set; }
     }
 }

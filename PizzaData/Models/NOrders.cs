@@ -12,5 +12,6 @@ namespace PizzaData.Models
         public virtual Customers Customer { get; set; }
         public virtual ICollection<OrderPizzas> OrderPizzas { get; set; }
         public virtual ICollection<OrderSides> OrderSides { get; set; }
+        public virtual ICollection<OrderPreMadePizzas> OrderPreMadePizzas { get; set; }
     }
 }
