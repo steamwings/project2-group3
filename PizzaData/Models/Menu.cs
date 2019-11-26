@@ -6,10 +6,11 @@ namespace PizzaData.Models
 {
     public partial class Menu
     {
-        public ICollection<CheeseTypes> Cheeses { get; set; }
-        public ICollection<CrustTypes> Crusts { get; set; }
-        public ICollection<SauceTypes> Sauces { get; set; }
-        public ICollection<Sides> Sides { get; set; }
-        public ICollection<Toppings> Toppings { get; set; }
+        public ICollection<CheeseTypesVM> Cheeses { get; set; }
+        public ICollection<CrustTypesVM> Crusts { get; set; }
+        public ICollection<SauceTypesVM> Sauces { get; set; }
+        public ICollection<SidesVM> Sides { get; set; }
+        public ICollection<ToppingsVM> Toppings { get; set; }
+        public ICollection<PreMadePizzasVM> PreMadePizzas { get; set; }
     }
 }

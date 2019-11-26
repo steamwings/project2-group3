@@ -77,7 +77,6 @@ namespace PizzaMvcUI.Controllers
             TempData.SetCart(cart);
         }
 
-<<<<<<< HEAD
         [HttpGet]
         [Route("RemoveSide/{id}")]
         public void RemoveSide(int id)
@@ -87,10 +86,6 @@ namespace PizzaMvcUI.Controllers
             TempData.SetCart(cart);
         }
 
-
-
-=======
->>>>>>> ba4b9fcaa9bd55d73c9899ed0f75aa8d57274f1e
         // POST: api/Cart
         [HttpPost]
         public void Post([FromBody] string value)

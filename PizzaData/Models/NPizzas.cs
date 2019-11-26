@@ -16,6 +16,7 @@ namespace PizzaData.Models
         public int SauceTypeId { get; set; }
         public string Name { get; set; }
         public string Size { get; set; }
+        public bool isPremade { get; set; }
 
         public virtual CheeseTypes CheeseType { get; set; }
         public virtual CrustTypes CrustType { get; set; }
