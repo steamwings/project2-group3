@@ -38,7 +38,7 @@ namespace PizzaMvcUI.Utilities
         {
             var menu = await API.GetMenu();
             var side = menu.Sides.Where(s => s.Id == sideId).Single();
-            return new Item() { Name = side.Name, Description = side.Description, Price = Format(side.Price) };
+            return new Item() { Id= side.Id, Name = side.Name, Description = side.Description, Price = Format(side.Price) };
         }
         public static async Task<Item> GetItemFromPizzaId(int pizzaId)
         {
