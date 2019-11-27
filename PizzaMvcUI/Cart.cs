@@ -12,16 +12,18 @@ namespace PizzaMvcUI
     public class Cart
     {
         public List<Pizzas> Pizzas { get; set; }
-        public List<int> PrebuiltPizzas { get; set; }
+        public List<int> PreMadePizzas { get; set; }
         public List<int> Sides { get; set; }
         public Pizzas currentPizza;
 
         public async Task<List<Item>> GetItems()
         {
             List<Item> list = new List<Item>();
-            //TODO: list.AddRange(await PrebuiltPizzas.Select(async p => await ItemFormatter.GetItemFromPizzaId(p)).WhenAll());
+            //TODO: 
+           
             list.AddRange(await Pizzas.Select(async p => await ItemFormatter.GetItem(p)).WhenAll());
             list.AddRange(await Sides.Select(async s => await ItemFormatter.GetItemFromSideId(s)).WhenAll());
+            list.AddRange(await PreMadePizzas.Select(async p => await ItemFormatter.GetItemFromPizzaId(p)).WhenAll());
             if (list.Count == 0) { list.Add(ItemFormatter.EmptyItem()); }
             return list;
         }
@@ -65,6 +67,11 @@ namespace PizzaMvcUI
         public void AddSide(int sideId)
         {
             Sides.Add(sideId);
+        }
+
+        public void AddPreMadePizza(int pMPizzaId)
+        {
+            PreMadePizzas.Add(pMPizzaId);
         }
 
         public void RemovePizza(Pizzas pizzaToRemove)

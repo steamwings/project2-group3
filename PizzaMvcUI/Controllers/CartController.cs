@@ -78,6 +78,15 @@ namespace PizzaMvcUI.Controllers
         }
 
         [HttpGet]
+        [Route("AddPreMade/{id}")]
+        public void PostPreMade(int id)
+        {
+            Cart cart = TempData.GetCart();
+            cart.AddPreMadePizza(id);
+            TempData.SetCart(cart);
+        }
+
+        [HttpGet]
         [Route("RemoveSide/{id}")]
         public void RemoveSide(int id)
         {

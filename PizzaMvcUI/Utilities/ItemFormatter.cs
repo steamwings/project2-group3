@@ -42,7 +42,9 @@ namespace PizzaMvcUI.Utilities
         }
         public static async Task<Item> GetItemFromPizzaId(int pizzaId)
         {
-            throw new NotImplementedException();
+            var menu = await API.GetMenu();
+            var pMPizza = menu.PreMadePizzas.Where(p => p.Id == pizzaId).Single();
+            return new Item() { Id = pMPizza.Id, Name = pMPizza.Name, Description = pMPizza.Description, Price = Format(pMPizza.Price) };
         }
 
         public static Item EmptyItem()

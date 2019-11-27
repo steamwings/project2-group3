@@ -128,5 +128,11 @@ namespace PizzaMvcUI
             }
             return pizzas;
         }
+
+        public static async Task<HttpStatusCode> PostOrder(Orders order)
+        {
+            var response = await client.PostAsJsonAsync($"api/orders", order);
+            return response.StatusCode;
+        }
     }
 }

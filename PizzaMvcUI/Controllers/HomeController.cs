@@ -24,7 +24,7 @@ namespace PizzaMvcUI.Controllers
         {
             if (TempData.Peek("Cart") == null)
             {
-                TempData.SetCart(new Cart { Pizzas = new List<Pizzas>(), Sides = new List<int>() });
+                TempData.SetCart(new Cart { Pizzas = new List<Pizzas>(), Sides = new List<int>(), PreMadePizzas = new List<int>() });
             }
             TempData.Keep("Cart");
             return View();

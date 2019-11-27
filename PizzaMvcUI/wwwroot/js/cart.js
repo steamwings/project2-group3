@@ -6,8 +6,6 @@
 });
 
 
-
-
 function showCheckout() {
 
     $("#checkoutForm").show()
