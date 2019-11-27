@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 })
 export class SessionCookieService {
 
-  loggedIn = new BehaviorSubject<boolean>(false);
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor( private cookieService: CookieService ) { 
     this.cookieService.set('UserID', '');
@@ -25,7 +25,7 @@ export class SessionCookieService {
   }
 
   isLoggedIn() : Observable<boolean>{ //TODO Make Observable
-    return this.loggedIn;
+    return this.loggedIn.asObservable();
   }
 
   logOut(){

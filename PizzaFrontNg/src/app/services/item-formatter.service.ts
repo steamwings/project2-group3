@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { KrazAPIService } from './kraz-api.service';
-import { Item, Pizza, ItemType } from '../modules/models/models.module';
+import { Item, Pizza, ItemType, IPizzaOption } from '../modules/models/models.module';
 import { Observable } from 'rxjs';
 import { formatCurrency } from '@angular/common';
 
@@ -16,7 +16,7 @@ export class ItemFormatterService {
     return formatCurrency(price, this.locale, "$");
   }
 
-  format(p: Pizza, index: number) : Observable<Item>{
+  formatPizza(p: Pizza, index: number) : Observable<Item>{
     var obs = new Observable<Item>(subscriber =>
     {
       this.api.getMenu().subscribe(menu =>{
@@ -41,15 +41,18 @@ export class ItemFormatterService {
     return obs;
   }
 
-  formatSide(id: number, index: number) : Observable<Item>{
-    var obs = new Observable<Item>(subscriber =>
-    {
+  private format(id: number, index: number, listname: string){
+    var obs = new Observable<Item>(subscriber => {
       this.api.getMenu().subscribe(menu => {
-        var side = menu.sides.find(s => s.id == id);
+        let array: Array<IPizzaOption> = menu[listname];
+        let pOption: IPizzaOption = array.find((s: IPizzaOption) => s.id == id);
         var item = new Item({
-          name:side.name, description:side.description, nprice:side.price,
-          price:this.formatPrice(side.price),
-          type:ItemType.Side, index:index
+          name: pOption.name, 
+          description: pOption.description,
+          nprice: pOption.price,
+          price: this.formatPrice(pOption.price),
+          type: ItemType.Side, 
+          index: index
         });
         subscriber.next(item);
       });
@@ -57,19 +60,12 @@ export class ItemFormatterService {
     return obs;
   }
 
+  formatSide(id: number, index: number) : Observable<Item>{
+    return this.format(id, index, "sides");
+  }
+
   formatPremadePizza(id: number, index: number) : Observable<Item>{
-    var obs = new Observable<Item>(subscriber => {
-      this.api.getMenu().subscribe(menu => {
-        // var pre = menu.prebuilt.find(p => p.id == id);
-        // var item = new Item({
-        //   name:pre.name, description:pre.description,nprice:pre.price,
-        //   price:this.formatPrice(pre.price),
-        //   type:ItemType.PrebuiltPizza, index: index
-        // });
-        subscriber.next(new Item({name:"prebuilt", type:ItemType.PrebuiltPizza, index: index}));
-      });
-    });
-    return obs;
+    return this.format(id, index, "premadePizzas");
   }
 
   emptyItem() : Observable<Item>{

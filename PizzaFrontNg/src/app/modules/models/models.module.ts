@@ -76,43 +76,23 @@ export class Order implements IOrder {
 export interface IPizzaOption {
   id: number,
   name: string,
-  description: string
+  description: string,
+  price: number,
 }
 
-export class Topping implements IPizzaOption {
-  id: number;
+class PizzaOption implements IPizzaOption {
+  id: number;  
   name: string;
   description: string;
   price: number;
 }
 
-export class Side implements IPizzaOption {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
-
-export class CrustType implements IPizzaOption {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
-
-export class SauceType implements IPizzaOption {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
-
-export class CheeseType implements IPizzaOption {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
+export class Topping extends PizzaOption {}
+export class Side extends PizzaOption {}
+export class CrustType extends PizzaOption {}
+export class SauceType extends PizzaOption {}
+export class CheeseType extends PizzaOption {}
+export class PremadePizza extends PizzaOption {}
 
 export class Menu {
   crusts: Array<CrustType>;
@@ -120,4 +100,5 @@ export class Menu {
   sauces: Array<SauceType>;
   sides: Array<Side>;
   toppings: Array<Topping>;
+  premadePizzas: Array<PremadePizza>;
 }

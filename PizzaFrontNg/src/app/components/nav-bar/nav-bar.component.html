@@ -1,17 +1,23 @@
 
 <nav>
-<button mat-button> Home </button>
+<button mat-button routerLink="/home"> Home </button>
 
 <button mat-button [matMenuTriggerFor]="Order" >Order</button>
 <mat-menu #Order="matMenu" yPosition="above">
   <button mat-menu-item routerLink="/orderpizza">Build Pizza</button>
-  <button mat-menu-item> Add a Side </button>
+  <button mat-menu-item routerLink="/orderside"> Add a Side </button>
   <button mat-menu-item routerLink="/orders" >Order History</button>
 </mat-menu>
 
 <!-- TODO <button mat-button >Tracker</button> -->
 
-<button mat-button [matMenuTriggerFor]="afterMenu">Shopping Cart</button>
+<span>
+  <button mat-button [matMenuTriggerFor]="afterMenu">Shopping Cart
+  <span class="">
+    <span class="rounded-circle numberCircle mat-body-1">{{cartCount | async}}</span>
+  </span>
+  </button>
+</span>
 <mat-menu #afterMenu="matMenu" yPosition="above">
   <button mat-menu-item routerLink="/cart">View Cart</button>
   <button mat-menu-item routerLink="/checkout">Check Out</button>

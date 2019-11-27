@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Topping, IPizzaOption, IOrder, Menu, CrustType, CheeseType, SauceType } from 'src/app/modules/models/models.module';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({

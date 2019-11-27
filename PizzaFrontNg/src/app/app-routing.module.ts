@@ -16,13 +16,17 @@ import { LoginComponent} from './components/login/login.component'
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { OrderSidesComponent } from './components/order-sides/order-sides.component';
+import { LandingContentComponent } from './components/landing-content/landing-content.component';
 
 
 const routes: Routes = [
-    {path: 'home', component: OrderPizzaComponent}, //TODO add real home
+    {path: '', component: LandingContentComponent},
+    {path: 'home', component: LandingContentComponent}, //TODO add real home
     {path: 'loginlanding', component: LoginLandingComponent},
     {path: 'orders', component: OrderListComponent},
     {path: 'orderpizza' , component: OrderPizzaComponent },
+    {path: 'orderside', component: OrderSidesComponent},
     {path: 'register' , component: RegisterComponent },
     {path: 'login' , component: LoginComponent },
     {path: 'logout', component: LogoutComponent},
@@ -55,4 +59,4 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule{ }
-export const routingComponents =[LoginComponent,OrderListComponent, OrderPizzaComponent,RegisterComponent,LoginLandingComponent]
+export const routingComponents =[LoginComponent,OrderListComponent, OrderPizzaComponent,RegisterComponent,LoginLandingComponent, LandingContentComponent]

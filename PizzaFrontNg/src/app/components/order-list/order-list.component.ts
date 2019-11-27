@@ -8,15 +8,10 @@ import { KrazAPIService } from '../../services/kraz-api.service'
 })
 export class OrderListComponent implements OnInit {
 
-  public pizzas=[];
-
-  constructor(private _getPizzaService : KrazAPIService) { }
+  constructor(private api : KrazAPIService) { }
 
   ngOnInit() {
-    this._getPizzaService.getCrustTypes()
-    .subscribe((data: any[])=>{
-      console.log(data)});
-    //.subscribe( data => this.pizzas = data );
+
   }
 
 }

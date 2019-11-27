@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { IOrder, IPizza, Pizza, Order, Item, Menu } from 'src/app/modules/models/models.module';
 import { Observable, zip, Subject, BehaviorSubject } from 'rxjs';
 import { ItemFormatterService } from './item-formatter.service';
+import { supportsScrollBehavior } from '@angular/cdk/platform';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,25 @@ export class ShoppingCartService {
 
   constructor(private cookies: CookieService,
               private formatter: ItemFormatterService,
-  ) { }
+  ){
+    this.countSubject = new BehaviorSubject<number>(0);
+    this.itemsSubject = new BehaviorSubject<Item[]>([]);
+    this.Save(this.Cart());
+  }
 
-  private subject : Subject<Item[]>;
+  ngOnInit(){
+    // this.itemsSubject.subscribe(i =>{
+    //   console.log("Items: " + i);
+    // });
+  }
+
+  private itemsSubject: Subject<Item[]>;
+  private countSubject: Subject<number>;
+  private count: number = 0;
+
+  public getCount() : Observable<number>{
+    return this.countSubject.asObservable();
+  }
 
   private Cart() : IOrder {
     if(!this.cookies.check('cart')){
@@ -33,16 +50,16 @@ export class ShoppingCartService {
   }
 
   private Save(cart : IOrder){
+    this.count = cart.pizzas.length + cart.premadePizzaIds.length + cart.sidesIds.length;
     this.cookies.set('cart', JSON.stringify(cart));
     this.CastChanges();
   }
 
   private CastChanges(){
-    if (this.subject) {
-      zip(...this.formatAsItems()).subscribe(v => {
-        this.subject.next(v);
-      });
-    }
+    zip(...this.formatAsItems()).subscribe(v => {
+      this.itemsSubject.next(v);
+    });
+    this.countSubject.next(this.count);
   }
 
   public clear() {
@@ -55,7 +72,7 @@ export class ShoppingCartService {
     this.Save(cart);
   }
 
-  public addSide(sideId : number) {
+  public addSide(sideId: number) {
     var cart = this.Cart();
     cart.sidesIds.push(sideId);
     this.Save(cart);
@@ -71,7 +88,7 @@ export class ShoppingCartService {
 
   public removeSide(index: number){
     var cart = this.Cart();
-    cart.sidesIds = cart.sidesIds.filter((_, i) => { index != i } );
+    cart.sidesIds = cart.sidesIds.filter((_, i) => index != i );
     this.Save(cart);
   }
 
@@ -80,7 +97,7 @@ export class ShoppingCartService {
     var cart = this.Cart();
     if(cart.pizzas)
       cart.pizzas.forEach((p, index) => {
-        list.push(this.formatter.format(p, index));
+        list.push(this.formatter.formatPizza(p, index));
       });
     if(cart.sidesIds)
       cart.sidesIds.forEach((s, index) => {
@@ -96,15 +113,14 @@ export class ShoppingCartService {
   }
 
   public getItems() : Observable<Item[]>{
-    if(!this.subject) this.subject = new BehaviorSubject<Item[]>([]);
     this.CastChanges();
-    return this.subject;
+    return this.itemsSubject.asObservable();
   }
 
   public getPrice() : Observable<string>{
-    if (!this.subject) this.getItems();
+    if (!this.itemsSubject) this.getItems();
     var obs = new Observable<string>(sub => {
-      this.subject.subscribe(items => {
+      this.itemsSubject.subscribe(items => {
         let total: number = 0;
         items.forEach(i => total += i.nprice);
         sub.next(this.formatter.formatPrice(total));
