@@ -27,7 +27,7 @@ namespace PizzaMvcUI.Controllers
         [HttpGet]
         public ActionResult LogIn()
         {
-            return View();
+            return View("Login");
         }
 
         [HttpPost]
