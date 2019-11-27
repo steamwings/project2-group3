@@ -117,5 +117,16 @@ namespace PizzaMvcUI
             }
             return orders;
         }
+
+        public static async Task<List<PreMadePizzasVM>> GetPreMadePizzas()
+        {
+            List<PreMadePizzasVM> pizzas = null;
+            HttpResponseMessage response = await client.GetAsync($"api/premadepizzas/");
+            if (response.IsSuccessStatusCode)
+            {
+                pizzas = await response.Content.ReadAsAsync<List<PreMadePizzasVM>>();
+            }
+            return pizzas;
+        }
     }
 }

@@ -101,5 +101,10 @@ namespace PizzaMvcUI.Controllers
                 return View();
             }
         }
+
+        public async Task<IActionResult> PreMade()
+        {
+            return View(await API.GetPreMadePizzas());
+        }
     }
 }
