@@ -77,7 +77,7 @@ namespace PizzaMvcUI
 
         public static async Task<IEnumerable<SidesVM>> GetSides()
         {
-            var response = await client.GetAsync($"api/Sides");
+            var response = await client.GetAsync("api/Sides");
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsAsync<IEnumerable<SidesVM>>();

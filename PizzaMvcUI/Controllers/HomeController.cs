@@ -22,13 +22,14 @@ namespace PizzaMvcUI.Controllers
 
         public IActionResult Index()
         {
-            if(TempData.Peek("Cart") == null)
+            if (TempData.Peek("Cart") == null)
             {
                 TempData.SetCart(new Cart { Pizzas = new List<Pizzas>(), Sides = new List<int>() });
             }
             TempData.Keep("Cart");
             return View();
         }
+
 
         public IActionResult Privacy()
         {

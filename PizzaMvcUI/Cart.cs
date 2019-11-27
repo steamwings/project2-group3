@@ -74,6 +74,11 @@ namespace PizzaMvcUI
 
         public void RemoveSide(int sideToRemove)
         {
+/*
+            var match = Sides.FirstOrDefault(x => x.Name == sideToRemove);
+
+            if (match != null)
+                Sides.Remove(match);*/
             Sides.Remove(sideToRemove);
         }
 
