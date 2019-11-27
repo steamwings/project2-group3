@@ -26,23 +26,34 @@
                         @TimeZoneInfo.ConvertTimeFromUtc(order.OrderTime, TimeZoneInfo.Local);
                     </td>
                     <td>
-                        @if (order.Pizzas != null && order.Pizzas.Count > 0)
+                        @if (order.PreMadePizzaIds.Count > 0 || order.Pizzas.Count > 0)
                         {
                             <span>Pizzas</span><br />
-                            @foreach (var pizza in order.Pizzas)
+                            @if (order.PreMadePizzaIds.Count > 0)
                             {
-                                <span> - Crust: @Model.menu.Crusts.First(c => c.Id == pizza.CrustTypesId).Name - </span>
-                                <span>Sauce: @Model.menu.Sauces.First(s => s.Id == pizza.SauceTypesId).Name - </span>
-                                <span>Cheese: @Model.menu.Cheeses.First(c => c.Id == pizza.CheeseTypesId).Name</span>
-                                @if (pizza.ToppingsId != null && pizza.ToppingsId.Count > 0)
+                                @foreach (var PreMadePizzaId in order.PreMadePizzaIds)
                                 {
-                                    <span> - Toppings: </span>
-                                    @foreach (var topping in pizza.ToppingsId)
-                                    {
-                                        <span> @Model.menu.Toppings.First(t => t.Id == topping).Name, </span>
-                                    }
+                    <span> - @Model.menu.PreMadePizzas.First(c => c.Id == PreMadePizzaId).Name: @Model.menu.PreMadePizzas.First(c => c.Id == PreMadePizzaId).Description</span><br />
                                 }
-                                <br />
+                            }
+                            @if (order.Pizzas.Count > 0)
+                            {
+                                @foreach (var pizza in order.Pizzas)
+                                {
+                                    <span> - Custom Pizza</span>
+                                    <span> - Crust: @Model.menu.Crusts.First(c => c.Id == pizza.CrustTypesId).Name</span>
+                                    <span> - Sauce: @Model.menu.Sauces.First(s => s.Id == pizza.SauceTypesId).Name</span>
+                                    <span> - Cheese: @Model.menu.Cheeses.First(c => c.Id == pizza.CheeseTypesId).Name</span>
+                                    @if (pizza.ToppingsId != null && pizza.ToppingsId.Count > 0)
+                                    {
+                                        <span> - Toppings: </span>
+                                        @foreach (var toppingId in pizza.ToppingsId)
+                                        {
+                                            <span> @Model.menu.Toppings.First(t => t.Id == toppingId).Name, </span>
+                                        }
+                                    }
+                                    <br />
+                                }
                             }
                         }
                         @if (order.SidesIds != null && order.SidesIds.Count > 0)

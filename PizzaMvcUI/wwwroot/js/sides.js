@@ -3,10 +3,20 @@
 
         let id = jQuery(this).attr("sideid");
         addSide(id)
+        confirmSide();
     });
 });
 
+function confirmSide() {
+    var popup = document.getElementById("SideConfirm");
+    popup.style.display = "block";
+    $("#SideContinue").click(closeConfirmation);
+}
 
+function closeConfirmation() {
+    var popup = document.getElementById("SideConfirm");
+    popup.style.display = "none";
+}
 
 
 function addSide( id) {
@@ -19,6 +29,7 @@ function addSide( id) {
         url: baseUrl + `/api/Cart/AddSide/${id}`,
         success: function (data, textStatus, jqXHR) {
             console.log("GET success");
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("GET failed: " + textStatus);

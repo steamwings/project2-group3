@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PizzaData.Models.Sides>
+﻿@model IEnumerable<PizzaData.Models.SidesVM>
 @{
     ViewData["Title"] = "Sides";
 }
@@ -43,8 +43,15 @@
                 <td>
                     <button  sideid="@(item.Id) " type="button" class="btn btn-default sidesSubmit">Add to Cart</button>
                 </td>
-
             </tr>
         }
     </tbody>
 </table>
+
+<div id="SideConfirm" class="ConfirmationWindow">
+    <div class="ConfirmationPrompt">
+        <p>You've added a side to your Cart!</p>
+        <a id="SideContinue" asp-action="Index">Continue Shopping</a> |
+        <a asp-controller="ViewCart" asp-action="Index">Go To Checkout</a>
+    </div>
+</div>
