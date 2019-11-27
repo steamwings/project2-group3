@@ -3,7 +3,7 @@
 <form [formGroup]="dynForm" (ngSubmit)="addPizza()">
     <p id="loadCrust" [hidden]="crustLoaded"> Loading crusts... </p>
     <div *ngIf="crustLoaded | async">
-        <h4 > Crust </h4>
+        <h4 class="mat-h2"> Crust </h4>
         <div *ngFor="let crust of crustList; let i = index; first as isFirst">
             <label for="radio_{{crust.name}}">
                 <input id="radio_{{crust.name}}" [formControl]="dynForm.controls['crust']"
@@ -15,7 +15,7 @@
     </div>
     <p id="loadSauce" [hidden]="sauceLoaded"> Loading sauces... </p>
     <div *ngIf="sauceLoaded | async">
-        <h4> Sauce </h4>
+        <h4 class="mat-h2"> Sauce </h4>
         <div *ngFor="let sauce of sauceList; let i = index; first as isFirst">
             <label for="radio_{{sauce.name}}">
                 <input id="radio_{{sauce.name}}" [formControl]="dynForm.controls['sauce']" [value]="sauce.id" type="radio"
@@ -27,7 +27,7 @@
     </div>
     <p id="loadCheese" [hidden]="cheeseLoaded"> Loading cheeses... </p>
     <div *ngIf="cheeseLoaded | async">
-        <h4> Cheese </h4>
+        <h4 class="mat-h2"> Cheese </h4>
         <div *ngFor="let cheese of cheeseList; let i = index; first as isFirst">
             <label for="radio_{{cheese.name}}">
                 <input id="radio_{{cheese.name}}" [formControl]="dynForm.controls['cheese']" [value]="cheese.id" type="radio"
@@ -39,7 +39,7 @@
     </div>
     <p id="loadToppings" [hidden]="toppingsLoaded"> Loading toppings... </p>
     <div *ngIf="toppingsLoaded | async">
-        <h4> Toppings </h4>
+        <h4 class="mat-h2"> Toppings </h4>
         <div *ngFor="let topping of dynForm.controls['toppings'].controls; let i = index">
             <input type="checkbox" [formControl]="topping" [checked]="false">
             <label>
@@ -49,6 +49,8 @@
         </div>
     </div>
     <div>
-        <button mat-button class="kraz-default" type="submit" [disabled]="!allowSubmit">Add to Order</button>
+        <button mat-button class="kraz-default" type="submit" [disabled]="!allowSubmit">
+            <span class="mat-h2">Add to Order</span>
+        </button>
     </div>
 </form>

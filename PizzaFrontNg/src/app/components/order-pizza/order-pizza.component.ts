@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators,FormControl,FormArray } from '@angula
 import { Pizza, Topping, CrustType, CheeseType, SauceType } from 'src/app/modules/models/models.module';
 import { KrazAPIService } from 'src/app/services/kraz-api.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-order-pizza',
@@ -31,10 +33,13 @@ export class OrderPizzaComponent implements OnInit {
   allowSubmit = false;
   setting = "start";
 
-  constructor(private fb: FormBuilder, 
-              private api: KrazAPIService,
-              private cart: ShoppingCartService)
-  {
+  constructor(
+    private fb: FormBuilder, 
+    private api: KrazAPIService,
+    private cart: ShoppingCartService,
+    private router: Router,
+    private snackbar: MatSnackBar,
+  ){
     this.dynForm = new FormGroup({});
 
     this.api.getCrustTypes().subscribe(crusts => { 
@@ -89,8 +94,15 @@ export class OrderPizzaComponent implements OnInit {
     });
   }
 
-  addPizza(){
+  private doAdd(pizza: Pizza){
+    this.cart.addPizza(pizza);
+    let sbRef = this.snackbar.open("Custom pizza added to Cart.", "Add a copy");
+    sbRef.onAction().subscribe(() => {
+      this.doAdd(pizza);
+    });
+  }
 
+  addPizza(){
     if(this.dynForm.invalid){
       //TODO Show error
       console.log("Invalid");
@@ -101,8 +113,7 @@ export class OrderPizzaComponent implements OnInit {
     pizza.crustTypesId = this.dynForm.controls['crust'].value;
     pizza.sauceTypesId = this.dynForm.controls['sauce'].value;
     pizza.toppingsId = this.toppings;
-    this.cart.addPizza(pizza);
-    console.log(JSON.stringify(pizza));
+    this.doAdd(pizza);
+    this.router.navigate(['/cart']);
   }
-
 }

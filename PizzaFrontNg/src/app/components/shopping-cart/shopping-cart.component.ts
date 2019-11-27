@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { Item, ItemType } from 'src/app/modules/models/models.module';
 import { Observable } from 'rxjs';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -10,14 +10,18 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./shopping-cart.component.css']
 })
 
-// TODO: Get table padding to actually work
 export class ShoppingCartComponent implements OnInit {
 
   items: Observable<Array<Item>>;
+  price: Observable<string>;
   columnsToDisplay = ['name', 'price', 'description', 'remove'];
-  
-  constructor(private cart: ShoppingCartService) { 
+  get ItemType() { return ItemType; }
+
+  constructor(
+    private cart: ShoppingCartService,
+  ){ 
     this.items = cart.getItems();
+    this.price = cart.getPrice();
     //this.items.subscribe(val => {console.log("Item: " + val)});
   }
 
@@ -38,6 +42,7 @@ export class ShoppingCartComponent implements OnInit {
       case ItemType.Meta:
       default:
     }
+    //TODO snackbar undo option
   }
 
   clear(){

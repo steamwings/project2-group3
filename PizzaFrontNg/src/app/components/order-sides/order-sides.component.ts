@@ -4,6 +4,7 @@ import { Side, Item, ItemType } from 'src/app/modules/models/models.module';
 import { Observable } from 'rxjs';
 import { ItemFormatterService } from 'src/app/services/item-formatter.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-order-sides',
@@ -15,11 +16,13 @@ export class OrderSidesComponent implements OnInit {
 
   sides: Observable<Item[]>;
   columnsToDisplay = ['add', 'name', 'price', 'description'];
-  
+  get ItemType() { return ItemType; }
+
   constructor(
     private api: KrazAPIService,
     private cart: ShoppingCartService,
-    formatter: ItemFormatterService
+    formatter: ItemFormatterService,
+    private snackbar: MatSnackBar,
   ){
     this.sides = Observable.create(sub =>{
       this.api.getMenu().subscribe(m => {
@@ -40,8 +43,12 @@ export class OrderSidesComponent implements OnInit {
   ngOnInit() {
   }
 
-  add(id: number){
-    this.cart.addSide(id);
+  add(i: Item){
+    this.cart.addSide(i.index);
+    let sbRef = this.snackbar.open(i.name + " added to Cart.", "Add another");
+    sbRef.onAction().subscribe(() => {
+      this.add(i);
+    });
   }
 
 }

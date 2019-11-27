@@ -1,5 +1,7 @@
 <mat-toolbar class="kraz-red-background">Checkout</mat-toolbar>
-<h4>Your total is {{ price | async }}</h4>
+
+<h4 *ngIf="order|async as o" class="mat-h2"> Order confirmed! Your order number is {{o}} </h4>
+<h2 *ngIf="(order|async)==undefined" class="mat-h2">How would you like to pay {{ price | async }}?</h2>
 
 <button class="kraz-default" [disabled]="disabled" (click)="submitOrder()" mat-button>Pay at Pickup</button>
 <button class="kraz-default" [disabled]="disabled" (click)="submitOrder()" mat-button>Pay by Card</button>

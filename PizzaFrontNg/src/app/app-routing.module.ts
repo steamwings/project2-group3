@@ -18,6 +18,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { OrderSidesComponent } from './components/order-sides/order-sides.component';
 import { LandingContentComponent } from './components/landing-content/landing-content.component';
+import { OrderConfirmComponent } from './components/order-confirm/order-confirm.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
     {path: 'logout', component: LogoutComponent},
     {path: 'cart', component: ShoppingCartComponent},
     {path: 'checkout', component: CheckoutComponent},
+    {path: 'orderconfirm', component: OrderConfirmComponent},
 ];
 
 @NgModule({

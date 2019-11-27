@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { IOrder, IPizza, Pizza, Order, Item, Menu } from 'src/app/modules/models/models.module';
+import { IOrder, IPizza, Pizza, Order, Item, Menu, ItemType } from 'src/app/modules/models/models.module';
 import { Observable, zip, Subject, BehaviorSubject } from 'rxjs';
 import { ItemFormatterService } from './item-formatter.service';
 import { supportsScrollBehavior } from '@angular/cdk/platform';
@@ -16,6 +16,7 @@ export class ShoppingCartService {
   ){
     this.countSubject = new BehaviorSubject<number>(0);
     this.itemsSubject = new BehaviorSubject<Item[]>([]);
+    this.priceSubject = new BehaviorSubject<string>("$0.00");
     this.Save(this.Cart());
   }
 
@@ -27,6 +28,7 @@ export class ShoppingCartService {
 
   private itemsSubject: Subject<Item[]>;
   private countSubject: Subject<number>;
+  private priceSubject: Subject<string> = null;
   private count: number = 0;
 
   public getCount() : Observable<number>{
@@ -58,6 +60,9 @@ export class ShoppingCartService {
   private CastChanges(){
     zip(...this.formatAsItems()).subscribe(v => {
       this.itemsSubject.next(v);
+      let total: number = 0;
+      v.forEach(i => total += i.nprice);
+      this.priceSubject.next(this.formatter.formatPrice(total));
     });
     this.countSubject.next(this.count);
   }
@@ -109,6 +114,7 @@ export class ShoppingCartService {
       });
     if(list.length==0)
       list.push(this.formatter.emptyItem());
+    
     return list;
   }
 
@@ -117,16 +123,9 @@ export class ShoppingCartService {
     return this.itemsSubject.asObservable();
   }
 
+
   public getPrice() : Observable<string>{
-    if (!this.itemsSubject) this.getItems();
-    var obs = new Observable<string>(sub => {
-      this.itemsSubject.subscribe(items => {
-        let total: number = 0;
-        items.forEach(i => total += i.nprice);
-        sub.next(this.formatter.formatPrice(total));
-      });
-    });
-    return obs;
+    return this.priceSubject.asObservable();
   }
 
 }

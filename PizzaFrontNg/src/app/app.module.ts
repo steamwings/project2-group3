@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatMenuModule, MatButtonModule, MatTableModule, 
-  MatGridListModule, MatToolbarModule } from '@angular/material';
+  MatGridListModule, MatToolbarModule, MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -23,6 +23,7 @@ import { ItemFormatterService } from './services/item-formatter.service';
 import { OrderSidesComponent } from './components/order-sides/order-sides.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { OrderConfirmComponent } from './components/order-confirm/order-confirm.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     ShoppingCartComponent,
     OrderSidesComponent,
     CheckoutComponent,
-    LogoutComponent,    
+    LogoutComponent,
+    OrderConfirmComponent,    
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     MatTableModule,
     MatGridListModule,
     MatToolbarModule,
+    MatSnackBarModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -58,6 +61,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     KrazAPIService,
     ShoppingCartService,
     ItemFormatterService,
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 3500 } },
     ],
   bootstrap: [
     AppComponent

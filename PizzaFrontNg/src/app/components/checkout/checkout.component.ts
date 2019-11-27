@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators'
 import { KrazAPIService } from 'src/app/services/kraz-api.service';
 import { Router } from '@angular/router';
 import { SessionCookieService } from 'src/app/services/session-cookie.service';
@@ -15,6 +16,7 @@ export class CheckoutComponent implements OnInit {
   price: Observable<string>;
   disabled: boolean = true;
   paid: boolean = false; // when true, buttons are disabled
+  order: Observable<string>;
 
   constructor(private cart: ShoppingCartService,
               private api: KrazAPIService,
@@ -30,16 +32,15 @@ export class CheckoutComponent implements OnInit {
   }
 
   submitOrder(){
-    this.cookieSvc.isLoggedIn().subscribe(loggedIn => {
+    this.cookieSvc.isLoggedIn().pipe(first()).subscribe(loggedIn => {
       if(!loggedIn) this.router.navigate(['/loginlanding']);
-      else{
+      else {
         var myOrder = this.cart.getAndClear();
         myOrder.customerId = parseInt(this.cookieSvc.getUserID());
         console.log(myOrder);
-        this.api.placeOrder(myOrder).subscribe(order => {
-          console.log("Got back: " + order);
-        });
+        this.order = this.api.placeOrder(myOrder);
         this.paid = this.disabled = true;
+        // this.router.navigate(['/orderconfirm']);
       }
     }); 
   }

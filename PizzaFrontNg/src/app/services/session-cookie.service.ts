@@ -11,7 +11,9 @@ export class SessionCookieService {
   private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor( private cookieService: CookieService ) { 
-    this.cookieService.set('UserID', '');
+    if(this.cookieService.check('UserID') && parseInt(this.cookieService.get('UserID'),10) > 0) {
+        this.loggedIn.next(true);
+    }
   }
 
   setUserID(id :string){
