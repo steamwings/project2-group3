@@ -2,23 +2,23 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div class="text-center">
-        @if (TempData["User"] != null)
+<div class="text-center">
+    @if (TempData["User"] != null)
+    {
+        var cust = await API.GetCustomer((int)TempData["User"]);
+        if (cust != null)
         {
-            var cust = await API.GetCustomer((int)TempData["User"]);
-            if (cust != null)
-            {
-                <h1 class="display-4">Welcome, @cust.FirstName</h1>
-            }
-            else
-            {
-                <h1 class="display-4">Welcome</h1>
-            }
+            <h1 class="display-4">Welcome, @cust.FirstName</h1>
         }
         else
         {
             <h1 class="display-4">Welcome</h1>
         }
-        @{ TempData.Keep(); }
-        <p><a asp-action="Index" asp-controller="Orders">Start your order</a>.</p>
-    </div>
+    }
+    else
+    {
+        <h1 class="display-4">Welcome</h1>
+    }
+    @{ TempData.Keep(); }
+    <p><a asp-action="Index" asp-controller="Orders">Start your order</a>.</p>
+</div>

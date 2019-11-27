@@ -22,7 +22,7 @@ namespace PizzaMvcUI
             //TODO: list.AddRange(await PrebuiltPizzas.Select(async p => await ItemFormatter.GetItemFromPizzaId(p)).WhenAll());
             list.AddRange(await Pizzas.Select(async p => await ItemFormatter.GetItem(p)).WhenAll());
             list.AddRange(await Sides.Select(async s => await ItemFormatter.GetItemFromSideId(s)).WhenAll());
-            if(list.Count == 0) { list.Add(ItemFormatter.EmptyItem()); }
+            if (list.Count == 0) { list.Add(ItemFormatter.EmptyItem()); }
             return list;
         }
 
@@ -74,11 +74,12 @@ namespace PizzaMvcUI
 
         public void RemoveSide(int sideToRemove)
         {
-/*
+            /*
             var match = Sides.FirstOrDefault(x => x.Name == sideToRemove);
 
             if (match != null)
-                Sides.Remove(match);*/
+                Sides.Remove(match);
+            */
             Sides.Remove(sideToRemove);
         }
 
