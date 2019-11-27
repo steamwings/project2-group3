@@ -14,7 +14,6 @@ namespace PizzaMvcUI.Controllers
         {
             CartVM cartVM = new CartVM {
                 Items = await TempData.GetCart().GetItems()
-
             };
 
             return View(cartVM);
