@@ -17,12 +17,5 @@ namespace PizzaMVCTest
             var result = controller.LogIn() as ViewResult;
             Assert.AreEqual("Login", result.ViewName);
         }
-
-        //[Test]
-        //public void Test2()
-        //{
-        //    var controller = new CustomersController();
-        //    var result = controller.
-        //}
     }
 }
