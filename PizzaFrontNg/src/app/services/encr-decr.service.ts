@@ -12,9 +12,8 @@ export class EncrDecrService {
   private hash(pwd: string, salt: string) : string{
     let swords: CryptoJS.LibWordArray = CryptoJS.enc.Base64.parse(salt);
     let pwords: CryptoJS.LibWordArray = CryptoJS.enc.Utf8.parse(pwd);
-    let a = new Array<number>(...pwords.words, ...swords.words);
-    let b = CryptoJS.lib.WordArray.create(a);
-    return CryptoJS.SHA256(b).toString(CryptoJS.enc.Base64);
+    var hexStr = CryptoJS.enc.Hex.stringify(pwords) + CryptoJS.enc.Hex.stringify(swords);
+    return CryptoJS.SHA256(CryptoJS.enc.Hex.parse(hexStr)).toString(CryptoJS.enc.Base64);
   }
 
   set(password){
