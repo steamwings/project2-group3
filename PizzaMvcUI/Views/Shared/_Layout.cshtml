@@ -16,7 +16,7 @@
             cust = await API.GetCustomer((int)user);
     }
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #CD4545" >
             <div class="container">
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     @if (cust != null)
@@ -63,6 +63,7 @@
             </div>
         </nav>
     </header>
+    
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -70,7 +71,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer id="MainFooter" class="border-top footer text-muted">
         <div class="container">
             &copy; 2019 - PizzaMvcUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
