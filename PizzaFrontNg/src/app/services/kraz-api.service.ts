@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Topping, IPizzaOption, IOrder, Menu, CrustType, CheeseType, SauceType } from 'src/app/modules/models/models.module';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SessionCookieService } from './session-cookie.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,11 @@ import { Observable } from 'rxjs';
 export class KrazAPIService {
   private baseUrl = 'https://krazpizza.azurewebsites.net';
 
-  constructor(private http:HttpClient) { }
-  
+  constructor(
+    private http:HttpClient,
+    private cookieSvc: SessionCookieService,  
+  ) { }
+
   private getTypes<T extends IPizzaOption>(uri: string): Observable<T[]> {
     return this.http.get<T[]>(this.baseUrl + uri);
   }
@@ -56,4 +60,9 @@ export class KrazAPIService {
     return this.http.post('https://krazpizza.azurewebsites.net/api/customers/salt', email, {headers,responseType: 'text'})
   }
     
+  getOrders(){
+    var id = this.cookieSvc.getUserID();
+    return this.http.get<IOrder[]>('https://krazpizza.azurewebsites.net/api/customers/' + id + '/orderhistory');
+  }
+
 }

@@ -73,6 +73,18 @@ export class Order implements IOrder {
   orderTime: string; //TODO Remove
 }
 
+export class DisplayOrder extends Order {
+  items: string;
+  price: string;
+
+  public constructor(o : Order, it: string, pr: string){
+    super();
+    Object.assign(this, o);
+    this.items = it;
+    this.price = pr;
+  }
+}
+
 export interface IPizzaOption {
   id: number,
   name: string,

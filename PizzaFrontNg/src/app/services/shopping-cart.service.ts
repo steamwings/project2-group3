@@ -58,7 +58,8 @@ export class ShoppingCartService {
   }
 
   private CastChanges(){
-    zip(...this.formatAsItems()).subscribe(v => {
+    this.formatter.formatAsItems(this.Cart())
+    .subscribe(v => {
       this.itemsSubject.next(v);
       let total: number = 0;
       v.forEach(i => total += i.nprice);
@@ -95,27 +96,6 @@ export class ShoppingCartService {
     var cart = this.Cart();
     cart.sidesIds = cart.sidesIds.filter((_, i) => index != i );
     this.Save(cart);
-  }
-
-  private formatAsItems() : Observable<Item>[]{
-    var list = new Array<Observable<Item>>();
-    var cart = this.Cart();
-    if(cart.pizzas)
-      cart.pizzas.forEach((p, index) => {
-        list.push(this.formatter.formatPizza(p, index));
-      });
-    if(cart.sidesIds)
-      cart.sidesIds.forEach((s, index) => {
-        list.push(this.formatter.formatSide(s, index));
-      });
-    if (cart.premadePizzaIds)
-      cart.premadePizzaIds.forEach((p, index) => {
-        list.push(this.formatter.formatPremadePizza(p, index));
-      });
-    if(list.length==0)
-      list.push(this.formatter.emptyItem());
-    
-    return list;
   }
 
   public getItems() : Observable<Item[]>{

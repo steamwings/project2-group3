@@ -32,6 +32,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   submitOrder(){
+    // This subscribe will dispose after the first value
     this.cookieSvc.isLoggedIn().pipe(first()).subscribe(loggedIn => {
       if(!loggedIn) this.router.navigate(['/loginlanding']);
       else {

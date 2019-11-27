@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { KrazAPIService } from './kraz-api.service';
-import { Item, Pizza, ItemType, IPizzaOption } from '../modules/models/models.module';
-import { Observable } from 'rxjs';
-import { formatCurrency } from '@angular/common';
+import { Item, Pizza, ItemType, IPizzaOption, IOrder } from '../modules/models/models.module';
+import { Observable, zip } from 'rxjs';
+import { formatCurrency, formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,10 @@ export class ItemFormatterService {
 
   formatPrice(price: number) : string {
     return formatCurrency(price, this.locale, "$");
+  }
+
+  formatDate(date: string) : string {
+    return formatDate(date, 'medium', this.locale);
   }
 
   formatPizza(p: Pizza, index: number) : Observable<Item>{
@@ -72,6 +76,25 @@ export class ItemFormatterService {
     return new Observable<Item>(sub => 
       sub.next(new Item({name:"No items.", description:"-", price:"-", nprice:0, type:ItemType.Meta, index:0})
     ));
+  }
+
+  formatAsItems(o: IOrder): Observable<Item[]> {
+    var list = new Array<Observable<Item>>();
+    if (o.pizzas)
+      o.pizzas.forEach((p, index) => {
+        list.push(this.formatPizza(p, index));
+      });
+    if (o.sidesIds)
+      o.sidesIds.forEach((s, index) => {
+        list.push(this.formatSide(s, index));
+      });
+    if (o.premadePizzaIds)
+      o.premadePizzaIds.forEach((p, index) => {
+        list.push(this.formatPremadePizza(p, index));
+      });
+    if (list.length == 0)
+      list.push(this.emptyItem());
+    return zip(...list);
   }
 
 
