@@ -60,6 +60,7 @@ namespace PizzaMvcUI
         public void AddPizza()
         {
             if (currentPizza is null) return;
+            currentPizza.Price = PricePizza(currentPizza).Result;
             Pizzas.Add(currentPizza);
             currentPizza = null;
         }
@@ -90,5 +91,20 @@ namespace PizzaMvcUI
             Sides.Remove(sideToRemove);
         }
 
+        public async Task<decimal> PricePizza(Pizzas pizza)
+        {
+            decimal price = 0;
+            Menu menu = await API.GetMenu();
+
+            price += menu.Crusts.First(c => c.Id == pizza.CrustTypesId).Price;
+            price += menu.Sauces.First(c => c.Id == pizza.SauceTypesId).Price;
+            price += menu.Cheeses.First(c => c.Id == pizza.CheeseTypesId).Price;
+            foreach (var toppingId in pizza.ToppingsId)
+            {
+                price += menu.Toppings.First(c => c.Id == toppingId).Price;
+            }
+
+            return price;
+        }
     }
 }

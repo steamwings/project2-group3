@@ -30,8 +30,8 @@ namespace PizzaMvcUI.Utilities
                 desc.Append(", ");
                 desc.Append(menu.Toppings.Where(t => t.Id == tid).Single().Name);
             });
-            
-            return new Item() { Name = "Custom Pizza", Description = desc.ToString(), Price = "TBD" };
+
+            return new Item() { Name = "Custom Pizza", Description = desc.ToString(), Price = Format(p.Price) };
         }
 
         public static async Task<Item> GetItemFromSideId(int sideId)
