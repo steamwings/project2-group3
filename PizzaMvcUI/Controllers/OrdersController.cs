@@ -15,18 +15,6 @@ namespace PizzaMvcUI.Controllers
             return View();
         }
 
-        // GET: Orders/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Orders/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: Orders/Create
         [HttpPost]
         [ValidateAntiForgeryToken]

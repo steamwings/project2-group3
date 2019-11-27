@@ -10,7 +10,6 @@ namespace PizzaMvcUI.Controllers
 {
     public class PizzasController : Controller
     {
-
         public async Task<ActionResult> SelectCrust(int id)
         {
             CrustTypes c = await API.GetCrust(id);
@@ -19,6 +18,11 @@ namespace PizzaMvcUI.Controllers
 
         // GET: Pizzas
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Build()
         {
             return View();
         }
@@ -96,6 +100,11 @@ namespace PizzaMvcUI.Controllers
             {
                 return View();
             }
+        }
+
+        public async Task<IActionResult> PreMade()
+        {
+            return View(await API.GetPreMadePizzas());
         }
     }
 }

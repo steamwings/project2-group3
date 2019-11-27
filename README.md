@@ -9,5 +9,5 @@ references PizzaData/PizzaData.csproj
 *will be created*
 
 ## ASP.NET MVC UI
-*will be created*
+PizzaMvcUI.sln also references PizzaData/PizzaData.csproj
 
